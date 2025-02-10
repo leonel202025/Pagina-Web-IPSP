@@ -5,7 +5,7 @@ export const App = () => {
   return (
     <>
     <Nav/>
-    <h1>bienvenidos</h1>
+    <h1>Bienvenidos a la Pagina Web oficial del Instituto Privado San Pablo</h1>
     </>
   )
 }
