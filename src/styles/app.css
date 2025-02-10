@@ -1,0 +1,35 @@
+body {
+    --color-principal: #ddd;
+    --color-secundario: #1E55E3;
+    background-image: url("../images/fondo.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+html, body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+body > * {
+    position: relative;
+    z-index: 2;
+}

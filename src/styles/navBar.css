@@ -1,0 +1,48 @@
+.nav__container {
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos */
+    align-items: center;
+    width: 100vw; /* Ocupar todo el ancho de la pantalla */
+    padding: 10px 10px; /* Ajusta el espaciado en los lados */
+    color: #ddd;
+    box-sizing: border-box;
+    font-size: 1.2em;
+}
+
+.nav__list {
+    display: flex;
+    align-items: center;
+    gap: 150px; /* Más espaciado entre elementos */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1; /* Hace que ocupe todo el espacio disponible */
+    justify-content: center; /* Centra los elementos en la lista */
+    position: relative;
+    top: -20px; /* Ajusta este valor para subir más */
+}
+
+.nav__logo {
+    flex-shrink: 0; /* Evita que se encoja */
+}
+
+.nav__logo img {
+    height: 100px;
+    width: auto;
+    margin-top: 30px;
+}
+
+.nav__item {
+    font-size: 1.1em;
+}
+
+.nav__item a {
+    color: #ddd;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav__item a:hover {
+    text-decoration: underline;
+    color: #fff;
+}
