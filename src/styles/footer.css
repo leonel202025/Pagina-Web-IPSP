@@ -1,0 +1,19 @@
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);  /* Centra el footer */
+    width: 100%;
+    padding: 10px;
+    font-family: 'Merriweather', serif;
+    text-align: center;
+    font-size: 1em;
+    color: #ccc;
+    padding: 15px;
+}
+
+footer span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
+    color: #fff;
+}

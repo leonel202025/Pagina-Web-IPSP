@@ -4,19 +4,18 @@ import logo from "../images/logo.png";
 
 export const Nav = () => {
   return (
-    <nav className="nav__container">
+    <header className="header">
+  <nav className="nav__container">
     <ul className="nav__list">
-      <li className="nav__item"><a href="">INICIO</a></li>
-      <li className="nav__item"><a href="">SOBRE NOSOTROS</a></li>
-  
-      {/* Imagen en el centro */}
-      <li className="nav__item nav__logo">
+      <li className="nav__item"><a href="#">Inicio</a></li>
+      <li className="nav__item"><a href="#">Sobre Nosotros</a></li>
+      <div className="nav__logo">
       <img src={logo} alt="Logo" />
-      </li>
-  
-      <li className="nav__item"><a href="">OFERTA EDUCATIVA</a></li>
-      <li className="nav__item"><a href="">CONTACTO</a></li>
+      </div>
+      <li className="nav__item"><a href="#">Oferta Educativa</a></li>
+      <li className="nav__item"><a href="#">Contacto</a></li>
     </ul>
   </nav>
+</header>
   )
 }
