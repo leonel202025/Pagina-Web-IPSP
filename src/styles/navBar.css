@@ -31,7 +31,7 @@
     height: 100px;
     width: auto;
     margin-top: 40px;
-    margin-left: 48px;
+    margin-left: 15px;
 }
 
 .nav__item {
@@ -68,4 +68,51 @@
 .nav__item a:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
+}
+
+.nav__dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown__menu {
+    background: rgba(0, 0, 0, 0.3);
+    font-size: 0.7em;
+}
+  
+.dropdown__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 150px;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out, visibility 0.6s;
+}
+
+.dropdown__menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+  
+.dropdown__menu li {
+    padding: 11px 15px;
+    white-space: nowrap;
+}
+  
+.dropdown__menu li a {
+    text-decoration: none;
+    color: #ccc;
+    display: block;
+}
+  
+  /* Asegurar que el dropdown no se cierre abruptamente */
+.nav__dropdown-container:hover .dropdown__menu {
+    display: block;
 }
