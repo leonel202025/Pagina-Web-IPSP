@@ -3,12 +3,11 @@
     justify-content: center;
     align-items: stretch;
     flex-wrap: wrap; /* Para manejar la responsividad */
-    
 }
 
 .historia {
     width: 800px;
-    padding: 10px 20px;
+    padding: 30px 20px;
     background-color: rgba(255, 255, 255, 0.24);
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -17,12 +16,8 @@
     font-size: 1.1em;
 }
 
-.historia p{
-    margin-bottom: -10px;
-}
-
-.historia p:last-child{
-    margin-bottom: 20px;
+.historia p {
+    margin-bottom: 5px;
 }
 
 .container__logo {

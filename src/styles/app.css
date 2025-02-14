@@ -1,6 +1,9 @@
-body {
+:root {
     --color-principal: #ccc;
     --color-secundario: #1E55E3;
+}
+
+body {
     background-image: url("../images/fondo.png");
     background-size: cover;
     background-position: center;
@@ -8,12 +11,12 @@ body {
 }
 
 *{
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
 html, body {
-    margin: 0;
-    padding: 0;
     min-height: 100vh;
 }
 

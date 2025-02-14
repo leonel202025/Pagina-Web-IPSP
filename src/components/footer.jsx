@@ -4,11 +4,11 @@ import "../styles/footer.css"
 export const Footer = () => {
   return (
     <footer>
-        <div>
+      <div>
         <p>
-        <span>Instituto Privado San Pablo |</span> Comprometidos con la educación para el hoy y el mañana
+          <strong>Instituto Privado San Pablo</strong> | Comprometidos con la educación para el hoy y el mañana
         </p>
-        </div>
+      </div>
     </footer>
   )
 }

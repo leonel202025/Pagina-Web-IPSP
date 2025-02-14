@@ -24,7 +24,7 @@ export const Historia = () => {
         </p>
       </div>
       <div className='container__logo'>
-        <img src={logo} alt="" className='logo'/>
+        <img src={logo} alt="logo ipsp" className='logo'/>
       </div>
     </div>
     </>
