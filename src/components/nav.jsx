@@ -17,7 +17,7 @@ export const Nav = () => {
             onMouseLeave={() => setIsDropdownOpen(false)}
           >
             <li className="nav__item nav__dropdown">
-              <span href=''>Sobre Nosotros</span>
+              <span>Sobre Nosotros</span>
               <ul className={`dropdown__menu ${isDropdownOpen ? "show" : ""}`}>
                 <li><Link to={"/historia"}>Historia</Link></li>
                 <li><Link to={"/plantel"}>Plantel Docente</Link></li>
