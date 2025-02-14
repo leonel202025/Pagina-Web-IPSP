@@ -1,0 +1,64 @@
+.container__plantel h1{
+    color: var(--color-principal);
+    text-align: center;
+}
+
+.container__plantel .especialidad {
+    color: var(--color-principal);
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+ 
+.container__grado {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    max-width: 900px; /* Evita que los elementos se separen demasiado */
+    margin: 0 auto;
+}
+
+.container__jardin {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px; /* Evita que los elementos se separen demasiado */
+    margin: 0 auto;
+}
+
+.docente {
+    width: 100%;
+    max-width: 250px;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.24);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto; /* Centra los elementos si son menos que el grid */
+}
+
+.docente .nombre {
+    font-size: 1.5em;
+    color: #eee;
+    margin-bottom: 10px;
+}
+
+.docente .sala {
+    font-size: 1.2em;
+    color: #ddd;
+}
+
+.docente img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}

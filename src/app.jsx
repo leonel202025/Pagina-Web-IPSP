@@ -17,6 +17,7 @@ export const App = () => {
 
       <Nav/>
 
+      <main className="main-content">
       <Routes>
         <Route path="/" element={<Inicio/>}/>
         <Route path="/nosotros" element={<Nosotros/>}/>
@@ -27,6 +28,7 @@ export const App = () => {
         <Route path="/clases" element={<Clases/>}/>
         <Route path="/consulta" element={<Consulta/>}/>
       </Routes>
+      </main>
 
       <Footer/>
 

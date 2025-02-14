@@ -7,7 +7,9 @@ body {
     background-image: url("../images/fondo.png");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-attachment: fixed; /* Evita que el fondo se expanda */
+    min-height: 100vh; /* Asegura que al menos cubra toda la pantalla */
+    margin: 0;
 }
 
 *{
@@ -36,3 +38,7 @@ body > * {
     position: relative;
     z-index: 2;
 }
+
+.main-content {
+    padding-bottom: 70px; /* Asegura espacio para el footer */
+  }
