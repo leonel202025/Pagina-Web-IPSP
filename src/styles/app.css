@@ -20,6 +20,19 @@ body {
 
 html, body {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;  /* Hace que los elementos hijos se apilen verticalmente */
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el contenido llene toda la pantalla */
+}
+
+.main-content {
+    flex: 1; /* Hace que el contenido crezca y empuje el footer hacia abajo */
+    padding: 20px;
 }
 
 
@@ -39,6 +52,3 @@ body > * {
     z-index: 2;
 }
 
-.main-content {
-    padding-bottom: 70px; /* Asegura espacio para el footer */
-  }

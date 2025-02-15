@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: stretch;
     flex-wrap: wrap; /* Para manejar la responsividad */
+    margin-top: -15px;
 }
 
 .historia {
