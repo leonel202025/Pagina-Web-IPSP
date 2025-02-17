@@ -1,0 +1,51 @@
+.container__horarios {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 80px;
+    padding: 20px;
+}
+
+.horario__title {
+    text-align: center;
+    color: var(--color-principal);
+    padding-bottom: 25px;
+    font-family: 'Merriweather';
+    font-size: 2.2em;
+}
+
+table{
+    background-color: rgba(255, 255, 255, 0.24);;
+    width: 80%;
+    border-collapse: collapse;
+    border: 2px solid var(--color-secundario);
+}
+
+.dia {
+    border: 2px solid var(--color-secundario);
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--color-principal);
+    font-family: "Roboto";
+}
+
+.materia {
+    border: 2px solid var(--color-secundario);
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    color: var(--color-principal);
+    font-family: "Roboto";
+}
+
+th {
+    text-align: center;
+    font-size: 1.5em;
+    padding: 15px;
+    color: var(--color-principal);
+    font-family: "Lato";
+    font-weight: bold;
+}

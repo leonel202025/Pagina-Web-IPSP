@@ -8,6 +8,7 @@ import nancy from "../images/Nancy.jpg";
 import viviana from "../images/Viviana.jpg";
 import mariel from "../images/Mariel.jpg";
 import rodrigo from "../images/Rodrigo.jpg";
+import luciana from "../images/Luciana.jpg";
 import "../styles/plantel.css"
 
 export const Plantel = () => {
@@ -31,7 +32,7 @@ export const Plantel = () => {
         </div>
         <div className='docente'>
           <img src={adriana} alt="docente" />
-          <h3 className='nombre'>Adriana Jardin</h3>
+          <h3 className='nombre'>Adriana Neme</h3>
           <h4 className='sala'>Jardin 5 años</h4>
         </div>
       </div>
@@ -76,7 +77,7 @@ export const Plantel = () => {
           <h4 className='sala'>Música</h4>
         </div>
         <div className='docente'>
-          <img src={rodrigo} alt="docente" />
+          <img src={luciana} alt="docente" />
           <h3 className='nombre'>Luciana Carrasco</h3>
           <h4 className='sala'>Educación Física</h4>
         </div>

@@ -5,6 +5,9 @@ import logo from "../images/logo.png";
 export const Historia = () => {
   return (
     <>
+    <div>
+      <h1>Nuestra Historia</h1>
+    </div>
     <div className='container__historia'>
       <div className='historia'>
         <p>
