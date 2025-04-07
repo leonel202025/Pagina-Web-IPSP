@@ -9,7 +9,7 @@ export const Inicio = () => {
     <span>Bienvenidos a la Página Web Oficial del</span>
     <span>Instituto Privado San Pablo</span>
     </h1>
-    <Link to={"/historia"} className="button">Conócenos</Link>
+    <Link to={"/login"} className="button">Iniciar Sesión</Link>
     </div>
   )
 }
