@@ -11,9 +11,37 @@ export const Login = () => {
     emailInputRef.current.focus();
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email, "Password:", password); // Verificación temporal
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Guardamos el token
+        localStorage.setItem('token', data.token);
+        alert('Inicio de sesión exitoso');
+
+        // Redirigir o hacer algo con el usuario
+        console.log("Usuario:", data.user);
+
+        // Ejemplo: navegar a dashboard (si usás React Router)
+        // navigate('/dashboard');
+      } else {
+        alert(data.error || 'Error al iniciar sesión');
+      }
+    } catch (error) {
+      console.error('Error al conectar con el backend:', error);
+      alert('Error en la conexión');
+    }
   };
 
   return (
