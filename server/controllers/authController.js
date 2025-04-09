@@ -2,26 +2,48 @@ const db = require('../models/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-// Login (para todos los usuarios)
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+
   try {
-    const [users] = await db.query(
-      'SELECT id, nombre, email, password, rol FROM usuarios WHERE email = ?', 
+    const [rows] = await db.query(
+      'SELECT * FROM usuarios WHERE email = ?',
       [email]
     );
-    if (!users.length || !(await bcrypt.compare(password, users[0].password))) {
+
+    if (rows.length === 0) {
       return res.status(401).json({ error: 'Credenciales inválidas' });
     }
-    const { password: _, ...userData } = users[0];
+
+    const user = rows[0];
+
+    // Verificar contraseña
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Credenciales inválidas' });
+    }
+
+    // ✅ Generar el token
     const token = jwt.sign(
-      { id: userData.id, rol: userData.rol },
+      { id: user.id, rol: user.rol },
       process.env.JWT_SECRET,
-      { expiresIn: '8h' }
+      { expiresIn: '1h' }
     );
-    res.json({ token, user: userData });
-  } catch (err) {
-    res.status(500).json({ error: 'Error en el servidor' });
+
+    // Enviar token y datos del usuario (los que necesites)
+    res.json({
+      token,
+      user: {
+        id: user.id,
+        nombre: user.nombre,
+        email: user.email,
+        rol: user.rol
+      }
+    });
+
+  } catch (error) {
+    console.error('❌ Error en login:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
 
@@ -45,3 +67,24 @@ exports.register = async (req, res) => {
     res.status(500).json({ error: 'Error al crear usuario' });
   }
 };
+
+exports.perfil = async (req, res) => {
+  const userId = req.userId; // ← Esto lo pone el middleware verifyToken
+
+  try {
+    const [rows] = await db.query(
+      'SELECT id, nombre, email, rol FROM usuarios WHERE id = ?',
+      [userId]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    res.json({ user: rows[0] });
+  } catch (error) {
+    console.error('❌ Error al obtener el perfil:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+

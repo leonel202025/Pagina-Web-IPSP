@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-const Perfil = () => {
+export const Perfil = () => {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const fetchPerfil = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
 
       if (!token) {
         alert("No estás autenticado");
@@ -13,11 +13,13 @@ const Perfil = () => {
       }
 
       try {
-        const response = await fetch('http://localhost:5000/api/auth/perfil', {
-          method: 'GET',
+        const token = localStorage.getItem("token");
+        console.log("🔑 Token obtenido:", token); // 👈 agregá esto
+        const response = await fetch("http://localhost:5000/api/auth/perfil", {
+          method: "GET",
           headers: {
-            'Authorization': token
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         const data = await response.json();
@@ -25,10 +27,10 @@ const Perfil = () => {
         if (response.ok) {
           setUserData(data.user);
         } else {
-          alert(data.error || 'Error al cargar perfil');
+          alert(data.error || "Error al cargar perfil");
         }
       } catch (error) {
-        console.error('Error al traer perfil:', error);
+        console.error("Error al traer perfil:", error);
       }
     };
 
@@ -45,5 +47,3 @@ const Perfil = () => {
     </div>
   );
 };
-
-export default Perfil;

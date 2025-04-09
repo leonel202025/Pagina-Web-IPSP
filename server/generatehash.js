@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs');
 
 // Configuración (cambia estos valores)
-const CONTRASEÑA_PLAIN = 'admin456';  // Cambia esta contraseña
+const CONTRASEÑA_PLAIN = 'profe123';  // Cambia esta contraseña
 const SALT_ROUNDS = 10;               // Coste del hash (10 es estándar)
 
 // Generar hash
