@@ -1,0 +1,117 @@
+.subtitulo {
+    color: #ddd;
+    text-align: center;
+}
+
+.container__niveles{
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}
+
+.niveles{
+    background: rgba(255, 255, 255, 0.24);
+    border-radius: 8px;
+    border: 1.5px solid var(--color-secundario);
+    color: #ddd;
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-wrap: wrap;
+    transition: transform 2s ease, box-shadow 2s ease;
+}
+
+.niveles:hover {
+    transform: scale(1.03);
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+}
+
+.title__nivel {
+    text-align: start;
+    background-color: #102A6D;
+    display: inline-block;
+    padding: 5px 8px; /* Simplificación de padding */
+    margin: -28px 0 10px -18px; /* Ajuste clave: margen negativo para acercar al borde */
+    border-radius: 8px;
+    font-size: 1.05em;
+    position: relative; /* Opcional: para mayor control */
+}
+
+.subtitulo2 {
+    color: #ddd;
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.inscripciones {
+    color: #ddd;
+    text-align: center;
+    font-size: 1.25em;
+    margin-bottom: 15px;
+}
+
+.informacion {
+    color: #ddd;
+    text-align: center;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+}
+
+.O {
+    color: #ddd;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.direccion__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.ubicacion__img {
+    width: 30px;
+    height: 30px;
+}
+
+.direccion {
+    color: #ddd;
+    font-size: 1em;
+}
+
+.button__contact{
+    display: block; /* Convierte el enlace en bloque */
+    margin: auto; /* Centrado horizontal con margen vertical */
+    padding: 5px 10px;
+    border: 3px solid var(--color-secundario);
+    color: var(--color-principal);
+    text-decoration: none;
+    font-size: 0.85em;
+    font-family: 'Lato';
+    border-radius: 5px;
+    text-align: center;
+    letter-spacing: 0.3px;
+    transition: transform 0.8s ease, box-shadow 1s ease;
+    width: fit-content; /* Ajusta el ancho al contenido */
+    transition: transform 0.8s ease, box-shadow 1s ease;
+}
+
+.button__container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Ajusta el espacio superior según necesites */
+    margin-bottom: 10px; /* Ajusta el espacio inferior */
+}
+
+.button__contact:hover{
+    transform: scale(1.01); /* Aumenta el tamaño del botón */
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+}
