@@ -40,7 +40,7 @@ export const Oferta = () => {
       </div>
       <h2 className="subtitulo2">📅 Inscripciones Abiertas para el Ciclo Lectivo 2025</h2>
       <p className="inscripciones">
-      Te Invitamos a Conocer Nuestras Instalaciones, Equipo Docente y Propuestas.
+      Te Invitamos a Conocer Nuestras Instalaciones, Equipo Docente y Propuestas
       </p>
       <p className="inscripciones"> ¡Sumate a Nuestra Comunidad Educativa!</p>
       <p className="informacion">Para más Información</p>
