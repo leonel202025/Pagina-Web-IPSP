@@ -6,7 +6,7 @@ export const Footer = () => {
     <footer>
       <div>
         <p>
-          <strong>Instituto Privado San Pablo</strong> | Comprometidos con la educación para el hoy y el mañana
+          <strong>Instituto Privado San Pablo</strong> | Comprometidos con la Educación para el Hoy y el Mañana
         </p>
       </div>
     </footer>
