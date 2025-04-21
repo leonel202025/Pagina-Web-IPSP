@@ -6,7 +6,7 @@ import ubicacion from "../images/ubicacion.png";
 export const Oferta = () => {
   return (
     <div>
-      <h1 className="titulo">🎓 Nuestra Oferta Educativa</h1>
+      <h1 className="titulo__oferta">🎓 Nuestra Oferta Educativa</h1>
       <h2 className="subtitulo">
         En el Instituto Privado San Pablo ofrecemos una educación integral con
         un enfoque tradicional, formando estudiantes con valores y conocimientos

@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/auth');
+const contactoRoute = require('./routes/contacto');
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // Rutas
 app.use('/api/auth', authRoutes);
+app.use('/api/contacto', contactoRoute);
 
 // Manejo de errores
 app.use((err, req, res, next) => {

@@ -1,0 +1,123 @@
+body, html {
+    height: 100%; /* Asegura que el cuerpo ocupe toda la pantalla */
+    margin: 0;
+  }
+
+.form__container {
+    background-color: #fffd;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+    margin-top: -25px;
+    border-radius: 10px;
+    border: 3px solid var(--color-secundario);
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436); 
+}
+
+.titulo {
+    color: var(--color-secundario);
+    text-align: center;
+    margin: 20px 0 10px 0;
+    width: 100%;
+    font-size: 1.8em;
+    font-family: 'Merriweather';
+  }
+
+  form {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 85%; /* Ocupa casi todo el ancho del contenedor */
+    margin: 0 auto;
+    padding: 10px;
+    padding-bottom: 15px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: none;
+    border-bottom: 2px solid var(--color-secundario);
+    background: transparent;
+    outline: none; /* Elimina el outline por defecto */
+    font-size: 0.9em;
+    margin-bottom: 25px;
+    margin-top: 1px;
+    font-family: 'Lato';
+    font-weight: 400;
+  }
+
+  select{
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: none;
+    border-bottom: 2px solid var(--color-secundario);
+    background: transparent;
+    outline: none; /* Elimina el outline por defecto */
+    font-size: 0.9em;
+    margin-bottom: 25px;
+    font-family: 'Lato';
+    font-weight: 400;
+  }
+
+button {
+    background-color: var(--color-secundario);
+    color: white;
+    padding: 13px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    font-size: 1em;
+  }
+  
+button:hover {
+    background-color: #103cac;
+  }
+
+label{
+  color: black;
+  font-size: 1.3em;
+  font-family: 'Lato';
+  font-weight: 400;
+}
+
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: none;
+    outline-color: var(--color-secundario);
+    font-size: 0.9em;
+    margin-bottom: 25px;
+    resize: vertical; /* o 'none' si no querés que el usuario cambie el tamaño */
+    font-family: 'Lato';
+    font-weight: 400;
+  }
+
+.canales {
+    text-align: center;
+    color: #ddd;
+    margin-top: 20px;
+    font-size: 1.4em;
+}
+
+.container__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.logo__item {
+    width: 70px;
+    height: 70px;
+    margin-top: 10px;
+}
