@@ -1,41 +1,91 @@
 const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
+const multer = require('multer');
+const path = require('path');
 
-router.post('/', async (req, res) => {
-  const { nombre, correo, asunto, mensaje } = req.body;
+// Configuración simplificada y robusta de Multer
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 }
+}).single('archivo');
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL_USER, // Usa una variable de entorno para el email
-      pass: process.env.GMAIL_PASS, // Usa una variable de entorno para la contraseña
-    },
+router.post('/', (req, res) => {
+  upload(req, res, async (err) => {
+    // Manejo centralizado de errores
+    if (err) {
+      console.error('Error al subir archivo:', err);
+      return res.status(400).json({ 
+        success: false,
+        message: err.code === 'LIMIT_FILE_SIZE' 
+          ? 'El archivo es demasiado grande (máx 5MB)' 
+          : 'Error al procesar el archivo'
+      });
+    }
+
+    try {
+      const { nombre, correo, asunto, mensaje } = req.body;
+      const archivo = req.file;
+
+      // Validación básica
+      if (!nombre || !correo || !asunto || !mensaje) {
+        return res.status(400).json({
+          success: false,
+          message: 'Todos los campos son obligatorios'
+        });
+      }
+
+      // Configuración del transporter (mejorada)
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_PASS
+        },
+        tls: {
+          rejectUnauthorized: false
+        }
+      });
+
+      // Construcción del correo
+      const mailOptions = {
+        from: `"Formulario de Contacto" <${process.env.GMAIL_USER}>`,
+        to: 'leonsosaf9@gmail.com',
+        subject: `Nuevo mensaje: ${asunto}`,
+        replyTo: correo,
+        html: `
+          <h2>Nuevo contacto</h2>
+          <p><strong>Nombre:</strong> ${nombre}</p>
+          <p><strong>Email:</strong> ${correo}</p>
+          <p><strong>Asunto:</strong> ${asunto}</p>
+          <p><strong>Mensaje:</strong></p>
+          <p>${mensaje.replace(/\n/g, '<br>')}</p>
+        `,
+        attachments: archivo ? [{
+          filename: archivo.originalname,
+          content: archivo.buffer
+        }] : []
+      };
+
+      // Envío del correo
+      await transporter.sendMail(mailOptions);
+      
+      res.json({ 
+        success: true,
+        message: 'Mensaje enviado correctamente' 
+      });
+
+    } catch (error) {
+      console.error('Error al enviar email:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Error al enviar el mensaje',
+        error: error.message
+      });
+    }
   });
-
-  const mailOptions = {
-    from: `"Consulta Web" <${process.env.GMAIL_USER}>`,
-    to: 'leonsosaf9@gmail.com', // Cambia este a tu correo de destino
-    subject: `Nuevo mensaje de contacto: ${asunto}`,
-    replyTo: correo,
-    html: `
-      <h2>Formulario de contacto</h2>
-      <p><strong>Nombre:</strong> ${nombre}</p>
-      <p><strong>Correo:</strong> ${correo}</p>
-      <p><strong>Asunto:</strong> ${asunto}</p>
-      <p><strong>Mensaje:</strong></p>
-      <p>${mensaje}</p>
-    `,
-  };
-
-  try {
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Correo enviado correctamente' });
-  } catch (error) {
-    console.error('❌ Error al enviar el correo:', error);
-    res.status(500).json({ message: 'Error al enviar el correo' });
-  }
 });
-
 
 module.exports = router;

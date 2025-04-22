@@ -120,4 +120,8 @@ textarea {
     width: 70px;
     height: 70px;
     margin-top: 10px;
+    transition: transform 2s ease,
 }
+
+.logo__item:hover {
+  transform: scale(1.03);} /* Aumenta el tamaño del botón 

@@ -37,7 +37,7 @@ export const Nav = () => {
               {user.rol === "admin" && (
                 <>
                   <li className="nav__item">
-                    <Link to={"/perfil"}>Panel Admin</Link>
+                    <Link to={"/panel-admin"}>Panel Admin</Link>
                   </li>
                   <div className="nav__logo">
                     <img src={logo} alt="Logo" />
@@ -49,19 +49,35 @@ export const Nav = () => {
               )}
 
               {user.rol === "profesor" && (
-                <li className="nav__item">
-                  <Link to={"/mis-cursos"}>Mis Cursos</Link>
-                </li>
+                <>
+                  <li className="nav__item">
+                    <Link to={"/mis-cursos"}>Mis Cursos</Link>
+                  </li>
+                  <div className="nav__logo-profe">
+                    <img src={logo} alt="Logo" />
+                  </div>
+                  <li className="nav__item">
+                    <Link to={"/mis-cursos"}>Mis Cursos</Link>
+                  </li>
+                </>
               )}
 
               {user.rol === "alumno" && (
-                <li className="nav__item">
-                  <Link to={"/mis-materias"}>Mis Materias</Link>
-                </li>
+                <>
+                  <li className="nav__item">
+                    <Link to={"/mis-materia"}>Mis Materias</Link>
+                  </li>
+                  <div className="nav__logo-alumn">
+                    <img src={logo} alt="Logo" />
+                  </div>
+                  <li className="nav__item">
+                    <Link to={"/mis-materia"}>Mis Materias</Link>
+                  </li>
+                </>
               )}
 
               <li className="nav__item">
-                <button onClick={logout}>Cerrar sesión</button>
+                <Link to={"/perfil"}>Perfil</Link>
               </li>
             </>
           )}

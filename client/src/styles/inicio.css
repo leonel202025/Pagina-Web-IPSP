@@ -36,3 +36,23 @@
     transform: scale(1.01); /* Aumenta el tamaño del botón */
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
 }
+
+.button_out {
+    width: 170px;
+    height: 50px;
+    background-color: transparent;
+    border: 3px solid var(--color-secundario);
+    font-size: 1.2em;
+    font-family: 'Lato';
+    border-radius: 5px;
+    text-align: center;
+    letter-spacing: 0.3px;
+    padding: 10px 20px;
+    transition: transform 0.8s ease, box-shadow 1s ease;
+}
+
+.button_out:hover {
+    transform: scale(1.01); /* Aumenta el tamaño del botón */
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+    background-color: transparent;
+}

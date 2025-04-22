@@ -9,16 +9,25 @@ export const Contacto = () => {
   const [correo, setCorreo] = useState("");
   const [asunto, setAsunto] = useState("");
   const [mensaje, setMensaje] = useState("");
-  const [status, setStatus] = useState(""); // Añadido para manejar el estado de envío
+  const [archivo, setArchivo] = useState(null);
+  const [status, setStatus] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setStatus("Enviando..."); // Cambia el estado para mostrar que se está enviando
+    setStatus("Enviando...");
+
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('correo', correo);
+    formData.append('asunto', asunto);
+    formData.append('mensaje', mensaje);
+    if (archivo) {
+      formData.append('archivo', archivo);
+    }
 
     fetch("http://localhost:5000/api/contacto", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, correo, asunto, mensaje }),
+      body: formData,
     })
       .then(async (res) => {
         if (!res.ok) {
@@ -33,12 +42,13 @@ export const Contacto = () => {
         setCorreo("");
         setAsunto("");
         setMensaje("");
-        setStatus(""); // Resetea el estado de envío
+        setArchivo(null);
+        setStatus("");
       })
       .catch((err) => {
         alert("Error al enviar el mensaje");
         console.error("Error:", err);
-        setStatus(""); // Resetea el estado de envío si ocurre un error
+        setStatus("");
       });
   };
 
@@ -83,20 +93,33 @@ export const Contacto = () => {
               required
             >
               <option value="">-- Seleccioná un Asunto --</option>
-              <option value="inscripciones">Inscripciones / Admisiones</option>
-              <option value="aranceles">
-                Consulta sobre Aranceles / Pagos
+              <option value="Inscripciones">Inscripciones</option>
+              <option value="Consulta sobre valor de Cuotas / Matricula">
+                Consulta sobre valor de Cuotas / Matricula
               </option>
-              <option value="requisitos">Requisitos de Ingreso</option>
-              <option value="reunion">
+              <option value="Solicitar Reunión con Dirección / Docente">
                 Solicitar Reunión con Dirección / Docente
               </option>
-              <option value="pases">Pases / Certificados</option>
-              <option value="eventos">Eventos Escolares</option>
-              <option value="sugerencias">Vacantes Disponibles</option>
-              <option value="otro">Otro</option>
+              <option value="Pases / Certificados">Pases / Certificados</option>
+              <option value="Vacantes Disponible">Vacantes Disponibles</option>
+              <option value="Presentar Curriculum">Presentar Curriculum</option>
+              <option value="Otro">Otro</option>
             </select>
           </div>
+
+          {asunto === "Presentar Curriculum" && (
+            <div>
+              <label htmlFor="archivo">Adjuntar Curriculum</label>
+              <input
+                type="file"
+                id="archivo"
+                name="archivo"
+                accept=".pdf,.doc,.docx"
+                onChange={(e) => setArchivo(e.target.files[0])}
+                required={asunto === "Presentar Curriculum"}
+              />
+            </div>
+          )}
 
           <div>
             <label htmlFor="mensaje">Mensaje</label>

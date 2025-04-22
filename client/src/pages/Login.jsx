@@ -3,12 +3,14 @@ import "../styles/login.css"
 import logo from "../images/logo.png";
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const emailInputRef = useRef(null);
   const { login, setManualLoading } = useContext(AuthContext); // 👈 agregar esto arriba
+  const navigate = useNavigate();
 
   useEffect(() => {
     emailInputRef.current.focus();
@@ -31,6 +33,7 @@ export const Login = () => {
       
       if (response.ok) {
         localStorage.setItem('token', data.token);
+        navigate('/');
         setManualLoading(true);  // Muestra el Loading
         login(data.user); // ✅ Actualiza el contexto
         setTimeout(() => {
