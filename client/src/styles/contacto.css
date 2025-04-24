@@ -120,8 +120,136 @@ textarea {
     width: 70px;
     height: 70px;
     margin-top: 10px;
-    transition: transform 2s ease,
+    transition: transform 2s ease;
 }
 
 .logo__item:hover {
-  transform: scale(1.03);} /* Aumenta el tamaño del botón 
+  transform: scale(1.1);} /* Aumenta el tamaño del botón*/
+
+/* Fondo semitransparente */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Caja principal del modal */
+.modal-box {
+  background-color: #ffffff;
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  animation: slideUp 0.4s ease;
+  position: relative;
+}
+
+/* Icono */
+.modal-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-text {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Botón cerrar */
+.modal-btn {
+  background-color: #0057a8;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-btn:hover {
+  background-color: #004080;
+}
+
+/* Diferenciar por tipo */
+.modal-box.exito .modal-icon {
+  color: #4caf50;
+}
+
+.modal-box.error .modal-icon {
+  color: #f44336;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin: 0 auto 1rem auto;
+}
+
+.circle {
+  stroke: #ccc;
+  stroke-width: 2;
+  stroke-dasharray: 157;
+  stroke-dashoffset: 157;
+  animation: draw 0.5s forwards ease-in-out;
+}
+
+.check {
+  stroke: #4caf50;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: draw 0.5s 0.3s forwards ease-in-out;
+}
+
+.cross {
+  stroke: #f44336;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: draw 0.5s 0.3s forwards ease-in-out;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}

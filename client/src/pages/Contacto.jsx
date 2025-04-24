@@ -11,18 +11,21 @@ export const Contacto = () => {
   const [mensaje, setMensaje] = useState("");
   const [archivo, setArchivo] = useState(null);
   const [status, setStatus] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMensaje, setModalMensaje] = useState("");
+  const [modalTipo, setModalTipo] = useState(""); // "exito" o "error"
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setStatus("Enviando...");
 
     const formData = new FormData();
-    formData.append('nombre', nombre);
-    formData.append('correo', correo);
-    formData.append('asunto', asunto);
-    formData.append('mensaje', mensaje);
+    formData.append("nombre", nombre);
+    formData.append("correo", correo);
+    formData.append("asunto", asunto);
+    formData.append("mensaje", mensaje);
     if (archivo) {
-      formData.append('archivo', archivo);
+      formData.append("archivo", archivo);
     }
 
     fetch("http://localhost:5000/api/contacto", {
@@ -37,7 +40,9 @@ export const Contacto = () => {
         return res.json();
       })
       .then((data) => {
-        alert("Mensaje enviado correctamente");
+        setModalMensaje("Mensaje Enviado Correctamente");
+        setModalTipo("exito");
+        setModalVisible(true);
         setNombre("");
         setCorreo("");
         setAsunto("");
@@ -46,7 +51,9 @@ export const Contacto = () => {
         setStatus("");
       })
       .catch((err) => {
-        alert("Error al enviar el mensaje");
+        setModalMensaje("Error al Enviar el Mensaje");
+        setModalTipo("error");
+        setModalVisible(true);
         console.error("Error:", err);
         setStatus("");
       });
@@ -165,6 +172,57 @@ export const Contacto = () => {
           </a>
         </div>
       </div>
+      {modalVisible && (
+        <div className={`modal-overlay`}>
+          <div className={`modal-box ${modalTipo}`}>
+            <div className="modal-icon">
+              {modalTipo === "exito" ? (
+                <svg
+                  className="icon success"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 52 52"
+                >
+                  <circle
+                    className="circle"
+                    cx="26"
+                    cy="26"
+                    r="25"
+                    fill="none"
+                  />
+                  <path className="check" fill="none" d="M14 27l7 7 17-17" />
+                </svg>
+              ) : (
+                <svg
+                  className="icon error"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 52 52"
+                >
+                  <circle
+                    className="circle"
+                    cx="26"
+                    cy="26"
+                    r="25"
+                    fill="none"
+                  />
+                  <path
+                    className="cross"
+                    fill="none"
+                    d="M16 16 36 36 M36 16 16 36"
+                  />
+                </svg>
+              )}
+            </div>
+
+            <p className="modal-text">{modalMensaje}</p>
+            <button
+              className="modal-btn"
+              onClick={() => setModalVisible(false)}
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

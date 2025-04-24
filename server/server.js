@@ -1,20 +1,21 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser'); // Añade esto
+const bodyParser = require('body-parser');
+const authRoutes = require('./routes/auth');
 
 const app = express();
 
 // Middlewares actualizados
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); // Para formularios normales
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Rutas
 const contactoRoute = require('./routes/contacto');
 app.use('/api/contacto', contactoRoute);
+app.use('/api/auth', authRoutes); 
 
-// Middleware de errores mejorado
 app.use((err, req, res, next) => {
   console.error('💥 ERROR:', {
     message: err.message,
