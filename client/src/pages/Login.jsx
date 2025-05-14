@@ -34,7 +34,7 @@ export const Login = () => {
         // ✅ Solo aquí activamos el loading
         setManualLoading(true);
 
-        localStorage.setItem("token", data.token);
+        sessionStorage.setItem("token", data.token);
         login(data.user);
         navigate("/");
 
@@ -43,7 +43,7 @@ export const Login = () => {
         }, 4000);
       } else {
         // ❌ Error: no activamos el loading
-        setErrorMessage("El mail y/o contraseña son incorrectos");
+        setErrorMessage("El Mail y/o Contraseña son Incorrectos.");
       }
     } catch (error) {
       console.error("Error al conectar con el backend:", error);

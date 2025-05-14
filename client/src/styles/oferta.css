@@ -1,6 +1,6 @@
 .titulo__oferta {
     font-family: 'Merriweather';
-    font-size: 2em;
+    font-size: 2.7em;
     color: #ddd;
     text-align: center;
 }
@@ -10,7 +10,9 @@
     text-align: center;
     font-family: 'Lato';
     font-weight: 400;
-    font-size: 1.3em;
+    font-size: 1.6em;
+    padding-top: 10px;
+    padding-bottom: 15px;
 }
 
 .container__niveles{
@@ -30,12 +32,12 @@
     color: #ddd;
     padding-left: 30px;
     padding-right: 10px;
-    padding-top: 20px;
+    padding-top: 25px;
     padding-bottom: 20px;
     text-wrap: wrap;
     transition: transform 2s ease, box-shadow 2s ease;
-    height: 190px;
-    width: 520px;  
+    height: 200px;
+    width: 550px;  
 }
 
 .niveles:hover {
@@ -50,7 +52,7 @@
     padding: 5px 8px; /* Simplificación de padding */
     margin: -28px 0 10px -18px; /* Ajuste clave: margen negativo para acercar al borde */
     border-radius: 8px;
-    font-size: 1.02em;
+    font-size: 1.18em;
     position: relative; /* Opcional: para mayor control */
     font-family: 'Lato';
     font-weight: 400;
@@ -59,8 +61,9 @@
 .subtitulo2 {
     color: #ddd;
     text-align: center;
-    font-size: 1.8em;
-    margin-bottom: 10px;
+    font-size: 2.3em;
+    padding-top: 20px;
+    margin-bottom: 15px;
     font-family: 'Lato';
     font-weight: 400;
 }
@@ -68,7 +71,7 @@
 .inscripciones {
     color: #ddd;
     text-align: center;
-    font-size: 1.1em;
+    font-size: 1.3em;
     margin-bottom: 10px;
     font-family: 'Lato';
 }
@@ -76,15 +79,15 @@
 .informacion {
     color: #ddd;
     text-align: center;
-    font-size: 1.1em;
-    margin-bottom: 8px;
+    font-size: 1.3em;
+    margin-bottom:10px;
     font-family: 'Lato';
 }
 
 .O {
     color: #ddd;
     text-align: center;
-    font-size: 1.1em;
+    font-size: 1.3em;
     font-family: 'Lato';
 }
 
@@ -103,7 +106,7 @@
 
 .direccion {
     color: #ddd;
-    font-size: 1em;
+    font-size: 1.2em;
     font-family: 'Lato';
 }
 
@@ -114,7 +117,7 @@
     border: 3px solid var(--color-secundario);
     color: var(--color-principal);
     text-decoration: none;
-    font-size: 0.85em;
+    font-size: 1.1em;
     font-family: 'Lato';
     border-radius: 5px;
     text-align: center;
@@ -138,7 +141,7 @@
 
 .niveles li {
     font-family: sans-serif;
-    font-size: 0.90em;
+    font-size: 1.1em;
     font-weight: 100;
     line-height: 25px;
 }

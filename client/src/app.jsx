@@ -8,14 +8,17 @@ import { Oferta } from "./pages/Oferta";
 import { Contacto } from "./pages/Contacto";
 import { Login } from "./pages/Login";
 import { Perfil } from "./pages/Perfil";
-import { AuthProvider, AuthContext } from './context/authContext';
-import { Loading } from './components/loading';
+import { AuthProvider, AuthContext } from "./context/authContext";
+import { Loading } from "./components/loading";
 import { useContext } from "react"; // <-- ✅ Importá esto
+import { CreateUsuario } from "./pages/CreateUsuario";
+import { AñadirAlumno } from "./pages/AñadirAlumno";
+import { AñadirProfesor } from "./pages/AñadirProfesor";
 
 const AppContent = () => {
-  const { loading, manualLoading } = useContext(AuthContext);
+  const { manualLoading } = useContext(AuthContext);
 
-  if (loading || manualLoading) return <Loading />;
+  if (manualLoading) return <Loading />;
   return (
     <>
       <Nav />
@@ -27,6 +30,9 @@ const AppContent = () => {
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/login" element={<Login />} />
           <Route path="/perfil" element={<Perfil />} />
+          <Route path="/crear-usuario" element={<CreateUsuario />}/>
+          <Route path="/crear-alumno" element={<AñadirAlumno />} />
+          <Route path="/crear-profesor" element={<AñadirProfesor />} />
         </Routes>
       </main>
       <Footer />

@@ -5,7 +5,7 @@ export const Perfil = () => {
 
   useEffect(() => {
     const fetchPerfil = async () => {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
 
       if (!token) {
         alert("No estás autenticado");
@@ -13,8 +13,8 @@ export const Perfil = () => {
       }
 
       try {
-        const token = localStorage.getItem("token");
-        console.log("🔑 Token obtenido:", token); // 👈 agregá esto
+        const token = sessionStorage.getItem("token");
+
         const response = await fetch("http://localhost:5000/api/auth/perfil", {
           method: "GET",
           headers: {

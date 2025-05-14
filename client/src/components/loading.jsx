@@ -8,7 +8,7 @@ export const Loading = () => {
       <div className="loading-bar">
         <div className="loading-progress"></div>
       </div>
-      <p className="text">Cargando...</p>
+      <p className="text">Cargando</p>
     </div>
   );
 };

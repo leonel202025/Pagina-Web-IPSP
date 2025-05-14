@@ -6,7 +6,7 @@ export const Nosotros = () => {
   return (
     <>
         <div>
-          <h1>Nuestra Historia</h1>
+          <h1 className='historia__titulo'>Nuestra Historia</h1>
         </div>
         <div className='container__historia'>
           <div className='historia'>

@@ -37,7 +37,7 @@ export const Nav = () => {
               {user.rol === "admin" && (
                 <>
                   <li className="nav__item">
-                    <Link to={"/panel-admin"}>Panel Admin</Link>
+                    <Link to={"/"}>Panel Admin</Link>
                   </li>
                   <div className="nav__logo">
                     <img src={logo} alt="Logo" />

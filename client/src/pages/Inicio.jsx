@@ -37,7 +37,7 @@ export const Inicio = () => {
       )}
       {user && (
         <>
-          <button className="button_out" onClick={handleLogout}>Cerrar sesión</button>
+          <button className="button_out" onClick={handleLogout}>Cerrar Sesión</button>
         </>
       )}
     </div>

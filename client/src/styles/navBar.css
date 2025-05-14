@@ -29,9 +29,9 @@
     top: -30px; /* Ajusta este valor para subir más */
 }
 
-.nav__logo .nav__logo-profe .nav__logo-alumn{
+.nav__logo{
     flex-shrink: 0; /* Evita que se encoja */
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .nav__logo-alumn{
@@ -45,26 +45,26 @@
 }
 
 .nav__logo img {
-    height: 100px;
+    height: 120px;
     width: auto;
     margin-top: 40px;
     margin-left: 15px;
 }
 
 .nav__logo-alumn img {
-    height: 100px;
+    height: 120px;
     width: auto;
     margin-top: 40px;
 }
 
 .nav__logo-profe img {
-    height: 100px;
+    height: 120px;
     width: auto;
     margin-top: 40px;
 }
 
 .nav__item {
-    font-size: 1.3em;
+    font-size: 1.4em;
     font-family: 'Roboto';
     font-weight: 400;
     letter-spacing: 0.6px;

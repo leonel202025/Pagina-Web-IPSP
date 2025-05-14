@@ -1,0 +1,39 @@
+.crear__wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -60px;
+}
+
+.title__create {
+    font-size: 2.8em;
+    font-family: 'Merriweather';
+    color: var(--color-principal);
+}
+
+.container__create {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}
+
+.crear__item {
+    text-decoration: none;
+    color: var(--color-principal);
+    font-size: 2.3em;
+    border: 2.2px solid var(--color-secundario);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-family: 'Lato';
+    transition: transform 0.8s ease, box-shadow 1s ease;
+}
+
+.crear__item:hover {
+    transform: scale(1.01); /* Aumenta el tamaño del botón */
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+}

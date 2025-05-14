@@ -3,13 +3,13 @@ footer {
     padding-bottom: 15px;
     font-family: 'Merriweather', serif;
     text-align: center;
-    font-size: 1em;
+    font-size: 1.1em;
     color: #ccc;
     margin-top: auto; /* Empuja el footer hacia abajo si hay poco contenido */
 }
 
 footer strong {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.1em;
+    font-size: 1.2em;
     color: #ccc;
 }

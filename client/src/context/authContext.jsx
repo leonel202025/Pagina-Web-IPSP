@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const verificarUsuario = async () => {
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       if (!token) {
         return;
       }
@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const res = await fetch('http://localhost:5000/api/auth/perfil', {
           headers: {
-            'Authorization': token
+            'Authorization': `Bearer ${token}` // 👈 CORRECTO
           }
         });
 
@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
         if (res.ok) {
           setUser(data.user);
         } else {
-          localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
         }
       } catch (err) {
         console.error('Error al verificar el token:', err);
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     setUser(null);
   };
 
