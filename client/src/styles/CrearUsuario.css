@@ -11,6 +11,17 @@
     font-size: 2.8em;
     font-family: 'Merriweather';
     color: var(--color-principal);
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+.container__general {
+    border: 2px solid var(--color-secundario);
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.10);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
 }
 
 .container__create {
@@ -25,15 +36,16 @@
     text-decoration: none;
     color: var(--color-principal);
     font-size: 2.3em;
-    border: 2.2px solid var(--color-secundario);
+    border: 1.5px solid var(--color-secundario);
     padding: 20px;
     border-radius: 10px;
     margin-top: 20px;
     font-family: 'Lato';
-    transition: transform 0.8s ease, box-shadow 1s ease;
+    transition: transform 0.8s ease, box-shadow 1s ease, background-color 0.8s ease;
 }
 
 .crear__item:hover {
     transform: scale(1.01); /* Aumenta el tamaño del botón */
-    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+    background-color: #1e56e39a;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.436);
 }
