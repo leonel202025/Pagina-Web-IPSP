@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
+const usuariosRoute = require('./routes/usuarios');
+const contactoRoute = require('./routes/contacto');
 
 const app = express();
 
@@ -12,9 +14,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Rutas
-const contactoRoute = require('./routes/contacto');
+app.use('/api/usuarios', usuariosRoute);
 app.use('/api/contacto', contactoRoute);
 app.use('/api/auth', authRoutes); 
+app.use('/api', require('./routes/grados'));
 
 app.use((err, req, res, next) => {
   console.error('💥 ERROR:', {

@@ -1,0 +1,14 @@
+body, html {
+  height: 100%; /* Asegura que el cuerpo ocupe toda la pantalla */
+  margin: 0;
+}
+
+.tittle__alumno {
+    color: var(--color-secundario);
+    text-align: center;
+    margin: 20px 0 10px 0;
+    margin-bottom: -20px;
+    width: 100%;
+    font-size: 2em;
+    font-family: 'Merriweather';
+}
