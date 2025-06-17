@@ -1,0 +1,130 @@
+.container__general-formulario {
+  width: 550px;
+  background-color: #fffd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--color-secundario);
+  border-radius: 10px;
+  margin: auto;
+  margin-top: 15px;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  padding: 2rem;
+  margin-top: -35px;
+}
+
+.title__profesor {
+  color: var(--color-secundario);
+  text-align: center;
+  margin: 5px 0 -10px 0;
+  width: 100%;
+  font-size: 2em;
+  font-family: 'Merriweather';
+}
+
+.form__container-profesor {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+/* Datos personales */
+.form-datos-personales {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+
+.form-datos-personales .row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-datos-personales input {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  border-bottom: 2px solid var(--color-secundario);
+  background: transparent;
+  outline: none;
+  text-align: left;
+}
+
+/* Checkbox container */
+.form-checkboxes {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.checkbox-column {
+  flex: 1 1 50%;
+  width: 200px;
+}
+
+.checkbox-column h3 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  max-width: 430px;
+}
+
+.checkbox-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  text-align: left;
+}
+
+.checkbox-item {
+  display: flex;
+  justify-content: space-between; /* esto ayuda también */
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  flex-direction: row-reverse; /* ← esto invierte el orden */
+}
+
+.checkbox-item span {
+  display: inline-block;
+  width: 350px; /* Ajustá este valor si querés más espacio para textos largos */
+  text-align: left;
+  padding-left: 6px;
+}
+
+/* Footer con botón */
+.form-footer {
+  width: 100%;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+button[type="submit"] {
+  padding: 0.8rem 2rem;
+  margin-bottom: -50px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  background-color: var(--color-secundario);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #004b9f;
+}
+
+.label__checkbox {
+  display: block;      /* Para que tome todo el ancho y se comporte en bloque */
+  margin-bottom: 15px; /* Ajusta este valor para el espacio que quieras */
+}

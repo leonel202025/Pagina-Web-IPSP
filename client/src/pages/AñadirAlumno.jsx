@@ -86,7 +86,7 @@ export const AñadirAlumno = () => {
           setModalMensaje("El Alumno ya está Registrado");
           setModalTipo("advertencia");
         } else {
-          setModalMensaje("Ocurrió un Rrror al Agregar el Alumno");
+          setModalMensaje("Ocurrió un Error al Agregar el Alumno");
           setModalTipo("error");
         }
       }
