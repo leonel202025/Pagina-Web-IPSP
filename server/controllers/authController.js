@@ -42,7 +42,6 @@ exports.login = async (req, res) => {
 
 // REGISTER
 exports.register = async (req, res) => {
-  console.log("Body recibido:", req.body); // <-- acá
   const {
     dni,
     nombre,
@@ -83,7 +82,7 @@ exports.register = async (req, res) => {
         [dni, nombre, email, hashedPassword, rol]
       );
 
-      const profesorId = result.insertId;
+      const id_profesor = result.insertId;
 
       // Insertar grados del profesor
       for (const id_grado of grados) {

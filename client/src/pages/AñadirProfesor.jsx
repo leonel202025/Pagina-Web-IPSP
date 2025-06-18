@@ -86,7 +86,7 @@ export const AñadirProfesor = () => {
       const data = await res.json();
 
       if (res.ok) {
-        setModalMensaje("Profesor agregado correctamente");
+        setModalMensaje("Profesor Agregado Correctamente");
         setModalTipo("exito");
         setFormData({
           dni: "",
@@ -99,10 +99,10 @@ export const AñadirProfesor = () => {
         setAsignaturasSeleccionadas([]);
       } else {
         if (data?.error?.includes("ya está registrado")) {
-          setModalMensaje("El Profesor ya está registrado");
+          setModalMensaje("El Profesor ya está Registrado");
           setModalTipo("advertencia");
         } else {
-          setModalMensaje("Error al agregar el Profesor");
+          setModalMensaje("Error al Agregar el Profesor");
           setModalTipo("error");
         }
       }

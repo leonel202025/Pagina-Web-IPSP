@@ -10,16 +10,17 @@
 .title__create {
     font-size: 2.8em;
     font-family: 'Merriweather';
-    color: var(--color-principal);
+    color: var(--color-secundario);
     text-align: center;
     margin-top: -20px;
     margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Nueva sombra */
 }
 
 .container__general {
-    border: 2px solid var(--color-secundario);
+    border: 3px solid var(--color-secundario);
     padding: 50px;
-    background-color: rgba(255, 255, 255, 0.10);
+    background-color: #fffc;
     border-radius: 10px;
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
 }
@@ -34,18 +35,27 @@
 
 .crear__item {
     text-decoration: none;
-    color: var(--color-principal);
+    color: var(--color-secundario);
     font-size: 2.3em;
-    border: 1.5px solid var(--color-secundario);
-    padding: 20px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
     border-radius: 10px;
     margin-top: 20px;
     font-family: 'Lato';
-    transition: transform 0.8s ease, box-shadow 1s ease, background-color 0.8s ease;
+    transition: transform 0.8s ease, box-shadow 1s ease, border 0.8s ease;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .crear__item:hover {
     transform: scale(1.01); /* Aumenta el tamaño del botón */
-    background-color: #1e56e39a;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.436);
+}
+
+.icono__crear {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  vertical-align: middle;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); /* Sombra agregada */
 }
