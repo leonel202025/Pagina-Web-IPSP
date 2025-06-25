@@ -1,9 +1,7 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/CrearUsuario.css";
 import Alumno from "../images/Alumno.png"
 import Profesor from "../images/Profesor.png"
-import { Outlet } from "react-router-dom";
 
 export const CreateUsuario = () => {
   return (
@@ -23,11 +21,10 @@ export const CreateUsuario = () => {
             <img
               src= {Profesor}
               alt="Profesor"
-              className="icono__crear"
+              className="icono__crear-profesor"
             />
             PROFESOR
           </Link>
-          <Outlet />
         </div>
       </div>
     </div>

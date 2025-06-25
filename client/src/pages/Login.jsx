@@ -35,7 +35,7 @@ export const Login = () => {
         setManualLoading(true);
 
         sessionStorage.setItem("token", data.token);
-        login(data.user);
+        login(data.user, data.token);
         navigate("/");
 
         setTimeout(() => {

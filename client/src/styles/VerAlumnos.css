@@ -1,0 +1,219 @@
+.container__alumnos {
+    display: flex;
+    flex-direction: column;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: Arial, sans-serif;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.527);
+  background-color: rgba(0, 0, 0, 0.4); /* fondo oscuro semitransparente */
+  backdrop-filter: blur(8px); /* el efecto de blur */
+  -webkit-backdrop-filter: blur(8px); /* para Safari */
+}
+
+thead tr:first-child th:first-child {
+  border-top-left-radius: 10px;
+}
+
+thead tr:first-child th:last-child {
+  border-top-right-radius: 10px;
+}
+
+tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+
+thead {
+  text-align: center;
+  width: 100%;
+}
+
+thead th {
+  padding: 12px 15px;
+  color: #ddd;
+  text-align: center;
+  border: 1.5px solid var(--color-secundario);
+}
+
+thead .grado {
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  padding: 14px 0;
+}
+
+tbody td {
+  padding: 12px 35px;
+  border-bottom: 1.5px solid var(--color-secundario);
+  border-right: 1.5px solid var(--color-secundario);
+  border-left: 1.5px solid var(--color-secundario);
+  color: #ddd;
+  text-align: center;
+}
+
+.ver_title {
+    color: #ddd;
+    text-align: center;
+    font-size: 2.5em;
+    margin-top: -30px;
+    margin-bottom: 20px;
+    font-family: "Merriweather";
+}
+
+.acciones {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-editar, .btn-eliminar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  width: 50px;
+  height: 50px;
+}
+
+.btn-editar svg {
+  fill: #3498db;
+  margin: auto;
+}
+
+.btn-eliminar svg {
+  fill: #e74c3c;
+  margin: auto;
+}
+
+.btn-editar {
+  border: 2px solid var(--color-secundario);
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.btn-eliminar {
+  border: 2px solid rgb(189, 17, 17);
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.btn-editar:hover{
+  background-color: #1e56e396;
+}
+
+.btn-eliminar:hover {
+  background-color: rgba(231, 9, 9, 0.575); /* más oscuro que #f8d7da */
+}
+
+/* Fondo overlay específico para modal editar alumno */
+.modal-editar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenedor modal específico */
+.modal-editar-container {
+  width: 430px;
+  background-color: #fffd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--color-secundario);
+  border-radius: 10px;
+  padding: 20px 25px;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  margin: 0;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Título exclusivo del modal editar */
+.modal-editar-titulo {
+  color: var(--color-secundario);
+  text-align: center;
+  margin: 20px 0 -30px 0;
+  width: 100%;
+  font-size: 2em;
+  font-family: 'Merriweather', serif;
+}
+
+/* Formulario específico */
+.modal-editar-form {
+  max-width: 460px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 0 0 0;
+  border-radius: 5px;
+}
+
+/* Inputs y select específicos */
+.modal-editar-form input,
+.modal-editar-form select {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: none;
+  border-bottom: 2px solid var(--color-secundario);
+  background: transparent;
+  outline: none;
+  font-size: 1em;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+}
+
+
+/* Botones específicos */
+.modal-editar-form button {
+  background-color: var(--color-secundario);
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  font-size: 1em;
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  margin-top: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-editar-form button:hover {
+  background-color: #103cac;
+}
+
+/* Botón cancelar específico */
+.modal-editar-form button.cancelar {
+  background-color: #ccc;
+  color: #333;
+  margin-top: 20px;
+}
+
+.modal-editar-form button.cancelar:hover {
+  background-color: #999;
+}

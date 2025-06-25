@@ -10,7 +10,6 @@ const asignaturaRoute = require('./routes/asignaturas');
 const app = express();
 
 app.use((req, res, next) => {
-  console.log(`🔔 Petición entrante: ${req.method} ${req.url}`);
   next();
 });
 
@@ -20,11 +19,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Rutas
-app.use('/api', asignaturaRoute);
-app.use('/api/usuarios', usuariosRoute);
+app.use('/api/asignaturas', asignaturaRoute);
+app.use('/api/grados', require('./routes/grados'));
 app.use('/api/contacto', contactoRoute);
-app.use('/api/auth', authRoutes); 
-app.use('/api', require('./routes/grados'));
+app.use('/api/auth', authRoutes);
+app.use('/api/usuarios', usuariosRoute);
+
 
 app.use((err, req, res, next) => {
   console.error('💥 ERROR:', {

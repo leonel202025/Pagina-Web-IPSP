@@ -1,10 +1,10 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const authController = require('../controllers/authController');
-const { verifyToken, checkRole } = require('../middlewares/auth'); // ← Este archivo debe exportar ambas funciones
+const authController = require("../controllers/authController");
+const authMiddleware = require("../middlewares/auth"); // importa tu middleware
 
-router.post('/login', authController.login);
-router.post('/register', authController.register);
-router.get('/perfil', verifyToken, authController.perfil);
+router.post("/login", authController.login);
+// Proteges la ruta perfil con verifyToken
+router.get("/perfil", authMiddleware.verifyToken, authController.perfil);
 
 module.exports = router;

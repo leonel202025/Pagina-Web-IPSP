@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models/db');
 
-router.get('/grados', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const [rows] = await db.query('SELECT id, grado FROM grados');
     res.json(rows);

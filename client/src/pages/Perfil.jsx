@@ -14,20 +14,22 @@ export const Perfil = () => {
 
       try {
         const token = sessionStorage.getItem("token");
-
-        const response = await fetch("http://localhost:5000/api/auth/perfil", {
-          method: "GET",
+        console.log("Token al hacer fetch:", sessionStorage.getItem("token"));
+        const response = await fetch("/api/auth/perfil", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        const data = await response.json();
+        const contentType = response.headers.get("content-type");
 
-        if (response.ok) {
-          setUserData(data.user);
+        if (response.ok && contentType.includes("application/json")) {
+          const data = await response.json();
+          setUserData(data);
         } else {
-          alert(data.error || "Error al cargar perfil");
+          const text = await response.text(); // leé como texto para evitar romper con .json()
+          console.error("Respuesta inesperada:", text);
+          alert("Error al cargar perfil");
         }
       } catch (error) {
         console.error("Error al traer perfil:", error);

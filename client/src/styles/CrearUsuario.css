@@ -59,3 +59,11 @@
   vertical-align: middle;
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); /* Sombra agregada */
 }
+
+.icono__crear-profesor {
+  width: 75px;
+  height: 75px;
+  margin-right: 10px;
+  vertical-align: middle;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); /* Sombra agregada */
+}

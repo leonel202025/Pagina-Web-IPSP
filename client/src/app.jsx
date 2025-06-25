@@ -10,10 +10,13 @@ import { Login } from "./pages/Login";
 import { Perfil } from "./pages/Perfil";
 import { AuthProvider, AuthContext } from "./context/authContext";
 import { Loading } from "./components/loading";
-import { useContext } from "react"; // <-- ✅ Importá esto
+import { useContext } from "react";
 import { CreateUsuario } from "./pages/CreateUsuario";
 import { AñadirAlumno } from "./pages/AñadirAlumno";
 import { AñadirProfesor } from "./pages/AñadirProfesor";
+import { PanelAdmin } from "./pages/PanelAdmin";
+import { VerAlumnos } from "./pages/VerAlumnos";
+import { VerProfesores } from "./pages/VerProfesores";
 
 const AppContent = () => {
   const { manualLoading } = useContext(AuthContext);
@@ -33,6 +36,9 @@ const AppContent = () => {
           <Route path="/crear-usuario" element={<CreateUsuario />}/>
           <Route path="/crear-alumno" element={<AñadirAlumno />} />
           <Route path="/crear-profesor" element={<AñadirProfesor />} />
+          <Route path="/panel-admin" element={<PanelAdmin />} />
+          <Route path="/ver-alumnos" element={<VerAlumnos />} />
+          <Route path="/ver-profesores" element={<VerProfesores />} />
         </Routes>
       </main>
       <Footer />

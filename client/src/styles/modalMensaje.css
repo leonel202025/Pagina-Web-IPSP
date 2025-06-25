@@ -116,3 +116,16 @@
     opacity: 1;
   }
 }
+
+.confirmar{
+  margin-bottom: 10px;
+}
+
+.cancelar {
+  background-color: #ccc;
+  color: #333;
+}
+
+.cancelar:hover{
+  background-color: #999;
+}

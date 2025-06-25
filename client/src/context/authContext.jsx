@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
@@ -8,44 +8,49 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const verificarUsuario = async () => {
-      const token = sessionStorage.getItem('token');
+      const token = sessionStorage.getItem("token");
+      console.log("Token al verificar usuario:", token);
       if (!token) {
         return;
       }
 
       try {
-        const res = await fetch('http://localhost:5000/api/auth/perfil', {
+        const res = await fetch("/api/auth/perfil", {
           headers: {
-            'Authorization': `Bearer ${token}` // 👈 CORRECTO
-          }
+            Authorization: `Bearer ${token}`, // 👈 CORRECTO
+          },
         });
-
+        console.log("Respuesta status:", res.status);
         const data = await res.json();
-
+        console.log("Respuesta data:", data);
         if (res.ok) {
-          setUser(data.user);
+          setUser(data);
+          console.log("Estado user actualizado:", data);
         } else {
-          sessionStorage.removeItem('token');
+          sessionStorage.removeItem("token");
         }
       } catch (err) {
-        console.error('Error al verificar el token:', err);
-      } 
+        console.error("Error al verificar el token:", err);
+      }
     };
 
     verificarUsuario();
   }, []);
 
-  const login = (userData) => {
+  const login = (userData, token) => {
     setUser(userData);
+    sessionStorage.setItem("token", token);
   };
 
   const logout = () => {
-    sessionStorage.removeItem('token');
+    sessionStorage.removeItem("token");
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, logout, login, manualLoading, setManualLoading}}>
+    <AuthContext.Provider
+      value={{ user, setUser, logout, login, manualLoading, setManualLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,3 +1,4 @@
+// controllers/authController.js
 const db = require("../models/db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -7,7 +8,9 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const [rows] = await db.query("SELECT * FROM usuarios WHERE email = ?", [email]);
+    const [rows] = await db.query("SELECT * FROM usuarios WHERE email = ?", [
+      email,
+    ]);
 
     if (rows.length === 0) {
       return res.status(401).json({ error: "Credenciales inválidas" });
@@ -40,94 +43,25 @@ exports.login = async (req, res) => {
   }
 };
 
-// REGISTER
-exports.register = async (req, res) => {
-  const {
-    dni,
-    nombre,
-    email,
-    password,
-    rol,
-    grados = [],
-    asignaturas = [],
-    id_grado,
-  } = req.body;
-
-  try {
-    const [users] = await db.query("SELECT id FROM usuarios WHERE email = ?", [email]);
-    if (users.length > 0) {
-      return res.status(400).json({ error: "El email ya está registrado" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    if (rol === "alumno") {
-      if (!dni || !nombre || !email || !password) {
-        return res.status(400).json({ error: "Faltan datos para alumno" });
-      }
-
-      await db.query(
-        "INSERT INTO usuarios (dni, nombre, email, password, rol, id_grado) VALUES (?, ?, ?, ?, ?, ?)",
-        [dni, nombre, email, hashedPassword, rol, id_grado]
-      );
-
-    } else if (rol === "profesor") {
-      if (!grados.length || !asignaturas.length) {
-        return res.status(400).json({ error: "Faltan grados o asignaturas para el profesor" });
-      }
-
-      // Insertar profesor
-      const [result] = await db.query(
-        "INSERT INTO usuarios (dni, nombre, email, password, rol) VALUES (?, ?, ?, ?, ?)",
-        [dni, nombre, email, hashedPassword, rol]
-      );
-
-      const id_profesor = result.insertId;
-
-      // Insertar grados del profesor
-      for (const id_grado of grados) {
-        await db.query(
-          "INSERT INTO profesor_grado (id_profesor, id_grado) VALUES (?, ?)",
-          [id_profesor, id_grado]
-        );
-      }
-
-      // Insertar asignaturas del profesor
-      for (const id_asignatura of asignaturas) {
-        await db.query(
-          "INSERT INTO profesor_asignatura (id_profesor, id_asignatura) VALUES (?, ?)",
-          [id_profesor, id_asignatura]
-        );
-      }
-
-    } else {
-      return res.status(400).json({ error: "Rol no válido" });
-    }
-
-    res.status(201).json({ message: "Usuario creado exitosamente" });
-  } catch (err) {
-    console.error("❌ Error en register:", err);
-    res.status(500).json({ error: "Error al crear usuario", details: err.message });
-  }
-};
-
-// PERFIL
 exports.perfil = async (req, res) => {
-  const userId = req.userId;
-
   try {
-    const [rows] = await db.query(
-      "SELECT id, nombre, email, rol FROM usuarios WHERE id = ?",
-      [userId]
-    );
+    if (!req.userId) {
+      return res.status(401).json({ error: "Token inválido o faltante" });
+    }
+
+    const [rows] = await db.query("SELECT * FROM usuarios WHERE id = ?", [
+      req.userId,
+    ]);
 
     if (rows.length === 0) {
       return res.status(404).json({ error: "Usuario no encontrado" });
     }
 
-    res.json({ user: rows[0] });
-  } catch (error) {
-    console.error("❌ Error al obtener el perfil:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
+    const usuario = rows[0];
+    delete usuario.password; // eliminar el password si lo trae
+    res.json(usuario);
+  } catch (err) {
+    console.error("Error en /perfil:", err); // 👈 Esto es lo que necesitamos ver
+    res.status(500).json({ error: "Error del servidor" });
   }
 };
