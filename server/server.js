@@ -23,7 +23,7 @@ app.use('/api/asignaturas', asignaturaRoute);
 app.use('/api/grados', require('./routes/grados'));
 app.use('/api/contacto', contactoRoute);
 app.use('/api/auth', authRoutes);
-app.use('/api/usuarios', usuariosRoute);
+app.use('/api/usuarios', require('./routes/usuarios'));
 
 
 app.use((err, req, res, next) => {

@@ -14,7 +14,7 @@ export const Perfil = () => {
 
       try {
         const token = sessionStorage.getItem("token");
-        console.log("Token al hacer fetch:", sessionStorage.getItem("token"));
+        
         const response = await fetch("/api/auth/perfil", {
           headers: {
             Authorization: `Bearer ${token}`,

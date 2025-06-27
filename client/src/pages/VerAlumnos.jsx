@@ -57,7 +57,6 @@ export function VerAlumnos() {
       const dataToSend = { ...alumnoAEditar };
 
       console.log("Enviando datos:", dataToSend);
-      console.log("Intentando eliminar alumno con id:", alumnoAEliminar.id);
       const res = await fetch(
         `http://localhost:5000/api/usuarios/${alumnoAEditar.id}`,
         {

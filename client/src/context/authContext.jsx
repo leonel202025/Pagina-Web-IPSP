@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const verificarUsuario = async () => {
       const token = sessionStorage.getItem("token");
-      console.log("Token al verificar usuario:", token);
       if (!token) {
         return;
       }
@@ -20,12 +19,9 @@ export const AuthProvider = ({ children }) => {
             Authorization: `Bearer ${token}`, // 👈 CORRECTO
           },
         });
-        console.log("Respuesta status:", res.status);
         const data = await res.json();
-        console.log("Respuesta data:", data);
         if (res.ok) {
           setUser(data);
-          console.log("Estado user actualizado:", data);
         } else {
           sessionStorage.removeItem("token");
         }
