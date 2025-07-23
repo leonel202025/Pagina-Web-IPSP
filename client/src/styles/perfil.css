@@ -1,0 +1,145 @@
+.perfil-container {
+  max-width: 400px;
+  margin: 40px auto;
+  background-color: #fffd;
+  border-radius: 12px;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  border: 3px solid var(--color-secundario);
+  padding: 24px;
+  font-family: Arial, sans-serif;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto;
+}
+
+.perfil-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  font-weight: bold;
+  color: #555;
+  position: relative;
+}
+
+.perfil-avatar-img {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  border: 2px solid #1976d2;
+}
+
+
+.boton-editar-avatar {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background-color: #1976d2;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+.boton-editar-avatar svg {
+  width: 16px;
+  height: 16px;
+  fill: white;
+}
+
+.perfil-nombre {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 12px;
+}
+
+.perfil-email {
+  text-align: center;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.perfil-info {
+  margin-top: 10px;
+}
+
+.perfil-info p {
+  margin: 8px 0;
+}
+
+.perfil-info span {
+  font-weight: bold;
+}
+
+.boton-editar{
+  margin-top: 15px;
+  width: 100%;
+  background-color: var(--color-secundario);
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.boton-editar:hover{
+  background-color: #004b9f;
+}
+
+.boton-eliminar {
+  margin-top: 8px;
+  width: 100%;
+  background-color: rgb(189, 17, 17);
+  color: #ddd;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.boton-eliminar:hover {
+  background-color: rgb(160, 16, 16); /* más oscuro que #f8d7da */
+}
+
+.boton-volver, .btn__buscar-otro, .boton-logout{
+  margin-top: 8px;
+  width: 100%;
+  background-color: #bbb;
+  color: #333;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.boton-volver:hover, .btn__buscar-otro:hover, .boton-logout:hover{
+  background-color: #aaa;
+}
+
+.texto-cargando {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 18px;
+}

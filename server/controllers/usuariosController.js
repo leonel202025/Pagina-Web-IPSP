@@ -1,6 +1,9 @@
 // controllers/usuariosController.js
 const db = require("../models/db");
 const bcrypt = require("bcryptjs");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 // Función para registrar usuario (antes en authController)
 exports.register = async (req, res) => {
@@ -110,10 +113,14 @@ exports.obtenerProfesores = async (req, res) => {
     `);
 
     // Convertir strings de IDs a arrays numéricos
-    const profesores = rows.map(profesor => ({
+    const profesores = rows.map((profesor) => ({
       ...profesor,
-      asignaturas_ids: profesor.asignaturas_ids ? profesor.asignaturas_ids.split(',').map(Number) : [],
-      grados_ids: profesor.grados_ids ? profesor.grados_ids.split(',').map(Number) : [],
+      asignaturas_ids: profesor.asignaturas_ids
+        ? profesor.asignaturas_ids.split(",").map(Number)
+        : [],
+      grados_ids: profesor.grados_ids
+        ? profesor.grados_ids.split(",").map(Number)
+        : [],
     }));
 
     res.json(profesores);
@@ -122,7 +129,6 @@ exports.obtenerProfesores = async (req, res) => {
     res.status(500).json({ error: "Error al obtener profesores" });
   }
 };
-
 
 exports.actualizarUsuario = async (req, res) => {
   const id = req.params.id;
@@ -167,7 +173,9 @@ exports.actualizarProfesor = async (req, res) => {
 
     // Eliminar relaciones anteriores en tablas correctas
     await db.query("DELETE FROM profesor_grado WHERE id_profesor = ?", [id]);
-    await db.query("DELETE FROM profesor_asignatura WHERE id_profesor = ?", [id]);
+    await db.query("DELETE FROM profesor_asignatura WHERE id_profesor = ?", [
+      id,
+    ]);
 
     // Insertar nuevas relaciones
     if (Array.isArray(grados)) {
@@ -217,7 +225,9 @@ exports.eliminarProfesor = async (req, res) => {
 
   try {
     // Eliminar relaciones primero
-    await db.query("DELETE FROM profesor_asignatura WHERE id_profesor = ?", [id]);
+    await db.query("DELETE FROM profesor_asignatura WHERE id_profesor = ?", [
+      id,
+    ]);
     await db.query("DELETE FROM profesor_grado WHERE id_profesor = ?", [id]);
 
     // Luego eliminar al profesor de la tabla usuarios
@@ -231,5 +241,70 @@ exports.eliminarProfesor = async (req, res) => {
   } catch (error) {
     console.error("❌ Error al eliminar profesor:", error);
     res.status(500).json({ error: "Error al eliminar profesor" });
+  }
+};
+
+/* Manejar Foto de Perfil */
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `user_${Date.now()}${ext}`);
+  },
+});
+
+const upload = multer({ storage });
+
+exports.uploadFotoPerfil = upload.single("foto");
+
+exports.actualizarFotoPerfil = async (req, res) => {
+  const userId = req.body.userId;
+
+  if (!req.file) {
+    return res.status(400).json({ error: "No se subió ninguna imagen" });
+  }
+
+  const rutaImagen = `/uploads/${req.file.filename}`;
+
+  try {
+    // (Opcional) Obtener ruta anterior y eliminarla
+    const [rows] = await db.query(
+      "SELECT foto_perfil FROM usuarios WHERE id = ?",
+      [userId]
+    );
+    const anterior = rows[0]?.foto_perfil;
+
+    if (anterior && fs.existsSync("." + anterior)) {
+      fs.unlinkSync("." + anterior); // Elimina la imagen vieja
+    }
+
+    // Actualizar la base de datos
+    await db.query("UPDATE usuarios SET foto_perfil = ? WHERE id = ?", [
+      rutaImagen,
+      userId,
+    ]);
+
+    res.json({ mensaje: "Imagen actualizada", ruta: rutaImagen });
+  } catch (err) {
+    console.error("❌ Error al guardar imagen:", err);
+    res.status(500).json({ error: "Error al guardar imagen" });
+  }
+};
+
+exports.buscarPorDni = async (req, res) => {
+  const { dni } = req.params;
+  try {
+    const [result] = await db.query("SELECT * FROM usuarios WHERE dni = ?", [
+      dni,
+    ]);
+    if (result.length === 0) {
+      return res.status(404).json({ mensaje: "Alumno no encontrado" });
+    }
+    res.json(result[0]);
+  } catch (err) {
+    console.error("Error al buscar por DNI:", err);
+    res.status(500).json({ mensaje: "Error del servidor" });
   }
 };

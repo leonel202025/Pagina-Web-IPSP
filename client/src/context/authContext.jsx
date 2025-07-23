@@ -5,6 +5,9 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [manualLoading, setManualLoading] = useState(false);
+  const [loadingTexto, setLoadingTexto] = useState("Cargando"); // 👈 nuevo
+  const [usuarioBuscado, setUsuarioBuscado] = useState(null);
+  const [modalVisibleUsuario, setModalVisibleUsuario] = useState(true);
 
   useEffect(() => {
     const verificarUsuario = async () => {
@@ -45,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, logout, login, manualLoading, setManualLoading }}
+      value={{ user, setUser, logout, login, manualLoading, setManualLoading, loadingTexto, setLoadingTexto, usuarioBuscado, setUsuarioBuscado, modalVisibleUsuario, setModalVisibleUsuario,}}
     >
       {children}
     </AuthContext.Provider>

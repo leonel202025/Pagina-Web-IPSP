@@ -17,11 +17,12 @@ import { AñadirProfesor } from "./pages/AñadirProfesor";
 import { PanelAdmin } from "./pages/PanelAdmin";
 import { VerAlumnos } from "./pages/VerAlumnos";
 import { VerProfesores } from "./pages/VerProfesores";
+import { BuscarUsuario } from "./pages/BuscarUsuarios";
 
 const AppContent = () => {
-  const { manualLoading } = useContext(AuthContext);
+  const { manualLoading, loadingTexto } = useContext(AuthContext);
 
-  if (manualLoading) return <Loading />;
+  if (manualLoading) return <Loading texto={loadingTexto} />;
   return (
     <>
       <Nav />
@@ -39,6 +40,7 @@ const AppContent = () => {
           <Route path="/panel-admin" element={<PanelAdmin />} />
           <Route path="/ver-alumnos" element={<VerAlumnos />} />
           <Route path="/ver-profesores" element={<VerProfesores />} />
+          <Route path="/buscar-usuario" element={<BuscarUsuario />} />
         </Routes>
       </main>
       <Footer />

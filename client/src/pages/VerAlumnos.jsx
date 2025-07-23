@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/verAlumnos.css";
-import ModalMensaje from "../components/modalMensaje";
+import ModalMensaje from "../components/ModalMensaje";
 
 export function VerAlumnos() {
   const [alumnos, setAlumnos] = useState([]);

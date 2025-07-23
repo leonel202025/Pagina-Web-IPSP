@@ -9,7 +9,8 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const emailInputRef = useRef(null);
-  const { login, setManualLoading } = useContext(AuthContext); // 👈 agregar esto arriba
+  const { login, setManualLoading, setLoadingTexto } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -37,6 +38,7 @@ export const Login = () => {
         sessionStorage.setItem("token", data.token);
         login(data.user, data.token);
         navigate("/");
+        setLoadingTexto("Cargando...");
 
         setTimeout(() => {
           setManualLoading(false);

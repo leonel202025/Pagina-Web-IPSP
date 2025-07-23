@@ -1,14 +1,15 @@
+// components/Loading.jsx
 import "../styles/loading.css";
-import logo from "../images/logo.png"; // sin llaves
+import logo from "../images/logo.png";
 
-export const Loading = () => {
+export const Loading = ({ texto = "Cargando" }) => {
   return (
     <div className="loading-container">
       <img src={logo} alt="Logo" className="loading-logo" />
       <div className="loading-bar">
         <div className="loading-progress"></div>
       </div>
-      <p className="text">Cargando</p>
+      <p className="text">{texto}</p>
     </div>
   );
 };

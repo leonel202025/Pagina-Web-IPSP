@@ -27,7 +27,7 @@ export const PanelAdmin = () => {
             />
             VER PROFESORES
           </Link>
-          <Link to={"/"} className="listar__item">
+          <Link to={"/buscar-usuario"} className="listar__item">
           <img
               src={buscarUsuario}
               alt="Buscar"

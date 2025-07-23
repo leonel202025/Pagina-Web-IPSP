@@ -5,7 +5,7 @@ import { AuthContext } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 
 export const Inicio = () => {
-  const { setManualLoading } = useContext(AuthContext); // 👈 agregar esto arriba
+  const { setManualLoading, setLoadingTexto } = useContext(AuthContext); // 👈 agregar esto arriba
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
 
@@ -18,6 +18,7 @@ export const Inicio = () => {
     // Luego esperás un poco y redirigís
     setTimeout(() => {
       navigate("/"); // Redirige al inicio
+      setLoadingTexto("Cargando");
       setManualLoading(false); // Ocultar loading
     }, 4000); // Podés ajustar el delay si querés
   };

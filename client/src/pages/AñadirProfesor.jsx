@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../styles/añadirProfesor.css";
-import ModalMensaje from "../components/modalMensaje";
+import ModalMensaje from "../components/ModalMensaje";
 
 export const AñadirProfesor = () => {
   const [formData, setFormData] = useState({
