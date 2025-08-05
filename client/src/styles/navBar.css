@@ -1,100 +1,408 @@
-.header{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .nav__container {
-    display: flex;
-    justify-content: space-between; /* Distribuye los elementos */
-    align-items: center;
-    width: 100%;  /* Usar 100% en lugar de 100vw */
-    max-width: 100%; /* Evita el desbordamiento */
-    padding-top: 12px;
-    color: #ddd;
-    box-sizing: border-box;
-    font-size: 1.2em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; 
+  max-width: 100%;
+  padding-top: 12px;
+  color: #ddd;
+  box-sizing: border-box;
+  font-size: 1.2em;
 }
 
 .nav__list {
-    display: flex;
-    align-items: center;
-    gap: 140px; /* Más espaciado entre elementos */
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    flex: 1; /* Hace que ocupe todo el espacio disponible */
-    justify-content: center; /* Centra los elementos en la lista */
-    position: relative;
-    top: -30px; /* Ajusta este valor para subir más */
+  display: flex;
+  align-items: center;
+  gap: 140px; 
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1; 
+  justify-content: center;
+  position: relative;
+  top: -30px;
 }
 
-.nav__logo{
-    flex-shrink: 0; /* Evita que se encoja */
-    margin-left: 10px;
+.nav__logo-mobile {
+  display: none;
 }
 
-.nav__logo-alumn{
-    flex-shrink: 0; /* Evita que se encoja */
-    margin-left: 20px;
-}
-
-.nav__logo-profe{
-    flex-shrink: 0; /* Evita que se encoja */
-    margin-left: 20px;
+.nav__toggle {
+  display: none;
 }
 
 .nav__logo img {
-    height: 120px;
-    width: auto;
-    margin-top: 40px;
-    margin-left: 15px;
+  height: 120px;
+  width: auto;
+  margin-top: 40px;
+  margin-left: 15px;
+  flex-shrink: 0;
 }
 
 .nav__logo-alumn img {
-    height: 120px;
-    width: auto;
-    margin-top: 40px;
+  height: 120px;
+  width: auto;
+  margin-top: 40px;
+  flex-shrink: 0;
 }
 
 .nav__logo-profe img {
-    height: 120px;
-    width: auto;
-    margin-top: 40px;
+  height: 120px;
+  width: auto;
+  margin-top: 40px;
+  flex-shrink: 0;
 }
 
 .nav__item {
-    font-size: 1.4em;
-    font-family: 'Roboto';
-    font-weight: 400;
-    letter-spacing: 0.6px;
+  font-size: 1.4em;
+  font-family: 'Roboto';
+  font-weight: 400;
+  letter-spacing: 0.6px;
 }
 
 .nav__item a {
-    color: #ccc;
-    text-decoration: none;
-    position: relative;
-    transition: color 0.3s ease;
+  color: #ccc;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
 .nav__item a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #1E55E3;
-    transform: scaleX(0);
-    transform-origin: bottom right;
-    transition: transform 0.5s ease;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #1E55E3;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease;
 }
 
 .nav__item a:hover {
-    color: #fff;
+  color: #fff;
 }
 
 .nav__item a:hover::after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+
+/* RESPONSIVE DESIGN */
+
+/* Notebooks */
+
+/* Muy Grandes */
+@media (max-width: 1440px) {
+  .nav__list {
+    gap: 100px;
+    top: -10px;
+  }
+
+  .nav__item {
+    font-size: 1.5em;
+  }
+
+  .nav__logo img,
+  .nav__logo-profe img,
+  .nav__logo-alumn img {
+    height: 105px;
+    margin-top: 30px;
+  }
+}
+
+/* Grandes */
+@media (min-width: 1281px) and (max-width: 1439px) {
+  .nav__list {
+    gap: 70px;
+    top: -10px;
+  }
+
+  .nav__item {
+    font-size: 1.3em;
+  }
+
+  .nav__logo img,
+  .nav__logo-profe img,
+  .nav__logo-alumn img {
+    height: 90px;
+    margin-top: 20px;
+  }
+}
+
+/* Notebooks Medianas y Tablets de 10" (Horizontal) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .nav__list {
+    gap: 70px;
+    top: -10px;
+  }
+
+  .nav__item {
+    font-size: 1.3em;
+  }
+
+  .nav__logo img,
+  .nav__logo-profe img,
+  .nav__logo-alumn img {
+    height: 80px;
+    margin-top: 25px;
+  }
+}
+
+/* Tablets de 7" (Horizontal) */
+@media screen and (min-width: 900px) and (max-width: 1024px) {
+  .nav__list {
+    gap: 50px;
+    margin-top: -5px;
+  }
+
+  .nav__item {
+    font-size: 1.15em;
+  }
+
+  .nav__logo img,
+  .nav__logo-profe img,
+  .nav__logo-alumn img {
+    height: 80px;
+    margin-top: 25px;
+  }
+}
+
+/* Tablets 10" (Vertical) */
+@media screen and (max-width: 800px) {
+  .nav__logo-mobile {
+    display: block;
+  }
+  .nav__logo-mobile img {
+    height: 80px;
+    width: auto;
+    margin-top: 15px;
+    margin-left: 570px;
+  }
+
+  .nav__logo,
+  .nav__logo-profe,
+  .nav__logo-alumn {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: flex;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 35px;
+    color: #ccc;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    top: 30px;
+    margin-left: 50px;
+    z-index: 2000;
+    transition: transform 0.3s ease;
+  }
+
+  .nav__toggle.menu-open {
+    transform: translateX(20vw); 
+  }
+
+  .nav__toggle:focus,
+  .nav__toggle:active {
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .nav__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .nav__list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 25px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 230px;
+    background-color: rgba(0, 0, 0, 0.5); /* más translúcido para que se note el blur */
+    backdrop-filter: blur(10px); /* 👈 desenfoque */
+    -webkit-backdrop-filter: blur(10px); /* soporte en Safari */
+    padding-top: 60px;
+    gap: 18px;
+    margin: 0;
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 1000;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.6); /* 👈 sombra oscura lateral */
+  }
+
+  .nav__list.active {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav__item {
+    text-align: left;      
+    width: 100%;         
+    font-size: 1.2em;
+    padding: 10px 0;
+  }
+}
+
+/* Tablets 7" (Vertical) */
+@media screen and (max-width: 600px) {
+  .nav__logo-mobile {
+    display: block;
+  }
+
+  .nav__logo-mobile img {
+    height: 80px;
+    width: auto;
+    margin-top: 15px;
+    margin-left: 420px;
+  }
+
+  .nav__logo,
+  .nav__logo-profe,
+  .nav__logo-alumn {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: flex;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 35px;
+    color: #ccc;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    top: 30px;
+    margin-left: 30px;
+    z-index: 2000;
+    transition: transform 0.3s ease;
+  }
+
+  .nav__toggle.menu-open {
+    transform: translateX(24vw);
+  }
+
+  .nav__toggle:focus,
+  .nav__toggle:active {
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .nav__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 15px;
+  }
+
+  .nav__list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 25px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 230px;
+    background-color: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    padding-top: 60px;
+    gap: 18px;
+    margin: 0;
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 1000;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.6);
+  }
+
+  .nav__list.active {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav__item {
+    text-align: left;        
+    width: 100%;             
+    font-size: 1.2em;
+    padding: 10px 0;
+  }
+}
+
+/* Celulares */
+@media screen and (max-width: 480px) {
+  .nav__logo-mobile img {
+    height: 70px;
+    width: auto;
+    margin-top: 15px;
+    margin-left: 27.5vh;
+  }
+
+  .nav__toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+    margin-left: 25px;
+    margin-top: 13px;
+  }
+
+  .nav__toggle.menu-open {
+    transform: translateX(33vw); 
+  }
+
+  .nav__top {
+    padding: 0 10px;
+  }
+
+  .nav__list {
+    width: 200px;
+    padding-left: 15px;
+    padding-top: 50px;
+    gap: 14px;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 3px 0 16px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav__item {
+    font-size: 1.05em;
+    padding: 8px 0;
+  }
 }

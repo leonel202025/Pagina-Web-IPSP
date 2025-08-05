@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "../styles/navBar.css";
 import logo from "../images/logo.png";
 import { Link } from "react-router-dom";
@@ -6,28 +6,61 @@ import { AuthContext } from "../context/authContext";
 
 export const Nav = () => {
   const { user, logout } = useContext(AuthContext);
+  const [menuAbierto, setMenuAbierto] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuAbierto(!menuAbierto);
+  };
+
+  const cerrarMenu = () => setMenuAbierto(false);
+
+  // Cierra el menú al tocar fuera del mismo
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        menuAbierto &&
+        !e.target.closest(".nav__list") &&
+        !e.target.closest(".nav__toggle")
+      ) {
+        setMenuAbierto(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [menuAbierto]);
 
   return (
     <header className="header">
+          <button className={`nav__toggle ${menuAbierto ? "menu-open" : ""}`} onClick={toggleMenu}>
+            ☰
+          </button>
       <nav className="nav__container">
-        <ul className="nav__list">
+        <div className="nav__top">
+          <div className="nav__logo-mobile">
+            <img src={logo} alt="Logo" />
+          </div>
+        </div>
+
+        {menuAbierto && <div className="nav__overlay"></div>}
+
+        <ul className={`nav__list ${menuAbierto ? "active" : ""}`}>
           <li className="nav__item">
-            <Link to={"/"}>Inicio</Link>
+            <Link to={"/"} onClick={cerrarMenu}>Inicio</Link>
           </li>
 
           {!user && (
             <>
               <li className="nav__item">
-                <Link to={"/nosotros"}>Sobre Nosotros</Link>
+                <Link to={"/nosotros"} onClick={cerrarMenu}>Sobre Nosotros</Link>
               </li>
               <div className="nav__logo">
                 <img src={logo} alt="Logo" />
               </div>
               <li className="nav__item">
-                <Link to={"/oferta"}>Oferta Educativa</Link>
+                <Link to={"/oferta"} onClick={cerrarMenu}>Oferta Educativa</Link>
               </li>
               <li className="nav__item">
-                <Link to={"/contacto"}>Contacto</Link>
+                <Link to={"/contacto"} onClick={cerrarMenu}>Contacto</Link>
               </li>
             </>
           )}
@@ -37,13 +70,13 @@ export const Nav = () => {
               {user.rol === "admin" && (
                 <>
                   <li className="nav__item">
-                    <Link to={"/panel-admin"}>Panel Admin</Link>
+                    <Link to={"/panel-admin"} onClick={cerrarMenu}>Panel Admin</Link>
                   </li>
                   <div className="nav__logo">
                     <img src={logo} alt="Logo" />
                   </div>
                   <li className="nav__item">
-                    <Link to={"/crear-usuario"}>Crear Usuario</Link>
+                    <Link to={"/crear-usuario"} onClick={cerrarMenu}>Crear Usuario</Link>
                   </li>
                 </>
               )}
@@ -51,13 +84,13 @@ export const Nav = () => {
               {user.rol === "profesor" && (
                 <>
                   <li className="nav__item">
-                    <Link to={"/mis-cursos"}>Mis Cursos</Link>
+                    <Link to={"/mis-cursos"} onClick={cerrarMenu}>Mis Cursos</Link>
                   </li>
                   <div className="nav__logo-profe">
                     <img src={logo} alt="Logo" />
                   </div>
                   <li className="nav__item">
-                    <Link to={"/mis-cursos"}>Mis Cursos</Link>
+                    <Link to={"/mis-cursos"} onClick={cerrarMenu}>Mis Cursos</Link>
                   </li>
                 </>
               )}
@@ -65,19 +98,19 @@ export const Nav = () => {
               {user.rol === "alumno" && (
                 <>
                   <li className="nav__item">
-                    <Link to={"/mis-materia"}>Mis Materias</Link>
+                    <Link to={"/mis-materia"} onClick={cerrarMenu}>Mis Materias</Link>
                   </li>
                   <div className="nav__logo-alumn">
                     <img src={logo} alt="Logo" />
                   </div>
                   <li className="nav__item">
-                    <Link to={"/mis-materia"}>Mis Materias</Link>
+                    <Link to={"/mis-materia"} onClick={cerrarMenu}>Mis Materias</Link>
                   </li>
                 </>
               )}
 
               <li className="nav__item">
-                <Link to={"/perfil"}>Perfil</Link>
+                <Link to={"/perfil"} onClick={cerrarMenu}>Perfil</Link>
               </li>
             </>
           )}

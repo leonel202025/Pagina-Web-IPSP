@@ -8,7 +8,6 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Evita que el fondo se expanda */
-    min-height: 100%; /* Asegura que al menos cubra toda la pantalla */
     margin: 0;
 }
 
@@ -19,7 +18,7 @@ body {
 }
 
 html, body {
-    min-height: 100vh;
+    min-height: 100%;
     display: flex;
     flex-direction: column;  /* Hace que los elementos hijos se apilen verticalmente */
 }
@@ -27,7 +26,7 @@ html, body {
 #root {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Asegura que el contenido llene toda la pantalla */
+    min-height: 100%; /* Asegura que el contenido llene toda la pantalla */
 }
 
 .main-content {
@@ -47,8 +46,28 @@ body::before {
     z-index: 1;
 }
 
-body > * {
-    position: relative;
-    z-index: 2;
+body > *:not(.nav__toggle) {
+  position: relative;
+  z-index: 2;
 }
 
+
+/* Responsive Design */
+
+/* Tablets */
+@media screen and (min-width: 600px) and (max-width: 800px) {
+  body {
+    background-image: url("../images/fondo-pequeño.png");
+    background-size: cover;
+    background-position: 46% center;
+  }
+}
+
+/* Celulares */
+@media screen and (max-width: 480px) {
+  body {
+    background-image: url("../images/fondo-celular.png");
+    background-size: cover;
+    background-position: 47% center;
+  }
+}

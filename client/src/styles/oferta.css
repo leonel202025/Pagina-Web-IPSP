@@ -3,6 +3,7 @@
     font-size: 2.7em;
     color: #ddd;
     text-align: center;
+    margin-top: -15px;
 }
 
 .subtitulo {
@@ -49,11 +50,11 @@
     text-align: start;
     background-color: #102A6D;
     display: inline-block;
-    padding: 5px 8px; /* Simplificación de padding */
-    margin: -28px 0 10px -18px; /* Ajuste clave: margen negativo para acercar al borde */
+    padding: 5px 8px; 
+    margin: -28px 0 10px -18px; 
     border-radius: 8px;
     font-size: 1.18em;
-    position: relative; /* Opcional: para mayor control */
+    position: relative; 
     font-family: 'Lato';
     font-weight: 400;
 }
@@ -111,8 +112,8 @@
 }
 
 .button__contact{
-    display: block; /* Convierte el enlace en bloque */
-    margin: auto; /* Centrado horizontal con margen vertical */
+    display: block; 
+    margin: auto; 
     padding: 5px 10px;
     border: 3px solid var(--color-secundario);
     color: var(--color-principal);
@@ -123,19 +124,19 @@
     text-align: center;
     letter-spacing: 0.3px;
     transition: transform 0.8s ease, box-shadow 1s ease;
-    width: fit-content; /* Ajusta el ancho al contenido */
+    width: fit-content;
     transition: transform 0.8s ease, box-shadow 1s ease;
 }
 
 .button__container {
     display: flex;
     justify-content: center;
-    margin-top: 10px; /* Ajusta el espacio superior según necesites */
-    margin-bottom: 5px; /* Ajusta el espacio inferior */
+    margin-top: 10px; 
+    margin-bottom: 5px;
 }
 
 .button__contact:hover{
-    transform: scale(1.01); /* Aumenta el tamaño del botón */
+    transform: scale(1.01);
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
 }
 
@@ -144,4 +145,502 @@
     font-size: 1.1em;
     font-weight: 100;
     line-height: 25px;
+}
+
+
+/* RESPONSIVE DESING */
+
+/* Notebook */
+
+/* Muy Grandes */
+@media (max-width: 1440px) {
+  .container__niveles {
+    gap: 40px;
+  }
+
+  .niveles {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 220px;
+    width: 500px; 
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .title__nivel {
+    font-size: 1.1em;
+  }
+
+  .subtitulo, .subtitulo2 {
+    font-size: 1.5em;
+  }
+
+  .inscripciones, .informacion, .O {
+    font-size: 1.15em;
+  }
+  .niveles li {
+    font-family: sans-serif;
+    font-size: 1em;
+    font-weight: 100;
+    line-height: 25px;
+}
+  .titulo__oferta {
+      font-size: 2.4em;
+  }
+  .subtitulo {
+      color: #ddd;
+      text-align: center;
+      font-family: 'Lato';
+      font-weight: 400;
+      font-size: 1.4em;
+      padding-top: 15px;
+      padding-bottom: 10px;
+  }
+  .ubicacion__img {
+      width: 25px;
+      height: 25px;
+  }
+
+  .direccion {
+      color: #ddd;
+      font-size: 1.1em;
+      font-family: 'Lato';
+  }
+  .button__contact{
+      font-size: 1em;
+  }
+}
+
+/* Grandes */
+@media (min-width: 1281px) and (max-width: 1439px) {
+  .container__niveles {
+    gap: 30px;
+  }
+
+  .niveles {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 220px;
+    width: 450px; 
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .title__nivel {
+    font-size: 1em;
+  }
+
+  .subtitulo, .subtitulo2 {
+    font-size: 1.28em;
+  }
+
+  .inscripciones, .informacion, .O {
+    font-size: 1.080em;
+  }
+  .niveles li {
+    font-family: sans-serif;
+    font-size: 0.95em;
+    font-weight: 100;
+    line-height: 25px;
+  }
+  .titulo__oferta {
+      font-size: 2.2em;
+  }
+  .subtitulo {
+      color: #ddd;
+      text-align: center;
+      font-family: 'Lato';
+      font-weight: 400;
+      font-size: 1.2em;
+      padding-top: 15px;
+      padding-bottom: 5px;
+  }
+  .ubicacion__img {
+      width: 25px;
+      height: 25px;
+  }
+
+  .direccion {
+      color: #ddd;
+      font-size: 1.1em;
+      font-family: 'Lato';
+  }
+  .button__contact{
+      font-size: 1em;
+  }
+}
+
+/* Notebooks Medianas y Tablets de 10" (Horizontal) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .container__niveles {
+    gap: 20px;
+  }
+
+  .niveles {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 250px;
+    width: 450px; 
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .title__nivel {
+    font-size: 1em;
+  }
+
+  .subtitulo, .subtitulo2 {
+    font-size: 1.28em;
+  }
+
+  .inscripciones, .informacion, .O {
+    font-size: 1.080em;
+  }
+    .niveles li {
+    font-family: sans-serif;
+    font-size: 0.95em;
+    font-weight: 100;
+    line-height: 25px;
+  }
+  .titulo__oferta {
+      font-size: 1.95em;
+  }
+  .subtitulo {
+      color: #ddd;
+      text-align: center;
+      font-family: 'Lato';
+      font-weight: 400;
+      font-size: 1.1em;
+      padding-top: 15px;
+      padding-bottom: 5px;
+  }
+  .ubicacion__img {
+      width: 25px;
+      height: 25px;
+  }
+
+  .direccion {
+      color: #ddd;
+      font-size: 1.1em;
+      font-family: 'Lato';
+  }
+  .button__contact{
+      font-size: 1em;
+  }
+}
+
+/* Tablets de 7" (Horizontal) */
+@media screen and (min-width: 900px) and (max-width: 1024px) {
+  .container__niveles {
+    gap: 20px;
+  }
+
+  .niveles {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 245px;
+    width: 450px; 
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .title__nivel {
+    font-size: 0.95em;
+  }
+
+  .subtitulo, .subtitulo2 {
+    font-size: 1.28em;
+  }
+
+  .inscripciones, .informacion, .O {
+    font-size: 1em;
+  }
+    .niveles li {
+    font-family: sans-serif;
+    font-size: 0.85em;
+    font-weight: 100;
+    line-height: 25px;
+  }
+  .titulo__oferta {
+      font-size: 1.85em;
+      margin-top: -15px;
+  }
+  .subtitulo {
+      color: #ddd;
+      text-align: center;
+      font-family: 'Lato';
+      font-weight: 400;
+      font-size: 1em;
+      padding-top: 15px;
+      padding-bottom: 5px;
+  }
+  .ubicacion__img {
+      width: 25px;
+      height: 25px;
+  }
+
+  .direccion, .O {
+      color: #ddd;
+      font-size: 0.9em;
+      font-family: 'Lato';
+  }
+  .button__contact{
+      font-size: 0.85em;
+  }
+}
+
+/* Tablets 10" (Vertical) */
+@media screen and (max-width: 800px){
+  .container__niveles {
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .niveles {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 230px;
+    width: 450px; 
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .title__nivel {
+    font-size: 1.1em;
+    padding: 10px;
+  }
+
+  .secundario {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 250px !important;
+    width: 450px; 
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .subtitulo, .subtitulo2 {
+    font-size: 1.28em;
+  }
+
+  .inscripciones, .informacion, .O {
+    font-size: 1.2em;
+  }
+    .niveles li {
+    font-family: sans-serif;
+    font-size: 1.2em;
+    font-weight: 100;
+    line-height: 25px;
+  }
+  .titulo__oferta {
+      font-size: 2.6em;
+      margin-top: 5px;
+  }
+  .subtitulo {
+      color: #ddd;
+      text-align: center;
+      font-family: 'Lato';
+      font-weight: 400;
+      font-size: 1.3em;
+      padding-top: 15px;
+      padding-bottom: 5px;
+  }
+  .subtitulo2 {
+      color: #ddd;
+      text-align: center;
+      font-size: 1.8em;
+      padding-top: 20px;
+      margin-bottom: 15px;
+      font-family: 'Lato';
+      font-weight: 400;
+  }
+  .ubicacion__img {
+      width: 30px;
+      height: 30px;
+  }
+
+  .direccion, .O {
+      color: #ddd;
+      font-size: 1.2em;
+      font-family: 'Lato';
+  }
+  .button__contact{
+      font-size: 1.2em;
+  }
+}
+
+/* Tablets 7" (Vertical) */
+@media screen and (max-width: 600px){
+  .container__niveles {
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .niveles {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 230px;
+    width: 450px; 
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .title__nivel {
+    font-size: 1.1em;
+    padding: 10px;
+  }
+
+  .secundario {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 250px !important;
+    width: 450px; 
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .subtitulo, .subtitulo2 {
+    font-size: 1.28em;
+  }
+
+  .inscripciones, .informacion, .O {
+    font-size: 1.2em;
+  }
+    .niveles li {
+    font-family: sans-serif;
+    font-size: 1.2em;
+    font-weight: 100;
+    line-height: 25px;
+  }
+  .titulo__oferta {
+      font-size: 2.4em;
+      margin-top: 5px;
+  }
+  .subtitulo {
+      color: #ddd;
+      text-align: center;
+      font-family: 'Lato';
+      font-weight: 400;
+      font-size: 1.2em;
+      margin-top: 10px;
+      margin-bottom: 5px;
+  }
+  .subtitulo2 {
+      color: #ddd;
+      text-align: center;
+      font-size: 1.8em;
+      padding-top: 20px;
+      margin-bottom: 15px;
+      font-family: 'Lato';
+      font-weight: 400;
+  }
+  .ubicacion__img {
+      width: 30px;
+      height: 30px;
+  }
+
+  .direccion, .O {
+      color: #ddd;
+      font-size: 1.2em;
+      font-family: 'Lato';
+  }
+  .button__contact{
+      font-size: 1.2em;
+  }
+}
+
+/* Celulares */
+@media screen and (max-width: 480px){
+  .container__niveles {
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .niveles {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 275px;
+    width: 330px;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .title__nivel {
+    font-size: 1.2em;
+    padding: 10px;
+  }
+
+  .secundario {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    height: 330px !important;
+    width: 330px; 
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .subtitulo, .subtitulo2 {
+    font-size: 1.28em;
+  }
+
+  .inscripciones, .informacion, .O {
+    font-size: 1em;
+  }
+    .niveles li {
+    font-family: sans-serif;
+    font-size: 1.2em;
+    font-weight: 400;
+    line-height: 25px;
+  }
+  .titulo__oferta {
+      font-size: 2em;
+      margin-top: 5px;
+  }
+  .gorrito {
+    display: none;
+  }
+  .subtitulo {
+      color: #ddd;
+      text-align: center;
+      font-family: 'Lato';
+      font-weight: 400;
+      font-size: 1em;
+      margin-top: 10px;
+      margin-bottom: 5px;
+  }
+  .subtitulo2 {
+      color: #ddd;
+      text-align: center;
+      font-size: 1.5em;
+      padding-top: 20px;
+      margin-bottom: 15px;
+      font-family: 'Lato';
+      font-weight: 400;
+  }
+  .ubicacion__img {
+      width: 20px;
+      height: 20px;
+  }
+
+  .direccion, .O {
+      color: #ddd;
+      font-size: 1em;
+      font-family: 'Lato';
+  }
+  .button__contact{
+      font-size: 0.9em;
+  }
 }

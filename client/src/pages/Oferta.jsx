@@ -6,7 +6,7 @@ import ubicacion from "../images/ubicacion.png";
 export const Oferta = () => {
   return (
     <div>
-      <h1 className="titulo__oferta">🎓 Nuestra Oferta Educativa</h1>
+      <h1 className="titulo__oferta"> <span className="gorrito">🎓</span> Nuestra Oferta Educativa</h1>
       <h2 className="subtitulo">
         En el Instituto Privado San Pablo ofrecemos una educación integral con
         un enfoque tradicional, formando estudiantes con valores y conocimientos
@@ -29,7 +29,7 @@ export const Oferta = () => {
             <li>Realizacion de proyectos que despiertan la curiosidad y el deseo de aprender.</li>
           </ul>
         </div>
-        <div className="niveles">
+        <div className="niveles secundario">
           <h2 className="title__nivel">Nivel Secundario</h2>
           <ul>
             <li>Titulo en Comunicación, Arte y Diseño</li>

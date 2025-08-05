@@ -43,4 +43,20 @@
     font-size: 1.5rem;
     color: #ddd;
   }
-  
+
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  .loading-logo {
+    width: 150px; /* más chico */
+    margin-bottom: 15px;
+  }
+
+  .loading-bar {
+    width: 180px;
+    height: 8px;
+  }
+
+  .text {
+    margin-top: 10px;
+    font-size: 1.2rem;
+  }
+}

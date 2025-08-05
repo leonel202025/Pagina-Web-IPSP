@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: stretch;
-    flex-wrap: wrap; /* Para manejar la responsividad */
+    flex-wrap: wrap;
 }
 
 .historia__titulo {
@@ -12,6 +12,7 @@
     font-family: "Merriweather";
     font-weight: 400;
     font-size: 2.5em;
+    margin-top: -30px;
 }
 
 .historia {
@@ -49,4 +50,177 @@
 .logo {
     width: 150px;
     height: 150px;
+}
+
+
+/* RESPONSIVE DESING */
+
+/* Notebook */
+
+/* Muy Grandes */
+@media (max-width: 1440px) {
+  .historia__titulo {
+    margin-top: -12px;
+    margin-bottom: 17px;
+    font-size: 2.3em;
+  }
+  .historia {
+    width: 800px;
+    font-size: 1.15em;
+    padding: 18px;
+  }
+
+  .container__logo {
+    width: 190px;
+  }
+
+  .logo {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+/* Grandes */
+@media (min-width: 1281px) and (max-width: 1439px) {
+  .historia__titulo {
+    margin-top: -12px;
+    margin-bottom: 17px;
+    font-size: 2em;
+  }
+  .historia {
+    width: 700px;
+    font-size: 1em;
+    padding: 15px;
+  }
+
+  .container__logo {
+    width: 180px;
+  }
+
+  .logo {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+/* Notebook Medianas y Tablets de 10" (Horizontal) */
+@media (min-width: 1025px) and (max-width: 1280px){
+  .historia__titulo {
+    margin-top: -12px;
+    margin-bottom: 17px;
+    font-size: 2em;
+  }
+  .historia {
+    width: 800px;
+    font-size: 1.1em;
+    padding: 15px;
+  }
+
+  .container__logo {
+    width: 200px;
+  }
+
+  .logo {
+    width: 130px !important;
+    height: 130px !important;
+  }
+}
+
+/* Tablets de 7" (Horizontal) */
+@media screen and (min-width: 900px) and (max-width: 1024px) {
+  .historia__titulo {
+    margin-top: -15px;
+    margin-bottom: 17px;
+    font-size: 1.6em;
+  }
+  .historia {
+    width: 700px;
+    font-size: 0.8em;
+    line-height: 22px;
+    padding: 15px;
+  }
+
+  .container__logo {
+    width: 180px;
+  }
+
+  .logo {
+    width: 115px !important;
+    height: 125px !important;
+  }
+}
+
+/* Tablets 10" (Vertical) */
+@media screen and (max-width: 800px){
+  .historia__titulo {
+    margin-top: -20px;
+    margin-bottom: 10px;
+    font-size: 3em;
+  }
+  .historia {
+    width: 600px;
+    font-size: 1.4em;
+    line-height: 28px;
+    padding: 15px;
+    margin-bottom: -10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .container__logo {
+    display: none;
+  }
+}
+
+/* Tablets 7" (Vertical) */
+@media screen and (max-width: 600px){
+  .historia__titulo {
+    margin-top: -5px;
+    margin-bottom: 15px;
+    font-size: 3em;
+  }
+  .historia {
+    width: 600px;
+    font-size: 1.4em;
+    line-height: 28px;
+    padding: 15px;
+    margin-bottom: -5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .container__logo {
+    display: none;
+  }
+}
+
+/* Celulares */
+@media screen and (max-width: 480px){
+  .historia__titulo {
+    margin-top: -7px;
+    margin-bottom: 15px;
+    font-size: 2em;
+  }
+  .historia {
+    width: 330px;
+    font-size: 1.2em;
+    line-height: 22px;
+    padding: 15px;
+    margin-bottom: -10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  }
+
+  .container__logo {
+    display: none;
+  }
 }

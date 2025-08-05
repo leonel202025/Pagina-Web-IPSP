@@ -19,7 +19,7 @@ export const BuscarUsuario = () => {
 
   const [modalTipo, setModalTipo] = useState("confirmacion");
   const [modalMensaje, setModalMensaje] = useState(
-    "Ingresá el DNI del usuario que deseas buscar:"
+    "Ingresá el DNI del ALUMNO que deseas buscar:"
   );
   const [dni, setDni] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -45,7 +45,7 @@ export const BuscarUsuario = () => {
     ) {
       setModalVisibleUsuario(true);
       setModalTipo("confirmacion");
-      setModalMensaje("Ingresá el DNI del usuario que deseas buscar:");
+      setModalMensaje("Ingresá el DNI del ALUMNO que deseas buscar:");
     }
   }, [
     usuarioBuscado,
@@ -69,7 +69,7 @@ export const BuscarUsuario = () => {
       setUsuarioBuscado(null);
       setDni("");
       setModalTipo("confirmacion");
-      setModalMensaje("Ingresá el DNI del usuario que deseas buscar:");
+      setModalMensaje("Ingresá el DNI del ALUMNO que deseas buscar:");
     };
 
     return () => {
@@ -88,7 +88,7 @@ export const BuscarUsuario = () => {
     if (dni.trim() === "") return;
 
     setManualLoading(true);
-    setLoadingTexto("Buscando usuario...");
+    setLoadingTexto("Buscando...");
     setUsuarioBuscado(null);
 
     try {
@@ -100,7 +100,7 @@ export const BuscarUsuario = () => {
 
       if (res.ok && data) {
         setTimeout(() => {
-          setLoadingTexto("Usuario encontrado");
+          setLoadingTexto("Alumno encontrado");
           setTimeout(() => {
             setUsuarioBuscado(data);
             setManualLoading(false);
@@ -129,7 +129,7 @@ export const BuscarUsuario = () => {
   const handleCancelar = () => {
     setModalVisibleUsuario(false);
     setModalTipo("confirmacion");
-    setModalMensaje("Ingresá el DNI del usuario que deseas buscar:");
+    setModalMensaje("Ingresá el DNI del ALUMNO que deseas buscar:");
     navigate("/panel-admin");
   };
 
@@ -232,7 +232,7 @@ export const BuscarUsuario = () => {
         }
         onClose={() => {
           setModalVisibleUsuario(false);
-          setModalMensaje("Ingresá el DNI del usuario que deseas buscar:");
+          setModalMensaje("Ingresá el DNI del ALUMNO que deseas buscar:");
           setModalTipo("confirmacion");
         }}
         onCancelar={handleCancelar}
@@ -286,7 +286,7 @@ export const BuscarUsuario = () => {
                 setModalVisibleUsuario(true);
                 setModalTipo("confirmacion");
                 setModalMensaje(
-                  "Ingresá el DNI del usuario que deseas buscar:"
+                  "Ingresá el DNI del ALUMNO que deseas buscar:"
                 );
                 setUsuarioBuscado(null);
                 setDni("");
@@ -359,7 +359,7 @@ export const BuscarUsuario = () => {
             if (modalMensaje === "Usuario eliminado correctamente") return;
             setModalVisibleUsuario(true);
             setModalTipo("confirmacion");
-            setModalMensaje("Ingresá el DNI del usuario que deseas buscar:");
+            setModalMensaje("Ingresá el DNI del ALUMNO que deseas buscar:");
           }}
           onVolverAlPanel={volverAlPanel}
         />

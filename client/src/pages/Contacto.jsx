@@ -62,10 +62,10 @@ export const Contacto = () => {
   return (
     <>
       <div className="form__container">
-        <h1 className="titulo">Contacto</h1>
+        <h1 className="titulo-contacto">Contacto</h1>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="nombre">Nombre y Apellido</label>
+            <label classname="label-contacto" htmlFor="nombre">Nombre y Apellido</label>
             <input
               type="text"
               id="nombre"
@@ -78,7 +78,7 @@ export const Contacto = () => {
           </div>
 
           <div>
-            <label htmlFor="email">Correo electrónico</label>
+            <label htmlFor="email" classname="label-contacto">Correo electrónico</label>
             <input
               type="email"
               id="email"
@@ -91,7 +91,7 @@ export const Contacto = () => {
           </div>
 
           <div>
-            <label htmlFor="asunto">Asunto</label>
+            <label htmlFor="asunto" classname="label-contacto">Asunto</label>
             <select
               id="asunto"
               name="asunto"
@@ -116,7 +116,7 @@ export const Contacto = () => {
 
           {asunto === "Presentar Curriculum" && (
             <div>
-              <label htmlFor="archivo">Adjuntar Curriculum</label>
+              <label htmlFor="archivo" classname="label-contacto">Adjuntar Curriculum</label>
               <input
                 type="file"
                 id="archivo"
@@ -129,7 +129,7 @@ export const Contacto = () => {
           )}
 
           <div>
-            <label htmlFor="mensaje">Mensaje</label>
+            <label classname="label-contacto" htmlFor="mensaje">Mensaje</label>
             <textarea
               id="mensaje"
               name="mensaje"
@@ -140,7 +140,7 @@ export const Contacto = () => {
             ></textarea>
           </div>
 
-          <button type="submit" disabled={status === "Enviando..."}>
+          <button type="submit" className="btn-contact" disabled={status === "Enviando..."}>
             {status || "Enviar"}
           </button>
         </form>

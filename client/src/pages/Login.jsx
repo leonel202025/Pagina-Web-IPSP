@@ -54,7 +54,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container__login">
       <>
         <h1 className="titulo-login">Iniciar Sesión</h1>
         <form onSubmit={handleSubmit}>
@@ -98,7 +98,7 @@ export const Login = () => {
               <span>{errorMessage}</span>
             </div>
           </div>
-          <button type="submit">Iniciar Sesión</button>
+          <button className="btn-login" type="submit">Iniciar Sesión</button>
         </form>
         <img src={logo} alt="logo ipsp" className="logo" />
       </>

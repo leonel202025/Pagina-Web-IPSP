@@ -39,7 +39,7 @@
 
 .form-datos-personales .row {
   display: flex;
-  gap: 1rem;
+  gap: 3rem;
   margin-bottom: 1rem;
 }
 
@@ -58,7 +58,7 @@
 .form-checkboxes {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: center;
   gap: 3rem;
 }
 
@@ -127,4 +127,66 @@ button[type="submit"]:hover {
 .label__checkbox {
   display: block;      /* Para que tome todo el ancho y se comporte en bloque */
   margin-bottom: 15px; /* Ajusta este valor para el espacio que quieras */
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+
+  /* Contenedor principal */
+  .container__general-formulario {
+    width: 440px; /* más angosto */
+    padding: 1.2rem; /* menos padding */
+    margin-top: -20px;
+  }
+
+  /* Título */
+  .title__profesor {
+    font-size: 1.6em; /* más chico */
+    margin: 4px 0 -6px 0;
+  }
+
+  /* Formulario */
+  .form__container-profesor {
+    gap: 1.2rem; /* menos espacio entre bloques */
+  }
+
+  /* Datos personales */
+  .form-datos-personales .row {
+    gap: 1.6rem; /* menos separación entre inputs */
+    margin-bottom: 0.6rem;
+  }
+
+  .form-datos-personales input {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
+  /* Checkboxes */
+  .form-checkboxes {
+    gap: 1.5rem;
+  }
+
+  .checkbox-column {
+    width: 160px; /* más angosto */
+  }
+
+  .checkbox-list {
+    max-height: 220px;
+    padding: 0.5rem;
+  }
+
+  .checkbox-item span {
+    width: 260px;
+    font-size: 0.9rem;
+  }
+
+  /* Footer y botón */
+  .form-footer {
+    margin-top: 1.2rem;
+  }
+
+  button[type="submit"] {
+    padding: 0.6rem 1.4rem;
+    font-size: 0.95rem;
+    margin-bottom: -30px;
+  }
 }

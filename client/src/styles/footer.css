@@ -5,11 +5,105 @@ footer {
     text-align: center;
     font-size: 1.1em;
     color: #ccc;
-    margin-top: auto; /* Empuja el footer hacia abajo si hay poco contenido */
+    margin-top: auto;
 }
 
 footer strong {
     font-family: 'Montserrat', sans-serif;
     font-size: 1.2em;
     color: #ccc;
+}
+
+
+/* RESPONSIVE DESING */
+
+/* Notebook */
+
+/* Muy Grandes */
+@media (max-width: 1440px) {
+  footer {
+    font-size: 1.1em;
+    padding-bottom: 12px;
+  }
+
+  footer strong {
+    font-size: 1.18em;
+  }
+}
+
+/* Grandes */
+@media (min-width: 1281px) and (max-width: 1439px) {
+  footer {
+    font-size: 1.050em;
+    padding-bottom: 10px;
+  }
+
+  footer strong {
+    font-size: 1.080em;
+  }
+}
+
+/* Notebooks Medianas y Tablets de 10" (Horizontal) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  footer {
+    font-size: 1.020em;
+    padding-bottom: 10px;
+  }
+
+  footer strong {
+    font-size: 1.050em;
+  }
+}
+
+/* Tablets de 7" (Horizontal) */
+@media screen and (min-width: 900px) and (max-width: 1024px) {
+  footer {
+    font-size: 1em;
+    padding-bottom: 10px;
+  }
+
+  footer strong {
+    font-size: 1.050em;
+  }
+}
+
+/* Tablets 10" (Vertical) */
+@media screen and (max-width: 800px) {
+  footer {
+    font-size: 1.2em;
+    padding: 15px 12px;
+    text-align: center;
+  }
+
+  footer strong {
+    font-size: 1.3em;
+  }
+}
+
+/* Tablets 7" (Vertical) */
+@media screen and (max-width: 600px) {
+  footer {
+    font-size: 1em;
+    padding: 15px 12px;
+    text-align: center;
+  }
+
+  footer strong {
+    font-size: 1.1em;
+  }
+}
+
+/* Celulares */
+@media screen and (max-width: 480px) {
+footer {
+  width: 100%;
+  margin-bottom: 10px;
+  font-family: 'Merriweather', serif;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+  footer strong {
+    font-size: 1.05em;
+  }
 }

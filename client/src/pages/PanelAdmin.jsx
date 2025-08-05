@@ -9,7 +9,7 @@ export const PanelAdmin = () => {
   return (
     <div className="crear__wrapper">
       <div className="container__general">
-        <h1 className="title__create">Panel de Aministracion</h1>
+        <h1 className="title__Panel">Panel de Aministracion</h1>
         <div className="container__listar">
           <Link to={"/ver-alumnos"} className="listar__item">
           <img

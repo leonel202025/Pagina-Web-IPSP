@@ -1,7 +1,7 @@
 body, html {
-    height: 100%; /* Asegura que el cuerpo ocupe toda la pantalla */
+    height: 100%;
     margin: 0;
-  }
+}
 
 .form__container {
     background-color: #fffd;
@@ -14,57 +14,56 @@ body, html {
     border-radius: 10px;
     border: 3px solid var(--color-secundario);
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436); 
-
 }
 
-.titulo {
+.titulo-contacto {
     color: var(--color-secundario);
     text-align: center;
-    margin: 20px 0 10px 0;
+    margin: 20px 0 -10px 0;
     width: 100%;
     font-size: 1.8em;
     font-family: 'Merriweather';
-  }
+}
 
-  form {
+form {
     max-width: 400px;
     margin: auto;
     padding: 20px;
     border-radius: 5px;
-    width: 85%; /* Ocupa casi todo el ancho del contenedor */
+    width: 85%;
     margin: 0 auto;
     padding: 10px;
     padding-bottom: 15px;
-  }
+}
   
-  input {
+input {
     width: 100%;
     padding: 8px;
     margin: 8px 0;
     border: none;
     border-bottom: 2px solid var(--color-secundario);
     background: transparent;
-    outline: none; /* Elimina el outline por defecto */
+    outline: none;
     font-size: 0.9em;
     margin-bottom: 25px;
     margin-top: 1px;
     font-family: 'Lato';
     font-weight: 400;
-  }
+}
 
-  select{
+select {
     width: 100%;
     padding: 8px;
     margin: 8px 0;
     border: none;
     border-bottom: 2px solid var(--color-secundario);
     background: transparent;
-    outline: none; /* Elimina el outline por defecto */
+    outline: none;
     font-size: 0.9em;
     margin-bottom: 25px;
     font-family: 'Lato';
     font-weight: 400;
-  }
+}
 
 button {
     background-color: var(--color-secundario);
@@ -76,13 +75,13 @@ button {
     text-align: center;
     width: 100%;
     font-size: 1em;
-  }
+}
   
 button:hover {
     background-color: #103cac;
-  }
+}
 
-label{
+.label-contacto {
   color: black;
   font-size: 1.3em;
   font-family: 'Lato';
@@ -97,10 +96,10 @@ textarea {
     outline-color: var(--color-secundario);
     font-size: 0.9em;
     margin-bottom: 25px;
-    resize: vertical; /* o 'none' si no querés que el usuario cambie el tamaño */
+    resize: vertical;
     font-family: 'Lato';
     font-weight: 400;
-  }
+}
 
 .canales {
     text-align: center;
@@ -124,9 +123,8 @@ textarea {
 }
 
 .logo__item:hover {
-  transform: scale(1.1);} /* Aumenta el tamaño del botón*/
+  transform: scale(1.1);}
 
-/* Fondo semitransparente */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -141,7 +139,6 @@ textarea {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Caja principal del modal */
 .modal-box {
   background-color: #ffffff;
   padding: 2rem 1.5rem;
@@ -154,7 +151,6 @@ textarea {
   position: relative;
 }
 
-/* Icono */
 .modal-icon {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -166,7 +162,6 @@ textarea {
   color: #333;
 }
 
-/* Botón cerrar */
 .modal-btn {
   background-color: #0057a8;
   color: #fff;
@@ -182,7 +177,6 @@ textarea {
   background-color: #004080;
 }
 
-/* Diferenciar por tipo */
 .modal-box.exito .modal-icon {
   color: #4caf50;
 }
@@ -226,14 +220,14 @@ textarea {
   animation: draw 0.5s 0.3s forwards ease-in-out;
 }
 
+
+/* Animaciones */
 @keyframes draw {
   to {
     stroke-dashoffset: 0;
   }
 }
 
-
-/* Animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -251,5 +245,263 @@ textarea {
   to {
     transform: translateY(0px);
     opacity: 1;
+  }
+}
+
+
+/* RESPONSIVE DESING */
+
+/* Notebook */
+
+/* Muy Grandes */
+@media (max-width: 1440px) {
+  .form__container {
+    width: 400px;
+  }
+
+  .titulo-contacto {
+    font-size: 1.9em;
+  }
+
+  .form__container label {
+    font-size: 1.2em;
+  }
+
+  .form__container input,
+  select,
+  textarea {
+    font-size: 0.85em;
+  }
+
+  .btn-contact {
+    font-size: 0.95em !important;
+  }
+
+  .canales {
+    font-size: 1.5em;
+  }
+
+  .logo__item {
+    width: 65px;
+    height: 65px;
+  }
+}
+
+/* Grandes */
+@media (min-width: 1281px) and (max-width: 1439px) {
+  .form__container {
+    width: 360px;
+  }
+
+  .titulo-contacto {
+    font-size: 1.8em;
+  }
+
+  .form__container label {
+    font-size: 1.1em;
+  }
+
+  .form__container input,
+  select,
+  textarea {
+    font-size: 0.8em;
+  }
+
+  .btn-contact {
+    font-size: 0.9em !important;
+  }
+
+  .canales {
+    font-size: 1.4em;
+  }
+
+  .logo__item {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Notebooks Medianas y Tablets de 10" (Horizontal) */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .form__container {
+    width: 340px;
+  }
+
+  .titulo-contacto {
+    font-size: 1.6em;
+  }
+
+  .form__container label {
+    font-size: 1.050em;
+  }
+
+  .form__container input,
+  select,
+  textarea {
+    font-size: 0.8em;
+  }
+
+  .btn-contact {
+   font-size: 0.9em !important;
+  }
+
+  .canales {
+    font-size: 1.4em;
+  }
+
+  .logo__item {
+    width: 55px;
+    height: 55px;
+  }
+}
+
+/* Tablets de 7" (Horizontal) */
+@media (min-width: 900px) and (max-width: 1024px) {
+  .form__container {
+    width: 340px;
+  }
+
+  .titulo-contacto {
+    font-size: 1.6em;
+  }
+
+  .form__container label {
+    font-size: 1em;
+  }
+
+  .form__container input,
+  select,
+  textarea {
+    font-size: 0.8em;
+  }
+
+  .btn-contact {
+   font-size: 0.8em !important;
+  }
+
+  .canales {
+    font-size: 1.5em;
+  }
+
+  .logo__item {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Tablets 10" (Vertical) */
+@media screen and (max-width: 800px){
+  .form__container {
+    width: 500px;
+    margin-top: 90px;
+  }
+
+  .titulo-contacto {
+    font-size: 1.8em;
+  }
+
+  .form__container label {
+    font-size: 1em;
+  }
+
+  .form__container input,
+  select,
+  textarea {
+    font-size: 0.8em;
+  }
+
+  .btn-contact {
+   font-size: 1em !important;
+  }
+
+  .canales {
+    font-size: 2.1em;
+  }
+
+  .logo__item {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+/* Tablets 7" (Vertical) */
+@media screen and (max-width: 600px){
+  .form__container {
+    width: 400px;
+    margin-top: 30px;
+  }
+
+  .titulo-contacto {
+    font-size: 2.3em;
+  }
+
+  .form__container label {
+    font-size: 1.7em;
+  }
+
+  .form__container input,
+  select,
+  textarea {
+    font-size: 1.3em;
+  }
+
+  .btn-contact {
+   font-size: 1.3em !important;
+  }
+
+  .canales {
+    font-size: 2em;
+  }
+
+  .logo__item {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Celulares */
+@media screen and (max-width: 480px){
+  .form__container {
+    width: 340px;
+    margin-top: 5px;
+  }
+
+  .titulo-contacto {
+    font-size: 2em;
+  }
+
+  .form__container label {
+    font-size: 1.3em;
+  }
+
+  .form__container input,
+  select,
+  textarea {
+    margin-top: -2px;
+    font-size: 1em;
+  }
+
+  .form__container
+  textarea {
+    margin-top: 5px;
+    font-size: 1em;
+  }
+
+  .form__container
+  form {
+    margin-bottom: 15px;
+  }
+
+  .btn-contact {
+   font-size: 1em !important;
+  }
+
+  .canales {
+    font-size: 1.25em;
+  }
+
+  .logo__item {
+    width: 55px;
+    height: 55px;
   }
 }
