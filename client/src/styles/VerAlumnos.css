@@ -218,9 +218,81 @@ tbody td {
   background-color: #999;
 }
 
-@media screen and (min-width: 1025px) and (max-width: 1280px) {
-  @media screen and (min-width: 1025px) and (max-width: 1280px) {
 
+/* Responsive Desing */
+
+/* Notebooks */
+
+/* Grandes */
+@media screen and (min-width: 1281px) and (max-width: 1439px) {
+  /* Contenedor principal */
+  .container__alumnos {
+    padding: 0 10px;
+  }
+
+  /* Tabla */
+  table {
+    font-size: 0.9em;
+    margin-top: 8px;
+    margin-bottom: 15px;
+  }
+
+  thead th {
+    padding: 10px 12px;
+    font-size: 1.1em;
+  }
+
+  thead .grado {
+    font-size: 1.3em;
+  }
+
+  tbody td {
+    padding: 10px 20px;
+    font-size: 1em;
+  }
+
+  /* Botones acciones */
+  .btn-editar, .btn-eliminar {
+    width: 40px;
+    height: 40px;
+    padding: 5px 8px;
+  }
+
+  /* Título */
+  .ver_title {
+    font-size: 2em;
+    margin-top: -20px;
+    margin-bottom: 15px;
+  }
+
+  /* Modal editar */
+  .modal-editar-container {
+    width: 380px;
+    padding: 15px 20px;
+  }
+
+  .modal-editar-titulo {
+    font-size: 1.8em;
+    margin: 15px 0 -25px 0;
+  }
+
+  /* Inputs */
+  .modal-editar-form input,
+  .modal-editar-form select {
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 0.95em;
+  }
+
+  /* Botones modal */
+  .modal-editar-form button {
+    padding: 12px 15px;
+    font-size: 0.95em;
+}
+}
+
+/* Medianas */
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
   /* Contenedor principal */
   .container__alumnos {
     padding: 0 10px;
@@ -284,7 +356,5 @@ tbody td {
   .modal-editar-form button {
     padding: 12px 15px;
     font-size: 0.95em;
-  }
 }
-
 }

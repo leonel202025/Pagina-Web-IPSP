@@ -142,6 +142,84 @@
   background-color: #bbb;
 }
 
+
+@media screen and (min-width: 1280px) and (max-width: 1439px) {
+
+  /* Contenedor general */
+  .modal-profesor__container {
+    width: 380px; /* más angosto */
+    padding: 1rem; /* menos padding */
+  }
+
+  /* Título */
+  .modal-profesor__title {
+    font-size: 1.4em; /* más chico */
+    margin: 3px 0 -5px 0;
+  }
+
+  /* Formulario */
+  .modal-profesor__form {
+    gap: 1rem; /* menos separación */
+  }
+
+  /* Filas de inputs */
+  .modal-profesor__row {
+    gap: 1rem;
+    margin-bottom: 0.5rem; /* menos altura */
+  }
+
+  /* Inputs */
+  .modal-profesor__input {
+    font-size: 0.85rem;
+    padding: 0.35rem;
+  }
+
+  /* Labels */
+  .modal-profesor__label {
+    font-size: 1rem; /* achicamos labels */
+    margin-bottom: 8px;
+  }
+
+  /* Contenedor de checkboxes */
+  .modal-profesor__checkboxes {
+    gap: 1rem; /* menos espacio entre columnas */
+  }
+
+  .modal-profesor__column {
+    width: 130px; /* columnas más compactas */
+  }
+
+  /* Lista de checkboxes */
+  .modal-profesor__checkbox-list {
+    max-height: 180px; /* más baja */
+    padding: 0.4rem;
+  }
+
+  /* Ítems de checkbox */
+  .modal-profesor__checkbox-item {
+    gap: 0.3rem;
+    margin-bottom: 0.3rem; /* menos espacio vertical */
+  }
+
+  .modal-profesor__checkbox-item span {
+    width: 220px;
+    font-size: 0.8rem;
+  }
+
+  /* Botones */
+  .modal-profesor__btn{
+    padding: 0.5rem 1.2rem;
+    margin-top: -50px;
+    margin-bottom: -20px;
+    font-size: 0.9rem;
+  }
+
+  .modal-profesor__btn.guardar {
+    font-size: 0.9em;
+  }
+}
+
+
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
 
   /* Contenedor general */
@@ -211,6 +289,10 @@
     margin-top: -50px;
     margin-bottom: -20px;
     font-size: 0.85rem;
+  }
+
+  .modal-profesor__btn.guardar {
+    font-size: 0.8em;
   }
 }
 

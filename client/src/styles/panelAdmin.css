@@ -45,6 +45,36 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Nueva sombra */
 }
 
+
+/* Responsive Desing */
+
+/* Notebooks */
+
+/* Grandes */
+@media screen and (min-width: 1281px) and (max-width: 1439px) {
+.listar__item {
+    font-size: 1.9em;
+    margin-bottom: -30px;
+}
+
+.icono__listar {
+    width: 180px;
+    height: 180px;
+    margin-bottom: -10px;
+}
+
+.title__Panel{
+    font-size: 2.2em;
+    margin-bottom: -10px;
+    }
+
+    .container__general{
+        margin-top: 70px;
+        margin-bottom: -30px;
+    }
+}
+
+/* Medianas */
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
 .listar__item {
     font-size: 1.7em;
