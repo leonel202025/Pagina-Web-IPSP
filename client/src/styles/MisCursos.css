@@ -1,0 +1,124 @@
+.mis-cursos__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.mis-cursos__table {
+  width: 100%;
+  max-width: 600px; /* ancho máximo para que no se extienda demasiado */
+  margin: 10px auto 20px auto; /* centrado horizontal con margen arriba y abajo */
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: Arial, sans-serif;
+  box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.527);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.mis-cursos__table thead tr:first-child th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.mis-cursos__table thead tr:first-child th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.mis-cursos__table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+
+.mis-cursos__table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+.mis-cursos__table thead {
+  text-align: center;
+  width: 100%;
+}
+
+.mis-cursos__table thead th {
+  padding: 8px 12px;
+  color: #ddd;
+  text-align: center;
+  border: 1.5px solid var(--color-secundario);
+}
+
+.mis-cursos__table thead .grado {
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  padding: 14px 0;
+}
+
+.mis-cursos__table tbody td {
+  padding: 8px 20px;
+  border-bottom: 1.5px solid var(--color-secundario);
+  border-right: 1.5px solid var(--color-secundario);
+  border-left: 1.5px solid var(--color-secundario);
+  color: #ddd;
+  text-align: center;
+}
+
+.mis-cursos__title {
+    color: #ddd;
+    text-align: center;
+    font-size: 2.5em;
+    margin-top: -30px;
+    margin-bottom: 20px;
+    font-family: "Merriweather";
+}
+
+.mis-cursos__acciones {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.mis-cursos__btn-editar,
+.mis-cursos__btn-eliminar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  width: 50px;
+  height: 50px;
+}
+
+.mis-cursos__btn-editar svg {
+  fill: #3498db;
+  margin: auto;
+}
+
+.mis-cursos__btn-eliminar svg {
+  fill: #e74c3c;
+  margin: auto;
+}
+
+.mis-cursos__btn-editar {
+  border: 2px solid var(--color-secundario);
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.mis-cursos__btn-eliminar {
+  border: 2px solid rgb(189, 17, 17);
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.mis-cursos__btn-editar:hover {
+  background-color: #1e56e396;
+}
+
+.mis-cursos__btn-eliminar:hover {
+  background-color: rgba(231, 9, 9, 0.575);
+}
+
+/* Aquí puedes seguir agregando el resto de estilos modal, responsive, etc,
+   pero siempre con el prefijo "mis-cursos__" para que sea scoped */

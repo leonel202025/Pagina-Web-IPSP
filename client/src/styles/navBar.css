@@ -55,6 +55,7 @@
 .nav__logo-profe img {
   height: 120px;
   width: auto;
+  margin-right: 50px;
   margin-top: 40px;
   flex-shrink: 0;
 }

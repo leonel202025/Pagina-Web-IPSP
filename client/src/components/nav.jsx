@@ -84,7 +84,7 @@ export const Nav = () => {
               {user.rol === "profesor" && (
                 <>
                   <li className="nav__item">
-                    <Link to={"/mis-cursos"} onClick={cerrarMenu}>Mis Cursos</Link>
+                    <Link to={"/panel-profesor"} onClick={cerrarMenu}>Panel Profesor</Link>
                   </li>
                   <div className="nav__logo-profe">
                     <img src={logo} alt="Logo" />

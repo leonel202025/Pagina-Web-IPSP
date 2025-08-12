@@ -18,6 +18,8 @@ import { PanelAdmin } from "./pages/PanelAdmin";
 import { VerAlumnos } from "./pages/VerAlumnos";
 import { VerProfesores } from "./pages/VerProfesores";
 import { BuscarUsuario } from "./pages/BuscarUsuarios";
+import { PanelProfesor } from "./pages/PanelProfesor";
+import { MisCursos } from "./pages/MisCursos";
 
 const AppContent = () => {
   const { manualLoading, loadingTexto } = useContext(AuthContext);
@@ -41,6 +43,8 @@ const AppContent = () => {
           <Route path="/ver-alumnos" element={<VerAlumnos />} />
           <Route path="/ver-profesores" element={<VerProfesores />} />
           <Route path="/buscar-usuario" element={<BuscarUsuario />} />
+          <Route path="/panel-profesor" element={<PanelProfesor />} />
+          <Route path="/mis-cursos" element={<MisCursos />} />
         </Routes>
       </main>
       <Footer />

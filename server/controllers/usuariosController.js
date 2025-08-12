@@ -308,3 +308,40 @@ exports.buscarPorDni = async (req, res) => {
     res.status(500).json({ mensaje: "Error del servidor" });
   }
 };
+
+// Obtener grados y alumnos asignados a un profesor
+exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
+  const { id_profesor } = req.params;
+
+  try {
+    // 1) Obtener grados asignados al profesor
+    const [grados] = await db.query(
+      `SELECT g.id, g.grado 
+       FROM profesor_grado pg
+       JOIN grados g ON g.id = pg.id_grado
+       WHERE pg.id_profesor = ?`,
+      [id_profesor]
+    );
+
+    if (grados.length === 0) {
+      return res.json({ grados: [], alumnos: [] });
+    }
+
+    // Extraer IDs de grados
+    const idsGrados = grados.map((g) => g.id);
+
+    // 2) Obtener alumnos que pertenecen a esos grados
+    const [alumnos] = await db.query(
+      `SELECT u.id, u.dni, u.nombre, u.email, u.id_grado, c.nota 
+   FROM usuarios u
+   LEFT JOIN calificaciones c ON c.id_alumno = u.id AND c.id_grado = u.id_grado
+   WHERE u.rol = 'alumno' AND u.id_grado IN (?)`,
+      [idsGrados]
+    );
+
+    res.json({ grados, alumnos });
+  } catch (error) {
+    console.error("Error obtener grados y alumnos por profesor:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+};

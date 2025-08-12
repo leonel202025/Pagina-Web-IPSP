@@ -1,0 +1,117 @@
+.profesor__wrapper {
+  margin-top: 70px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.profesor__title {
+  font-size: 2.8em;
+  font-family: 'Merriweather', serif;
+  color: var(--color-secundario);
+  margin-top: -20px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.profesor__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+}
+
+.profesor__item {
+  text-decoration: none;
+  color: var(--color-secundario);
+  font-size: 2.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-family: 'Lato', sans-serif;
+  transition: transform 0.8s ease, box-shadow 1s ease, border 0.8s ease;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.profesor__item:hover {
+  transform: scale(1.01);
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.436);
+  cursor: pointer;
+}
+
+.profesor__iconAlumnos,
+.profesor__iconCalif {
+  width: 250px;
+  height: 250px;
+  margin-right: 10px;
+  margin-bottom: -5px;
+  vertical-align: middle;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.profesor__iconMaterias{
+    width: 290px;
+  height: 250px;
+  margin-right: 10px;
+  margin-bottom: -5px;
+  vertical-align: middle;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* Responsive Design */
+
+/* Grandes */
+@media screen and (min-width: 1281px) and (max-width: 1439px) {
+  .profesor__item {
+    font-size: 1.9em;
+    margin-bottom: -30px;
+  }
+
+  .profesor__iconAlumnos,
+  .profesor__iconMaterias,
+  .profesor__iconCalif {
+    width: 180px;
+    height: 180px;
+    margin-bottom: -10px;
+  }
+
+  .profesor__title {
+    font-size: 2.2em;
+    margin-bottom: -10px;
+  }
+
+  .profesor__wrapper {
+    margin-top: 70px;
+    margin-bottom: -30px;
+  }
+}
+
+/* Medianas */
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  .profesor__item {
+    font-size: 1.7em;
+    margin-bottom: -30px;
+  }
+
+  .profesor__iconAlumnos,
+  .profesor__iconMaterias,
+  .profesor__iconCalif {
+    width: 160px;
+    height: 160px;
+    margin-bottom: -10px;
+  }
+
+  .profesor__title {
+    font-size: 2em;
+    margin-bottom: -10px;
+  }
+
+  .profesor__wrapper {
+    margin-top: 70px;
+    margin-bottom: -30px;
+  }
+}
