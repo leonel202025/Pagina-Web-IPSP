@@ -93,7 +93,7 @@ export const BuscarUsuario = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/usuarios/buscar/${dni}`
+        `http://localhost:5000/api/usuarios/buscar/${dni}?rol=alumno`
       );
 
       const data = await res.json();
@@ -285,9 +285,7 @@ export const BuscarUsuario = () => {
               onClick={() => {
                 setModalVisibleUsuario(true);
                 setModalTipo("confirmacion");
-                setModalMensaje(
-                  "Ingresá el DNI del ALUMNO que deseas buscar:"
-                );
+                setModalMensaje("Ingresá el DNI del ALUMNO que deseas buscar:");
                 setUsuarioBuscado(null);
                 setDni("");
               }}

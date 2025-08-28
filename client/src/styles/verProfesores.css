@@ -113,35 +113,23 @@
   text-align: center;
 }
 
-.modal-profesor__btn {
-  padding: 0.8rem 2rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  margin: 0 0.5rem;
-  transition: background-color 0.3s ease;
-}
-
-.modal-profesor__btn.guardar {
+.guardar {
   background-color: var(--color-secundario);
   color: white;
+  margin-bottom: 10px;
 }
-
-.modal-profesor__btn.guardar:hover {
+.guardar:hover {
   background-color: #004b9f;
 }
 
-.modal-profesor__btn.cancelar {
+.cancelar {
   background-color: #ccc;
   color: #333;
-  margin-top: 20px;
 }
 
-.modal-profesor__btn.cancelar:hover {
+.cancelar:hover {
   background-color: #bbb;
 }
-
 
 @media screen and (min-width: 1280px) and (max-width: 1439px) {
 

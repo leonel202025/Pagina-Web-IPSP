@@ -13,8 +13,9 @@ export const AñadirProfesor = () => {
 
   const [grados, setGrados] = useState([]);
   const [asignaturas, setAsignaturas] = useState([]);
-  const [asignaturasSeleccionadas, setAsignaturasSeleccionadas] = useState([]);
-  const [gradosSeleccionados, setGradosSeleccionados] = useState([]);
+  const [asignaciones, setAsignaciones] = useState([
+    { id_grado: "", id_asignatura: "" },
+  ]);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMensaje, setModalMensaje] = useState("");
@@ -23,57 +24,58 @@ export const AñadirProfesor = () => {
   useEffect(() => {
     fetch("http://localhost:5000/api/grados")
       .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) setGrados(data);
-        else setGrados([]);
-      })
+      .then((data) => setGrados(Array.isArray(data) ? data : []))
       .catch(() => setGrados([]));
 
     fetch("http://localhost:5000/api/asignaturas")
       .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) setAsignaturas(data);
-        else setAsignaturas([]);
-      })
+      .then((data) => setAsignaturas(Array.isArray(data) ? data : []))
       .catch(() => setAsignaturas([]));
   }, []);
 
   const handleChange = (e) => {
-    const { name, value, options } = e.target;
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    if (options) {
-      // Si es select múltiple, extraemos valores seleccionados en array
-      const selectedValues = [];
-      for (let i = 0; i < options.length; i++) {
-        if (options[i].selected) selectedValues.push(Number(options[i].value));
-      }
-      setFormData({ ...formData, [name]: selectedValues });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+  const handleAsignacionChange = (index, campo, valor) => {
+    const nuevas = [...asignaciones];
+    nuevas[index][campo] = Number(valor);
+    setAsignaciones(nuevas);
+  };
+
+  const agregarFila = () => {
+    setAsignaciones([...asignaciones, { id_grado: "", id_asignatura: "" }]);
+  };
+
+  const eliminarFila = (index) => {
+    const nuevas = asignaciones.filter((_, i) => i !== index);
+    setAsignaciones(nuevas);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (gradosSeleccionados.length === 0) {
-      setModalMensaje("Debes seleccionar al menos un grado");
+    // Validaciones
+    if (asignaciones.length === 0) {
+      setModalMensaje("Debes asignar al menos un grado con materia");
       setModalTipo("advertencia");
       setModalVisible(true);
       return;
     }
 
-    if (asignaturasSeleccionadas.length === 0) {
-      setModalMensaje("Debes seleccionar al menos una asignatura");
-      setModalTipo("advertencia");
-      setModalVisible(true);
-      return;
+    for (const asign of asignaciones) {
+      if (!asign.id_grado || !asign.id_asignatura) {
+        setModalMensaje("Cada asignación debe tener grado y materia");
+        setModalTipo("advertencia");
+        setModalVisible(true);
+        return;
+      }
     }
 
     const payload = {
       ...formData,
-      grados: gradosSeleccionados,
-      asignaturas: asignaturasSeleccionadas,
+      asignaciones,
     };
 
     try {
@@ -86,7 +88,7 @@ export const AñadirProfesor = () => {
       const data = await res.json();
 
       if (res.ok) {
-        setModalMensaje("Profesor Agregado Correctamente");
+        setModalMensaje("Profesor agregado correctamente");
         setModalTipo("exito");
         setFormData({
           dni: "",
@@ -95,17 +97,18 @@ export const AñadirProfesor = () => {
           password: "",
           rol: "profesor",
         });
-        setGradosSeleccionados([]);
-        setAsignaturasSeleccionadas([]);
+        setAsignaciones([{ id_grado: "", id_asignatura: "" }]);
       } else {
-        if (data?.error?.includes("ya está registrado")) {
-          setModalMensaje("El Profesor ya está Registrado");
-          setModalTipo("advertencia");
-        } else {
-          setModalMensaje("Error al Agregar el Profesor");
-          setModalTipo("error");
-        }
+        setModalMensaje(
+          data?.error?.includes("ya está registrado")
+            ? "El Profesor ya está registrado"
+            : "Error al agregar el Profesor"
+        );
+        setModalTipo(
+          data?.error?.includes("ya está registrado") ? "advertencia" : "error"
+        );
       }
+
       setModalVisible(true);
     } catch (error) {
       setModalMensaje("Error de red");
@@ -116,7 +119,7 @@ export const AñadirProfesor = () => {
 
   return (
     <div className="container__general-formulario">
-      <h1 className="title__profesor"> Añadir Profesor </h1>
+      <h1 className="title__profesor">Añadir Profesor</h1>
       <form onSubmit={handleSubmit} className="form__container-profesor">
         <div className="form-datos-personales">
           <label className="label__datos">
@@ -158,69 +161,83 @@ export const AñadirProfesor = () => {
           </div>
         </div>
 
-        <div className="form-checkboxes">
-          <div className="checkbox-column">
-            <label className="label__checkbox">
-              <strong>Grados</strong>
-            </label>
-            <div className="checkbox-list">
-              {grados.map((grado) => (
-                <label key={grado.id} className="checkbox-item">
-                  <input
-                    type="checkbox"
-                    value={grado.id}
-                    checked={gradosSeleccionados.includes(grado.id)}
-                    onChange={(e) => {
-                      const id = Number(e.target.value);
-                      if (e.target.checked) {
-                        setGradosSeleccionados([...gradosSeleccionados, id]);
-                      } else {
-                        setGradosSeleccionados(
-                          gradosSeleccionados.filter((i) => i !== id)
-                        );
-                      }
-                    }}
-                  />
-                  <span>{grado.grado}</span>
-                </label>
-              ))}
-            </div>
-          </div>
+        <div className="form-asignaciones">
+          <label className="label__datos">
+            <strong>Asignaciones (Grado → Materia)</strong>
+          </label>
+          {asignaciones.map((asig, index) => (
+            <div key={index} className="asignacion-fila">
+              <select
+                value={asig.id_grado}
+                onChange={(e) =>
+                  handleAsignacionChange(index, "id_grado", e.target.value)
+                }
+                required
+              >
+                <option value="">Seleccionar grado</option>
+                {grados.map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.grado}
+                  </option>
+                ))}
+              </select>
 
-          <div className="checkbox-column">
-            <label className="label__checkbox">
-              <strong>Asignaturas</strong>
-            </label>
-            <div className="checkbox-list">
-              {asignaturas.map((asig) => (
-                <label key={asig.id} className="checkbox-item">
-                  <input
-                    type="checkbox"
-                    value={asig.id}
-                    checked={asignaturasSeleccionadas.includes(asig.id)}
-                    onChange={(e) => {
-                      const id = Number(e.target.value);
-                      if (e.target.checked) {
-                        setAsignaturasSeleccionadas([
-                          ...asignaturasSeleccionadas,
-                          id,
-                        ]);
-                      } else {
-                        setAsignaturasSeleccionadas(
-                          asignaturasSeleccionadas.filter((i) => i !== id)
-                        );
-                      }
-                    }}
-                  />
-                  <span>{asig.asignatura}</span>
-                </label>
-              ))}
+              <select
+                value={asig.id_asignatura}
+                onChange={(e) =>
+                  handleAsignacionChange(index, "id_asignatura", e.target.value)
+                }
+                required
+              >
+                <option value="">Seleccionar materia</option>
+                {asignaturas.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.asignatura}
+                  </option>
+                ))}
+              </select>
+              <div className="botones">
+                <button
+                  className="borrar_asignacion"
+                  type="button"
+                  onClick={() => eliminarFila(index)}
+                  title="Borrar Asignacion"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="#e74c3c"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M6 19c0 1.104.896 2 2 2h8c1.104 0 2-.896 2-2V7H6v12zm3.46-9.88L12 10.59l2.54-2.47a1 1 0 1 1 1.42 1.42L13.41 12l2.47 2.54a1 1 0 1 1-1.42 1.42L12 13.41l-2.54 2.47a1 1 0 1 1-1.42-1.42L10.59 12 8.12 9.46a1 1 0 0 1 1.34-1.34z" />
+                    <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                  </svg>
+                </button>
+
+                <button
+                  className="agregar_asignacion"
+                  type="button"
+                  onClick={agregarFila}
+                  title="Agregar Asignacion"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="#1E55E3"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 5v14M5 12h14" stroke="#1E55E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
 
         <div className="form-footer">
-          <button type="submit">Añadir Profesor</button>
+          <button className="añadir_profesor" type="submit">Añadir Profesor</button>
         </div>
       </form>
 

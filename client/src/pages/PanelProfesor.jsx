@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "../styles/PanelProfesor.css"; // archivo CSS separado para este panel
 import calificaciones from "../images/calificaciones.png";
 import misAlumnos from "../images/misAlumnos.png";
-import misMaterias from "../images/misMaterias.png";
 
 export const PanelProfesor = () => {
   return (
@@ -18,14 +17,6 @@ export const PanelProfesor = () => {
               className="profesor__iconAlumnos"
             />
             MIS ALUMNOS
-          </Link>
-          <Link to={"/mis-materias"} className="profesor__item">
-            <img
-              src={misMaterias}
-              alt="Materia"
-              className="profesor__iconMaterias"
-            />
-            MIS MATERIAS
           </Link>
           <Link to={"/cargar-notas"} className="profesor__item">
             <img

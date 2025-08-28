@@ -38,30 +38,26 @@ exports.register = async (req, res) => {
         [dni, nombre, email, hashedPassword, rol, id_grado]
       );
     } else if (rol === "profesor") {
-      if (!grados.length || !asignaturas.length) {
+      const { asignaciones } = req.body; // Array [{id_grado, id_asignatura}, ...]
+      if (!Array.isArray(asignaciones) || asignaciones.length === 0) {
         return res
           .status(400)
-          .json({ error: "Faltan grados o asignaturas para el profesor" });
+          .json({ error: "Faltan asignaciones para el profesor" });
       }
 
+      // Insertar usuario
       const [result] = await db.query(
         "INSERT INTO usuarios (dni, nombre, email, password, rol) VALUES (?, ?, ?, ?, ?)",
         [dni, nombre, email, hashedPassword, rol]
       );
-
       const id_profesor = result.insertId;
 
-      for (const id_grado of grados) {
+      // Insertar combinaciones en profesor_grado_asignatura
+      for (const asig of asignaciones) {
+        if (!asig.id_grado || !asig.id_asignatura) continue;
         await db.query(
-          "INSERT INTO profesor_grado (id_profesor, id_grado) VALUES (?, ?)",
-          [id_profesor, id_grado]
-        );
-      }
-
-      for (const id_asignatura of asignaturas) {
-        await db.query(
-          "INSERT INTO profesor_asignatura (id_profesor, id_asignatura) VALUES (?, ?)",
-          [id_profesor, id_asignatura]
+          "INSERT INTO profesor_grado_asignatura (id_profesor, id_grado, id_asignatura) VALUES (?, ?, ?)",
+          [id_profesor, asig.id_grado, asig.id_asignatura]
         );
       }
     } else {
@@ -90,40 +86,44 @@ exports.obtenerAlumnos = async (req, res) => {
   }
 };
 
-// Obtener profesores (función nueva)
 exports.obtenerProfesores = async (req, res) => {
   try {
     const [rows] = await db.query(`
       SELECT 
-        u.id,
-        u.nombre,
-        u.dni,
-        u.email,
-        GROUP_CONCAT(DISTINCT a.asignatura SEPARATOR ', ') AS materias,
-        GROUP_CONCAT(DISTINCT g.grado SEPARATOR ', ') AS grados,
-        GROUP_CONCAT(DISTINCT a.id SEPARATOR ',') AS asignaturas_ids,
-        GROUP_CONCAT(DISTINCT g.id SEPARATOR ',') AS grados_ids
+        u.id, u.nombre, u.dni, u.email,
+        g.id AS id_grado, g.grado,
+        a.id AS id_asignatura, a.asignatura
       FROM usuarios u
-      LEFT JOIN profesor_asignatura pa ON pa.id_profesor = u.id
-      LEFT JOIN asignaturas a ON a.id = pa.id_asignatura
-      LEFT JOIN profesor_grado pg ON pg.id_profesor = u.id
-      LEFT JOIN grados g ON g.id = pg.id_grado
+      LEFT JOIN profesor_grado_asignatura pga ON pga.id_profesor = u.id
+      LEFT JOIN grados g ON g.id = pga.id_grado
+      LEFT JOIN asignaturas a ON a.id = pga.id_asignatura
       WHERE u.rol = 'profesor'
-      GROUP BY u.id, u.nombre, u.dni, u.email
+      ORDER BY u.id, g.id, a.id
     `);
 
-    // Convertir strings de IDs a arrays numéricos
-    const profesores = rows.map((profesor) => ({
-      ...profesor,
-      asignaturas_ids: profesor.asignaturas_ids
-        ? profesor.asignaturas_ids.split(",").map(Number)
-        : [],
-      grados_ids: profesor.grados_ids
-        ? profesor.grados_ids.split(",").map(Number)
-        : [],
-    }));
+    // Agrupar por profesor y formar array de combinaciones
+    const profesoresMap = {};
+    rows.forEach(row => {
+      if (!profesoresMap[row.id]) {
+        profesoresMap[row.id] = {
+          id: row.id,
+          nombre: row.nombre,
+          dni: row.dni,
+          email: row.email,
+          gradosMaterias: []
+        };
+      }
+      if (row.id_grado && row.id_asignatura) {
+        profesoresMap[row.id].gradosMaterias.push({
+          id_grado: row.id_grado,
+          grado: row.grado,
+          id_asignatura: row.id_asignatura,
+          asignatura: row.asignatura
+        });
+      }
+    });
 
-    res.json(profesores);
+    res.json(Object.values(profesoresMap));
   } catch (err) {
     console.error("Error al obtener profesores:", err);
     res.status(500).json({ error: "Error al obtener profesores" });
@@ -153,55 +153,42 @@ exports.actualizarUsuario = async (req, res) => {
 
 exports.actualizarProfesor = async (req, res) => {
   const { id } = req.params;
-  const { dni, nombre, email, password, grados, asignaturas } = req.body;
+  const { dni, nombre, email, password, gradosMaterias } = req.body;
 
   try {
-    // Construir consulta de actualización dinámicamente (password opcional)
-    let updateQuery = "UPDATE usuarios SET dni = ?, nombre = ?, email = ?";
+    // Actualizar datos personales
     const params = [dni, nombre, email];
-
-    if (password && password.trim() !== "") {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      updateQuery += ", password = ?";
-      params.push(hashedPassword);
+    let sql = "UPDATE usuarios SET dni = ?, nombre = ?, email = ?";
+    if (password) {
+      const hashed = await bcrypt.hash(password, 10);
+      sql += ", password = ?";
+      params.push(hashed);
     }
-
-    updateQuery += " WHERE id = ?";
+    sql += " WHERE id = ?";
     params.push(id);
+    await db.query(sql, params);
 
-    await db.query(updateQuery, params);
+    // Eliminar asignaciones antiguas
+    await db.query("DELETE FROM profesor_grado_asignatura WHERE id_profesor = ?", [id]);
 
-    // Eliminar relaciones anteriores en tablas correctas
-    await db.query("DELETE FROM profesor_grado WHERE id_profesor = ?", [id]);
-    await db.query("DELETE FROM profesor_asignatura WHERE id_profesor = ?", [
-      id,
-    ]);
-
-    // Insertar nuevas relaciones
-    if (Array.isArray(grados)) {
-      for (const idGrado of grados) {
+    // Insertar nuevas combinaciones
+    if (Array.isArray(gradosMaterias)) {
+      for (const gm of gradosMaterias) {
+        if (!gm.id_grado || !gm.id_asignatura) continue;
         await db.query(
-          "INSERT INTO profesor_grado (id_profesor, id_grado) VALUES (?, ?)",
-          [id, idGrado]
-        );
-      }
-    }
-
-    if (Array.isArray(asignaturas)) {
-      for (const idAsignatura of asignaturas) {
-        await db.query(
-          "INSERT INTO profesor_asignatura (id_profesor, id_asignatura) VALUES (?, ?)",
-          [id, idAsignatura]
+          "INSERT INTO profesor_grado_asignatura (id_profesor, id_grado, id_asignatura) VALUES (?, ?, ?)",
+          [id, gm.id_grado, gm.id_asignatura]
         );
       }
     }
 
     res.json({ message: "Profesor actualizado correctamente" });
   } catch (error) {
-    console.error("Error al actualizar profesor:", error);
+    console.error("Error actualizar profesor:", error);
     res.status(500).json({ error: "Error al actualizar profesor" });
   }
 };
+
 
 exports.eliminarUsuario = async (req, res) => {
   const { id } = req.params;
@@ -296,12 +283,15 @@ exports.actualizarFotoPerfil = async (req, res) => {
 exports.buscarPorDni = async (req, res) => {
   const { dni } = req.params;
   try {
-    const [result] = await db.query("SELECT * FROM usuarios WHERE dni = ?", [
-      dni,
-    ]);
+    const [result] = await db.query(
+      "SELECT * FROM usuarios WHERE dni = ? AND rol = 'alumno'",
+      [dni]
+    );
+
     if (result.length === 0) {
       return res.status(404).json({ mensaje: "Alumno no encontrado" });
     }
+
     res.json(result[0]);
   } catch (err) {
     console.error("Error al buscar por DNI:", err);
@@ -309,17 +299,23 @@ exports.buscarPorDni = async (req, res) => {
   }
 };
 
-// Obtener grados y alumnos asignados a un profesor
+// Obtener grados, materias y alumnos asignados a un profesor
 exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
   const { id_profesor } = req.params;
 
   try {
-    // 1) Obtener grados asignados al profesor
+    // 1) Obtener todas las combinaciones de grado + materia que dicta el profesor
     const [grados] = await db.query(
-      `SELECT g.id, g.grado 
-       FROM profesor_grado pg
-       JOIN grados g ON g.id = pg.id_grado
-       WHERE pg.id_profesor = ?`,
+      `SELECT 
+          g.id AS id_grado,
+          g.grado,
+          a.id AS id_asignatura,
+          a.asignatura AS materia
+       FROM profesor_grado_asignatura pga
+       JOIN grados g ON g.id = pga.id_grado
+       JOIN asignaturas a ON a.id = pga.id_asignatura
+       WHERE pga.id_profesor = ?
+       ORDER BY g.id, a.id`,
       [id_profesor]
     );
 
@@ -327,15 +323,25 @@ exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
       return res.json({ grados: [], alumnos: [] });
     }
 
-    // Extraer IDs de grados
-    const idsGrados = grados.map((g) => g.id);
+    // Extraer IDs de grados para buscar alumnos
+    const idsGrados = [...new Set(grados.map((g) => g.id_grado))];
 
-    // 2) Obtener alumnos que pertenecen a esos grados
+    // 2) Obtener alumnos de esos grados
     const [alumnos] = await db.query(
-      `SELECT u.id, u.dni, u.nombre, u.email, u.id_grado, c.nota 
-   FROM usuarios u
-   LEFT JOIN calificaciones c ON c.id_alumno = u.id AND c.id_grado = u.id_grado
-   WHERE u.rol = 'alumno' AND u.id_grado IN (?)`,
+      `SELECT 
+          u.id,
+          u.dni,
+          u.nombre,
+          u.email,
+          u.id_grado,
+          c.id_asignatura,
+          c.nota
+       FROM usuarios u
+       LEFT JOIN calificaciones c 
+            ON c.id_alumno = u.id 
+           AND c.id_grado = u.id_grado
+       WHERE u.rol = 'alumno' 
+         AND u.id_grado IN (?)`,
       [idsGrados]
     );
 
@@ -345,3 +351,4 @@ exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
     res.status(500).json({ error: "Error interno del servidor" });
   }
 };
+

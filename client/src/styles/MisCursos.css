@@ -79,7 +79,7 @@
 }
 
 .mis-cursos__btn-editar,
-.mis-cursos__btn-eliminar {
+.mis-cursos__btn-eliminar, .mis-cursos__btn-cargar {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,7 +100,7 @@
   margin: auto;
 }
 
-.mis-cursos__btn-editar {
+.mis-cursos__btn-editar, .mis-cursos__btn-cargar {
   border: 2px solid var(--color-secundario);
   background-color: transparent;
   border-radius: 50%;
@@ -112,7 +112,7 @@
   border-radius: 50%;
 }
 
-.mis-cursos__btn-editar:hover {
+.mis-cursos__btn-editar:hover, .mis-cursos__btn-cargar:hover {
   background-color: #1e56e396;
 }
 
