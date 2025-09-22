@@ -15,6 +15,8 @@ router.put("/profesores/:id", usuariosController.actualizarProfesor);
 router.delete("/:id", usuariosController.eliminarUsuario);
 router.delete("/profesores/:id", usuariosController.eliminarProfesor);
 router.get("/profesor/:id_profesor/grados", usuariosController.obtenerGradosYAlumnosPorProfesor);
+router.post("/calificaciones", usuariosController.guardarNota);
+router.post("/calificaciones/eliminar", usuariosController.eliminarNota);
 
 
 module.exports = router;

@@ -1,6 +1,9 @@
 .mis-cursos__container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
 }
 
 .mis-cursos__table {
@@ -90,11 +93,6 @@
   height: 50px;
 }
 
-.mis-cursos__btn-editar svg {
-  fill: #3498db;
-  margin: auto;
-}
-
 .mis-cursos__btn-eliminar svg {
   fill: #e74c3c;
   margin: auto;
@@ -120,5 +118,105 @@
   background-color: rgba(231, 9, 9, 0.575);
 }
 
-/* Aquí puedes seguir agregando el resto de estilos modal, responsive, etc,
-   pero siempre con el prefijo "mis-cursos__" para que sea scoped */
+/* Agregá esto a tu CSS */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5); /* fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #ddd;
+  padding: 25px;
+  border-radius: 8px;
+  width: 350px;
+  font-size: 0.95em;
+  max-width: 100%;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+  font-family: 'Merriweather';
+}
+
+.mis-cursos__seleccion{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--color-secundario);
+  padding: 30px 23px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.4); /* fondo oscuro semitransparente */
+  backdrop-filter: blur(8px); /* el efecto de blur */
+  -webkit-backdrop-filter: blur(8px); /* para Safari *  /* Safari */
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+}
+
+.mis__cursos-botones{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.mis__cursos-title {
+  font-size: 1.85em;
+  color: #ddd;
+  margin-bottom: 25px;
+}
+
+.mis__cursos-btn-curso {
+  border: 1px solid var(--color-secundario);
+  background-color: transparent;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 1.3em;
+  color: #ddd;
+}
+
+/* opcional: efecto al pasar el mouse */
+.mis__cursos-btn-curso:hover {
+  background-color: rgba(0, 0, 0, 0.4); /* fondo oscuro semitransparente */
+}
+
+.mis__cursos-boton-volver {
+  border: 1px solid var(--color-secundario);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  align-self: center;
+  max-width: max-content; /* ocupa solo lo necesario */
+}
+
+.mis__cursos-boton-volver:hover{
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.mis-cursos__table{
+  margin-top: -30px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.nota__btn-cancelar{
+  background-color: #bbb;
+  color: #333;
+}
+
+.nota__btn-cancelar:hover{
+  background-color: #aaa;
+}

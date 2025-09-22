@@ -33,7 +33,7 @@ export const PanelAdmin = () => {
               alt="Buscar"
               className="icono__listar"
             />
-            BUSCAR USUARIOS
+            BUSCAR ALUMNOS
           </Link>
         </div>
       </div>

@@ -84,13 +84,13 @@ export const Nav = () => {
               {user.rol === "profesor" && (
                 <>
                   <li className="nav__item">
-                    <Link to={"/panel-profesor"} onClick={cerrarMenu}>Panel Profesor</Link>
+                    <Link to={"/mis-cursos"} onClick={cerrarMenu}>Mis Cursos</Link>
                   </li>
                   <div className="nav__logo-profe">
                     <img src={logo} alt="Logo" />
                   </div>
                   <li className="nav__item">
-                    <Link to={"/mis-cursos"} onClick={cerrarMenu}>Calendario</Link>
+                    <Link to={"/calendario"} onClick={cerrarMenu}>Calendario</Link>
                   </li>
                 </>
               )}

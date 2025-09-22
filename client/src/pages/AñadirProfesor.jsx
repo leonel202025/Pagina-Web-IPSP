@@ -40,7 +40,7 @@ export const AñadirProfesor = () => {
 
   const handleAsignacionChange = (index, campo, valor) => {
     const nuevas = [...asignaciones];
-    nuevas[index][campo] = Number(valor);
+    nuevas[index][campo] = valor;
     setAsignaciones(nuevas);
   };
 
@@ -73,9 +73,26 @@ export const AñadirProfesor = () => {
       }
     }
 
+    let asignacionesFinal = [];
+    for (const asign of asignaciones) {
+      if (asign.id_grado === "todos") {
+        grados.forEach((g) => {
+          asignacionesFinal.push({
+            id_grado: g.id, // número
+            id_asignatura: Number(asign.id_asignatura),
+          });
+        });
+      } else {
+        asignacionesFinal.push({
+          id_grado: Number(asign.id_grado),
+          id_asignatura: Number(asign.id_asignatura),
+        });
+      }
+    }
+
     const payload = {
       ...formData,
-      asignaciones,
+      asignaciones: asignacionesFinal, // 👈 usamos la lista final
     };
 
     try {
@@ -84,7 +101,6 @@ export const AñadirProfesor = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
       const data = await res.json();
 
       if (res.ok) {
@@ -168,7 +184,7 @@ export const AñadirProfesor = () => {
           {asignaciones.map((asig, index) => (
             <div key={index} className="asignacion-fila">
               <select
-                value={asig.id_grado}
+                value={asig.id_grado} // ahora siempre string
                 onChange={(e) =>
                   handleAsignacionChange(index, "id_grado", e.target.value)
                 }
@@ -176,10 +192,13 @@ export const AñadirProfesor = () => {
               >
                 <option value="">Seleccionar grado</option>
                 {grados.map((g) => (
-                  <option key={g.id} value={g.id}>
+                  <option key={g.id} value={String(g.id)}>
+                    {" "}
+                    {/* 👈 guardamos id como string */}
                     {g.grado}
                   </option>
                 ))}
+                <option value="todos">Todos los grados</option>
               </select>
 
               <select
@@ -228,7 +247,13 @@ export const AñadirProfesor = () => {
                     fill="#1E55E3"
                     viewBox="0 0 24 24"
                   >
-                    <path d="M12 5v14M5 12h14" stroke="#1E55E3" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path
+                      d="M12 5v14M5 12h14"
+                      stroke="#1E55E3"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </button>
               </div>
@@ -237,7 +262,9 @@ export const AñadirProfesor = () => {
         </div>
 
         <div className="form-footer">
-          <button className="añadir_profesor" type="submit">Añadir Profesor</button>
+          <button className="añadir_profesor" type="submit">
+            Añadir Profesor
+          </button>
         </div>
       </form>
 

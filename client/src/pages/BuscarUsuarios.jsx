@@ -7,10 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 export const BuscarUsuario = () => {
   const {
-    manualLoading,
-    setManualLoading,
-    loadingTexto,
-    setLoadingTexto,
     usuarioBuscado,
     setUsuarioBuscado,
     modalVisibleUsuario,
@@ -37,7 +33,6 @@ export const BuscarUsuario = () => {
   useEffect(() => {
     if (
       !usuarioBuscado &&
-      !manualLoading &&
       !modalVisibleUsuario &&
       !modalVisible &&
       !modalEditarVisible &&
@@ -49,7 +44,6 @@ export const BuscarUsuario = () => {
     }
   }, [
     usuarioBuscado,
-    manualLoading,
     modalVisibleUsuario,
     modalVisible,
     modalEditarVisible,
@@ -86,9 +80,6 @@ export const BuscarUsuario = () => {
 
   const buscarUsuario = async () => {
     if (dni.trim() === "") return;
-
-    setManualLoading(true);
-    setLoadingTexto("Buscando...");
     setUsuarioBuscado(null);
 
     try {
@@ -100,15 +91,12 @@ export const BuscarUsuario = () => {
 
       if (res.ok && data) {
         setTimeout(() => {
-          setLoadingTexto("Alumno encontrado");
           setTimeout(() => {
             setUsuarioBuscado(data);
-            setManualLoading(false);
             setModalVisibleUsuario(false);
-          }, 2000);
-        }, 2000);
+          });
+        });
       } else {
-        setManualLoading(false);
         setUsuarioBuscado(null);
 
         if (!modalVisibleUsuario) {
@@ -117,7 +105,6 @@ export const BuscarUsuario = () => {
       }
     } catch (err) {
       console.error("Error al buscar usuario:", err);
-      setManualLoading(false);
       setUsuarioBuscado(null);
 
       if (!modalVisibleUsuario) {
@@ -214,7 +201,7 @@ export const BuscarUsuario = () => {
   return (
     <>
       <ModalMensaje
-        visible={modalVisibleUsuario && !usuarioBuscado && !manualLoading}
+        visible={modalVisibleUsuario && !usuarioBuscado}
         tipo={modalTipo}
         mensaje={
           <div>
@@ -242,7 +229,7 @@ export const BuscarUsuario = () => {
         }}
       />
 
-      {!manualLoading && usuarioBuscado && (
+      {usuarioBuscado && (
         <div className="perfil-container">
           <div className="avatar-wrapper">
             {usuarioBuscado.foto_perfil ? (

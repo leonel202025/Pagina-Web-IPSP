@@ -44,8 +44,8 @@
 }
 
 .profesor__iconAlumnos {
-  width: 250px;
-  height: 250px;
+  width: 200px;
+  height: 200px;
   margin-right: 10px;
   margin-bottom: -5px;
   vertical-align: middle;
@@ -53,17 +53,8 @@
 }
 
 .profesor__iconCalif{
-  width: 230px;
-  height: 250px;
-  margin-right: 10px;
-  margin-bottom: -5px;
-  vertical-align: middle;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5));
-}
-
-.profesor__iconMaterias{
-    width: 290px;
-  height: 250px;
+  width: 180px;
+  height: 200px;
   margin-right: 10px;
   margin-bottom: -5px;
   vertical-align: middle;

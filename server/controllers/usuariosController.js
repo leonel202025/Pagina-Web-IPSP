@@ -29,14 +29,30 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     if (rol === "alumno") {
-      if (!dni || !nombre || !email || !password) {
+      if (!dni || !nombre || !email || !password || !id_grado) {
         return res.status(400).json({ error: "Faltan datos para alumno" });
       }
 
-      await db.query(
+      // Insertar en usuarios
+      const [result] = await db.query(
         "INSERT INTO usuarios (dni, nombre, email, password, rol, id_grado) VALUES (?, ?, ?, ?, ?, ?)",
         [dni, nombre, email, hashedPassword, rol, id_grado]
       );
+      const id_alumno = result.insertId;
+
+      // 2️⃣ Traer todas las asignaturas del grado del alumno
+      const [asignaturas] = await db.query(
+        "SELECT a.id AS id_asignatura FROM profesor_grado_asignatura pga JOIN asignaturas a ON a.id = pga.id_asignatura WHERE pga.id_grado = ? GROUP BY a.id",
+        [id_grado]
+      );
+
+      // 3️⃣ Insertar relaciones en alumno_grado_asignatura
+      for (const a of asignaturas) {
+        await db.query(
+          "INSERT INTO alumno_grado_asignatura (id_alumno, id_grado, id_asignatura) VALUES (?, ?, ?)",
+          [id_alumno, id_grado, a.id_asignatura]
+        );
+      }
     } else if (rol === "profesor") {
       const { asignaciones } = req.body; // Array [{id_grado, id_asignatura}, ...]
       if (!Array.isArray(asignaciones) || asignaciones.length === 0) {
@@ -103,14 +119,14 @@ exports.obtenerProfesores = async (req, res) => {
 
     // Agrupar por profesor y formar array de combinaciones
     const profesoresMap = {};
-    rows.forEach(row => {
+    rows.forEach((row) => {
       if (!profesoresMap[row.id]) {
         profesoresMap[row.id] = {
           id: row.id,
           nombre: row.nombre,
           dni: row.dni,
           email: row.email,
-          gradosMaterias: []
+          gradosMaterias: [],
         };
       }
       if (row.id_grado && row.id_asignatura) {
@@ -118,7 +134,7 @@ exports.obtenerProfesores = async (req, res) => {
           id_grado: row.id_grado,
           grado: row.grado,
           id_asignatura: row.id_asignatura,
-          asignatura: row.asignatura
+          asignatura: row.asignatura,
         });
       }
     });
@@ -169,7 +185,10 @@ exports.actualizarProfesor = async (req, res) => {
     await db.query(sql, params);
 
     // Eliminar asignaciones antiguas
-    await db.query("DELETE FROM profesor_grado_asignatura WHERE id_profesor = ?", [id]);
+    await db.query(
+      "DELETE FROM profesor_grado_asignatura WHERE id_profesor = ?",
+      [id]
+    );
 
     // Insertar nuevas combinaciones
     if (Array.isArray(gradosMaterias)) {
@@ -189,7 +208,6 @@ exports.actualizarProfesor = async (req, res) => {
   }
 };
 
-
 exports.eliminarUsuario = async (req, res) => {
   const { id } = req.params;
 
@@ -208,17 +226,19 @@ exports.eliminarUsuario = async (req, res) => {
 };
 
 exports.eliminarProfesor = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params; // este id puede ser id o dni según tu PK en usuarios
 
   try {
-    // Eliminar relaciones primero
-    await db.query("DELETE FROM profesor_asignatura WHERE id_profesor = ?", [
-      id,
-    ]);
-    await db.query("DELETE FROM profesor_grado WHERE id_profesor = ?", [id]);
+    // Primero eliminar relaciones en la tabla intermedia
+    await db.query(
+      "DELETE FROM profesor_grado_asignatura WHERE id_profesor = ?",
+      [id]
+    );
 
-    // Luego eliminar al profesor de la tabla usuarios
+    // Luego eliminar al profesor en usuarios
     const [result] = await db.query("DELETE FROM usuarios WHERE id = ?", [id]);
+    // ⚠️ Si tu PK es dni en vez de id, cambia la consulta a:
+    // const [result] = await db.query("DELETE FROM usuarios WHERE dni = ?", [id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "Profesor no encontrado" });
@@ -329,19 +349,22 @@ exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
     // 2) Obtener alumnos de esos grados
     const [alumnos] = await db.query(
       `SELECT 
-          u.id,
-          u.dni,
-          u.nombre,
-          u.email,
-          u.id_grado,
-          c.id_asignatura,
-          c.nota
-       FROM usuarios u
-       LEFT JOIN calificaciones c 
-            ON c.id_alumno = u.id 
-           AND c.id_grado = u.id_grado
-       WHERE u.rol = 'alumno' 
-         AND u.id_grado IN (?)`,
+      aga.id AS id_alumno_grado_asignatura,
+      u.id AS id_alumno,
+      u.nombre,
+      u.dni,
+      u.email,
+      g.id AS id_grado,
+      g.grado,
+      a.id AS id_asignatura,
+      a.asignatura AS materia,
+      c.nota
+      FROM alumno_grado_asignatura aga
+      JOIN usuarios u ON u.id = aga.id_alumno
+      JOIN grados g ON g.id = aga.id_grado
+      JOIN asignaturas a ON a.id = aga.id_asignatura
+      LEFT JOIN calificaciones c ON c.id_alumno_grado_asignatura = aga.id
+      WHERE aga.id_grado IN (?)`,
       [idsGrados]
     );
 
@@ -352,3 +375,100 @@ exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
   }
 };
 
+exports.guardarNota = async (req, res) => {
+  const { id_alumno, id_grado, id_asignatura, id_profesor, nota } = req.body;
+
+  // Validación rápida
+  if (!id_alumno || !id_grado || !id_asignatura || !id_profesor) {
+    return res.status(400).json({ error: "Faltan datos requeridos" });
+  }
+
+  try {
+    // 1️⃣ Ver si existe la relación alumno-grado-asignatura
+    const [relacion] = await db.query(
+      `SELECT id FROM alumno_grado_asignatura 
+       WHERE id_alumno = ? AND id_grado = ? AND id_asignatura = ?`,
+      [id_alumno, id_grado, id_asignatura]
+    );
+
+    let id_alumno_grado_asignatura;
+    if (relacion.length > 0) {
+      id_alumno_grado_asignatura = relacion[0].id;
+    } else {
+      // Crear la relación si no existe
+      const [resultado] = await db.query(
+        `INSERT INTO alumno_grado_asignatura (id_alumno, id_grado, id_asignatura)
+         VALUES (?, ?, ?)`,
+        [id_alumno, id_grado, id_asignatura]
+      );
+      id_alumno_grado_asignatura = resultado.insertId;
+    }
+
+    // 2️⃣ Ver si ya existe una calificación
+    const [calificacionExistente] = await db.query(
+      `SELECT id FROM calificaciones 
+       WHERE id_alumno_grado_asignatura = ?`,
+      [id_alumno_grado_asignatura]
+    );
+
+    if (calificacionExistente.length > 0) {
+      // Actualizar nota
+      await db.query(
+        `UPDATE calificaciones SET nota = ?, id_profesor = ? 
+         WHERE id_alumno_grado_asignatura = ?`,
+        [nota, id_profesor, id_alumno_grado_asignatura]
+      );
+    } else {
+      // Insertar nueva nota
+      await db.query(
+        `INSERT INTO calificaciones (id_alumno_grado_asignatura, id_profesor, nota)
+         VALUES (?, ?, ?)`,
+        [id_alumno_grado_asignatura, id_profesor, nota]
+      );
+    }
+
+    // Devolver la nota junto con la info para actualizar el frontend
+    res.json({
+      id_alumno_grado_asignatura,
+      id_alumno,
+      id_grado,
+      id_asignatura,
+      nota,
+    });
+  } catch (error) {
+    console.error("❌ Error al guardar nota:", error);
+    res.status(500).json({ error: "Error al guardar nota" });
+  }
+};
+
+// controllers/usuariosController.js
+
+exports.eliminarNota = async (req, res) => {
+  const { id_alumno, id_grado, id_asignatura } = req.body;
+
+  try {
+    // 1️⃣ Buscar la relación alumno-grado-asignatura
+    const [relacion] = await db.query(
+      `SELECT id FROM alumno_grado_asignatura 
+       WHERE id_alumno = ? AND id_grado = ? AND id_asignatura = ?`,
+      [id_alumno, id_grado, id_asignatura]
+    );
+
+    if (relacion.length === 0) {
+      return res.status(404).json({ error: "Relación no encontrada" });
+    }
+
+    const id_alumno_grado_asignatura = relacion[0].id;
+
+    // 2️⃣ Eliminar la calificación si existe
+    await db.query(
+      `DELETE FROM calificaciones WHERE id_alumno_grado_asignatura = ?`,
+      [id_alumno_grado_asignatura]
+    );
+
+    res.json({ message: "Calificación eliminada", id_alumno, id_grado, id_asignatura });
+  } catch (error) {
+    console.error("❌ Error al eliminar calificación:", error);
+    res.status(500).json({ error: "Error al eliminar calificación" });
+  }
+};
