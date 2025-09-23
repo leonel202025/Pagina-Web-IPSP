@@ -19,6 +19,7 @@ import { VerAlumnos } from "./pages/VerAlumnos";
 import { VerProfesores } from "./pages/VerProfesores";
 import { BuscarUsuario } from "./pages/BuscarUsuarios";
 import { MisCursos } from "./pages/MisCursos";
+import { CrearEvento } from "./pages/CrearEvento";
 
 const AppContent = () => {
   const { manualLoading, loadingTexto } = useContext(AuthContext);
@@ -43,6 +44,7 @@ const AppContent = () => {
           <Route path="/ver-profesores" element={<VerProfesores />} />
           <Route path="/buscar-usuario" element={<BuscarUsuario />} />
           <Route path="/mis-cursos" element={<MisCursos />} />
+          <Route path="/crear-evento" element={<CrearEvento />} />
         </Routes>
       </main>
       <Footer />

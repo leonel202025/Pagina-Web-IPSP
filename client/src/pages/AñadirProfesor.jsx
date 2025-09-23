@@ -217,6 +217,29 @@ export const AñadirProfesor = () => {
               </select>
               <div className="botones">
                 <button
+                  className="agregar_asignacion"
+                  type="button"
+                  onClick={agregarFila}
+                  title="Agregar Asignacion"
+                  >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="#1E55E3"
+                    viewBox="0 0 24 24"
+                    >
+                    <path
+                      d="M12 5v14M5 12h14"
+                      stroke="#1E55E3"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      />
+                  </svg>
+                </button>
+              {asignaciones.length > 1 && (
+                <button
                   className="borrar_asignacion"
                   type="button"
                   onClick={() => eliminarFila(index)}
@@ -233,29 +256,7 @@ export const AñadirProfesor = () => {
                     <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
                   </svg>
                 </button>
-
-                <button
-                  className="agregar_asignacion"
-                  type="button"
-                  onClick={agregarFila}
-                  title="Agregar Asignacion"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="#1E55E3"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M12 5v14M5 12h14"
-                      stroke="#1E55E3"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
+              )}
               </div>
             </div>
           ))}

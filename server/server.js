@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
-const usuariosRoute = require('./routes/usuarios');
 const contactoRoute = require('./routes/contacto');
 const asignaturaRoute = require('./routes/asignaturas');
 const path = require("path");
@@ -25,6 +24,7 @@ app.use('/api/grados', require('./routes/grados'));
 app.use('/api/contacto', contactoRoute);
 app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', require('./routes/usuarios'));
+app.use("/api/eventos", require("./routes/eventos"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 

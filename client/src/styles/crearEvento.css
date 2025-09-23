@@ -1,0 +1,65 @@
+.crear-evento__container {
+  width: 450px;
+  background-color: #fffd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--color-secundario);
+  border-radius: 10px;
+  padding: 25px 30px 5px 30px;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
+  margin:auto;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.crear-evento__container h1 {
+  color: var(--color-secundario);
+  text-align: center;
+  font-size: 2em;
+  font-family: 'Merriweather', serif;
+  margin-bottom: 20px;
+  margin-top: 7px;
+}
+
+.crear-evento__form {
+    margin-top: -40px;
+  width: 100%;
+}
+
+.crear-evento__form input,
+.crear-evento__form select,
+.crear-evento__form textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: none;
+  border-bottom: 2px solid var(--color-secundario);
+  background: transparent;
+  outline: none;
+  font-size: 1em;
+  font-family: 'Lato', sans-serif;
+}
+
+.crear-evento__form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Estilo de los selects múltiples */
+.select-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.botones {
+    display: flex;
+    gap: 7px;
+}
+
+.btn__guardar-evento{
+    margin-top: 30px;
+}
