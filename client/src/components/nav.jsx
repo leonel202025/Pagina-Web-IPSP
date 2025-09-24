@@ -76,7 +76,7 @@ export const Nav = () => {
                     <img src={logo} alt="Logo" />
                   </div>
                   <li className="nav__item">
-                    <Link to={"/crear-usuario"} onClick={cerrarMenu}>Crear Usuario</Link>
+                    <Link to={"/crear-usuario"} onClick={cerrarMenu}>Panel Creacion</Link>
                   </li>
                 </>
               )}

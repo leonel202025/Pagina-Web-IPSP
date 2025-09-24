@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import  alumnosListar  from "../images/alumnosListar.png";
 import  profesoresListar  from "../images/profesoresListar.png";
-import  crearEvento  from "../images/Evento.png";
+import  calendario  from "../images/calendario.png";
 import "../styles/panelAdmin.css"
 
 export const PanelAdmin = () => {
@@ -27,13 +27,13 @@ export const PanelAdmin = () => {
             />
             VER PROFESORES
           </Link>
-          <Link to={"/crear-evento"} className="listar__item">
+          <Link to={"/ver-evento"} className="listar__item">
           <img
-              src={crearEvento}
-              alt="Crear Evento"
+              src={calendario}
+              alt="Ver Eventos"
               className="icono__listar"
             />
-            CREAR EVENTO
+            VER EVENTOS
           </Link>
         </div>
       </div>

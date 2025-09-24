@@ -1,0 +1,22 @@
+.container__table-eventos{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tabla__eventos {
+  width: auto; /* ancho se ajusta al contenido */
+  table-layout: auto; /* columnas se adaptan al contenido */
+}
+
+.tabla__eventos th,
+.tabla__eventos td {
+  padding: 6px 40px; /* padding reducido */
+  white-space: normal; /* permite que el texto se divida en varias líneas */
+}
+
+.tabla__eventos th{
+    padding: 12px 40px; /* padding reducido */
+  white-space: normal; 
+}
+/* eliminamos max-width, overflow y text-overflow para que crezca según el contenido */
