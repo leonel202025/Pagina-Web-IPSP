@@ -66,7 +66,7 @@ export const AñadirProfesor = () => {
 
     for (const asign of asignaciones) {
       if (!asign.id_grado || !asign.id_asignatura) {
-        setModalMensaje("Cada asignación debe tener grado y materia");
+        setModalMensaje("Todos los campos son obligatorios");
         setModalTipo("advertencia");
         setModalVisible(true);
         return;
@@ -78,7 +78,7 @@ export const AñadirProfesor = () => {
       if (asign.id_grado === "todos") {
         grados.forEach((g) => {
           asignacionesFinal.push({
-            id_grado: g.id, // número
+            id_grado: g.id,
             id_asignatura: Number(asign.id_asignatura),
           });
         });
@@ -92,7 +92,7 @@ export const AñadirProfesor = () => {
 
     const payload = {
       ...formData,
-      asignaciones: asignacionesFinal, // 👈 usamos la lista final
+      asignaciones: asignacionesFinal,
     };
 
     try {
@@ -114,17 +114,10 @@ export const AñadirProfesor = () => {
           rol: "profesor",
         });
         setAsignaciones([{ id_grado: "", id_asignatura: "" }]);
-      } else {
-        setModalMensaje(
-          data?.error?.includes("ya está registrado")
-            ? "El Profesor ya está registrado"
-            : "Error al agregar el Profesor"
-        );
-        setModalTipo(
-          data?.error?.includes("ya está registrado") ? "advertencia" : "error"
-        );
+      } else if(data?.error?.includes("ya está registrado")){
+        setModalMensaje("El Profesor ya está registrado");
+        setModalTipo("error");
       }
-
       setModalVisible(true);
     } catch (error) {
       setModalMensaje("Error de red");
@@ -147,14 +140,12 @@ export const AñadirProfesor = () => {
               value={formData.dni}
               onChange={handleChange}
               placeholder="DNI"
-              required
             />
             <input
               name="nombre"
               value={formData.nombre}
               onChange={handleChange}
               placeholder="Nombre"
-              required
             />
           </div>
           <div className="row">
@@ -164,7 +155,6 @@ export const AñadirProfesor = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Email"
-              required
             />
             <input
               name="password"
@@ -172,7 +162,6 @@ export const AñadirProfesor = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="Contraseña"
-              required
             />
           </div>
         </div>
@@ -184,17 +173,14 @@ export const AñadirProfesor = () => {
           {asignaciones.map((asig, index) => (
             <div key={index} className="asignacion-fila">
               <select
-                value={asig.id_grado} // ahora siempre string
+                value={asig.id_grado}
                 onChange={(e) =>
                   handleAsignacionChange(index, "id_grado", e.target.value)
                 }
-                required
               >
                 <option value="">Seleccionar grado</option>
                 {grados.map((g) => (
                   <option key={g.id} value={String(g.id)}>
-                    {" "}
-                    {/* 👈 guardamos id como string */}
                     {g.grado}
                   </option>
                 ))}
@@ -206,7 +192,6 @@ export const AñadirProfesor = () => {
                 onChange={(e) =>
                   handleAsignacionChange(index, "id_asignatura", e.target.value)
                 }
-                required
               >
                 <option value="">Seleccionar materia</option>
                 {asignaturas.map((a) => (
@@ -215,48 +200,52 @@ export const AñadirProfesor = () => {
                   </option>
                 ))}
               </select>
+
               <div className="botones">
+                {/* Botón agregar */}
                 <button
                   className="agregar_asignacion"
                   type="button"
                   onClick={agregarFila}
                   title="Agregar Asignacion"
-                  >
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
                     height="20"
                     fill="#1E55E3"
                     viewBox="0 0 24 24"
-                    >
+                  >
                     <path
                       d="M12 5v14M5 12h14"
                       stroke="#1E55E3"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      />
+                    />
                   </svg>
                 </button>
-              {asignaciones.length > 1 && (
-                <button
-                  className="borrar_asignacion"
-                  type="button"
-                  onClick={() => eliminarFila(index)}
-                  title="Borrar Asignacion"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="#e74c3c"
-                    viewBox="0 0 24 24"
+
+                {/* Botón eliminar: solo si hay más de uno */}
+                {asignaciones.length > 1 && (
+                  <button
+                    className="borrar_asignacion"
+                    type="button"
+                    onClick={() => eliminarFila(index)}
+                    title="Borrar Asignacion"
                   >
-                    <path d="M6 19c0 1.104.896 2 2 2h8c1.104 0 2-.896 2-2V7H6v12zm3.46-9.88L12 10.59l2.54-2.47a1 1 0 1 1 1.42 1.42L13.41 12l2.47 2.54a1 1 0 1 1-1.42 1.42L12 13.41l-2.54 2.47a1 1 0 1 1-1.42-1.42L10.59 12 8.12 9.46a1 1 0 0 1 1.34-1.34z" />
-                    <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                  </svg>
-                </button>
-              )}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      fill="#e74c3c"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M6 19c0 1.104.896 2 2 2h8c1.104 0 2-.896 2-2V7H6v12zm3.46-9.88L12 10.59l2.54-2.47a1 1 0 1 1 1.42 1.42L13.41 12l2.47 2.54a1 1 0 1 1-1.42 1.42L12 13.41l-2.54 2.47a1 1 0 1 1-1.42-1.42L10.59 12 8.12 9.46a1 1 0 0 1 1.34-1.34z" />
+                      <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                    </svg>
+                  </button>
+                )}
               </div>
             </div>
           ))}

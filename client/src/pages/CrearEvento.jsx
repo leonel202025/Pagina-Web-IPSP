@@ -98,19 +98,16 @@ export function CrearEvento() {
           placeholder="Título"
           value={titulo}
           onChange={(e) => setTitulo(e.target.value)}
-          required
         />
         <textarea
           placeholder="Descripción"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          required
         />
         <input
           type="datetime-local"
           value={fecha}
           onChange={(e) => setFecha(e.target.value)}
-          required
         />
 
         <div className="crear-evento__profesores">
@@ -119,7 +116,6 @@ export function CrearEvento() {
               <select
                 value={profId}
                 onChange={(e) => handleSelectChange(index, e.target.value)}
-                required
               >
                 <option value="">Seleccione un profesor</option>
                 {profesores

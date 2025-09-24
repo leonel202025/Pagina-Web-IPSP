@@ -33,8 +33,8 @@ export function VerEventos() {
         <table className="tabla__eventos">
           <thead>
             <tr>
-              <th>Título</th>
               <th>Fecha</th>
+              <th>Acto</th>
               <th>Reponsables</th>
               <th>Acciones</th>
             </tr>
@@ -43,8 +43,8 @@ export function VerEventos() {
             {eventos.length > 0 ? (
               eventos.map((evento) => (
                 <tr key={evento.id}>
-                  <td className="evento__titulo">{evento.titulo}</td>
                   <td>{new Date(evento.fecha).toLocaleDateString()}</td>
+                  <td className="evento__titulo">{evento.titulo}</td>
                   <td>
                     {Array.isArray(evento.profesores)
                       ? evento.profesores.join(", ")
