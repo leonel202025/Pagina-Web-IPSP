@@ -67,3 +67,41 @@ exports.listarEventos = async (req, res) => {
     res.status(500).json({ mensaje: "Error al listar eventos" });
   }
 };
+
+exports.listarEventosProfesor = async (req, res) => {
+  try {
+    const { idProfesor } = req.params;
+
+    // Traemos los eventos que son para todos los profesores
+    const [eventosParaTodos] = await db.query(
+      `SELECT id, titulo, descripcion, fecha, todos_profesores
+       FROM eventos
+       WHERE todos_profesores = 1
+       ORDER BY fecha DESC`
+    );
+
+    // Traemos los eventos asignados específicamente al profesor
+    const [eventosAsignados] = await db.query(
+      `SELECT e.id, e.titulo, e.descripcion, e.fecha, e.todos_profesores
+       FROM eventos e
+       JOIN evento_profesor ep ON e.id = ep.id_evento
+       WHERE ep.id_profesor = ?
+       ORDER BY e.fecha DESC`,
+      [idProfesor]
+    );
+
+    // Unimos ambos resultados (sin duplicar)
+    const eventosMap = new Map();
+
+    [...eventosParaTodos, ...eventosAsignados].forEach(ev => {
+      eventosMap.set(ev.id, ev); // evita duplicados por id
+    });
+
+    const eventos = Array.from(eventosMap.values());
+
+    res.json(eventos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al listar eventos del profesor" });
+  }
+};

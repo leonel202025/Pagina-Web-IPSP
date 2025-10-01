@@ -201,7 +201,7 @@ export const AñadirProfesor = () => {
                 ))}
               </select>
 
-              <div className="botones">
+              <div className="add__profesor-botones">
                 {/* Botón agregar */}
                 <button
                   className="agregar_asignacion"

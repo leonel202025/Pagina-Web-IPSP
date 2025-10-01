@@ -109,43 +109,83 @@
   margin-top: 10px;
 }
 
-.botones{
+.add__profesor-botones{
   display: flex;
   flex-direction: row;
   gap: 20px;
   align-items: center;
   justify-content: center;
   margin-bottom: -40px;
+  margin-right: 10px;
 }
 
 /* Responsive Design */
 
 /* Notebooks */
 
+/* Muy Grandes */
+@media screen and (min-width: 1440px) {
+  .container__general-formulario {
+    width: 500px;
+    padding: 1.5rem;
+    margin-top: -25px;
+  }
+
+  .title__profesor {
+    font-size: 1.8em;
+    margin: 6px 0 -8px 0;
+  }
+
+  .form__container-profesor {
+    gap: 1.5rem;
+  }
+
+  .form-datos-personales .row {
+    gap: 2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .form-datos-personales input {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .add__profesor-botones {
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-left: 35px;
+  }
+
+  .añadir_profesor {
+    font-size: 1.1rem;
+    padding: 0.8rem 2rem;
+  }
+
+  .form-footer{
+    margin-top: -20px;
+    margin-bottom: -20px;
+  }
+}
+
 /* Grandes */
 @media screen and (min-width: 1281px) and (max-width: 1439px) {
-
-  /* Contenedor principal */
   .container__general-formulario {
-    width: 440px; /* más angosto */
-    padding: 1.2rem; /* menos padding */
+    width: 440px;
+    padding: 1.2rem;
     margin-top: -20px;
   }
 
-  /* Título */
   .title__profesor {
-    font-size: 1.6em; /* más chico */
+    font-size: 1.6em;
     margin: 4px 0 -6px 0;
   }
 
-  /* Formulario */
   .form__container-profesor {
-    gap: 1.2rem; /* menos espacio entre bloques */
+    gap: 1.2rem;
   }
 
-  /* Datos personales */
   .form-datos-personales .row {
-    gap: 1.6rem; /* menos separación entre inputs */
+    gap: 1.5rem;
     margin-bottom: 0.6rem;
   }
 
@@ -154,61 +194,43 @@
     padding: 0.4rem;
   }
 
-  /* Checkboxes */
-  .form-checkboxes {
-    gap: 1.5rem;
+  .add__profesor-botones {
+    gap: 18px;
+    margin-bottom: 15px;
+    margin-left: 50px;
   }
 
-  .checkbox-column {
-    width: 160px; /* más angosto */
+  .añadir_profesor {
+    font-size: 1rem;
+    padding: 0.7rem 1.5rem;
   }
 
-  .checkbox-list {
-    max-height: 220px;
-    padding: 0.5rem;
-  }
-
-  .checkbox-item span {
-    width: 260px;
-    font-size: 0.9rem;
-  }
-
-  /* Footer y botón */
-  .form-footer {
-    margin-top: 1.2rem;
-  }
-
-  button[type="submit"] {
-    padding: 0.6rem 1.4rem;
-    font-size: 0.95rem;
+  .form-footer{
+    margin-top: -15px;
+    margin-bottom: -20px;
   }
 }
 
 /* Medianas */
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
-
-  /* Contenedor principal */
   .container__general-formulario {
-    width: 440px; /* más angosto */
-    padding: 1.2rem; /* menos padding */
+    width: 420px;
+    padding: 1rem;
     margin-top: -20px;
   }
 
-  /* Título */
   .title__profesor {
-    font-size: 1.6em; /* más chico */
+    font-size: 1.5em;
     margin: 4px 0 -6px 0;
   }
 
-  /* Formulario */
   .form__container-profesor {
-    gap: 1.2rem; /* menos espacio entre bloques */
+    gap: 1rem;
   }
 
-  /* Datos personales */
   .form-datos-personales .row {
-    gap: 1.6rem; /* menos separación entre inputs */
-    margin-bottom: 0.6rem;
+    gap: 1.2rem;
+    margin-bottom: 0.5rem;
   }
 
   .form-datos-personales input {
@@ -216,33 +238,21 @@
     padding: 0.4rem;
   }
 
-  /* Checkboxes */
-  .form-checkboxes {
-    gap: 1.5rem;
+  .add__profesor-botones {
+    gap: 15px;
+    margin-bottom: 10px;
+    margin-left: 20px;
   }
 
-  .checkbox-column {
-    width: 160px; /* más angosto */
+  .añadir_profesor {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
   }
 
-  .checkbox-list {
-    max-height: 220px;
-    padding: 0.5rem;
-  }
-
-  .checkbox-item span {
-    width: 260px;
-    font-size: 0.9rem;
-  }
-
-  /* Footer y botón */
-  .form-footer {
-    margin-top: 1.2rem;
-  }
-
-  button[type="submit"] {
-    padding: 0.6rem 1.4rem;
-    font-size: 0.95rem;
-    margin-bottom: -30px;
+  .form-footer{
+    margin-top: -5px;
+    margin-bottom: -10px;
   }
 }
+
+

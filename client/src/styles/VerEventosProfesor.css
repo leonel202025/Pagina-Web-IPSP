@@ -1,0 +1,168 @@
+/* Contenedor principal */
+.container__eventos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  font-family: Arial, sans-serif;
+}
+
+/* Contenedor de la tabla */
+.container__table-eventos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+  width: 100%;
+}
+
+/* Tabla */
+.tabla__eventos-profesor {
+  width: 100%;
+  max-width: 1300px; /* ancho máximo */
+  margin: 10px auto 20px auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed; /* columnas proporcionales */
+  font-family: Arial, sans-serif;
+  box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Cabecera */
+.tabla__eventos-profesor th {
+  padding: 12px 15px;
+  text-align: center;
+  color: #ddd;
+  border: 1.5px solid var(--color-secundario);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Celdas */
+.tabla__eventos-profesor td {
+  padding: 12px 15px;
+  text-align: center;
+  color: #ddd;
+  border: 1.5px solid var(--color-secundario);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+/* Mostrar contenido completo en hover */
+.tabla__eventos-profesor td[title] {
+  cursor: pointer;
+}
+.tabla__eventos-profesor td:hover::after {
+  content: attr(title);
+  position: absolute;
+  white-space: pre-wrap;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  min-width: 150px;
+  max-width: 400px;
+}
+
+/* Bordes redondeados */
+.tabla__eventos-profesor thead tr:first-child th:first-child { border-top-left-radius: 10px; }
+.tabla__eventos-profesor thead tr:first-child th:last-child { border-top-right-radius: 10px; }
+.tabla__eventos-profesor tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+.tabla__eventos-profesor tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+/* Ancho fijo de columnas */
+.tabla__eventos-profesor th:nth-child(1),
+.tabla__eventos-profesor td:nth-child(1) { width: 10px; } /* Fecha */
+.tabla__eventos-profesor th:nth-child(2),
+.tabla__eventos-profesor td:nth-child(2) { width: 10px; } /* Acto / Título */
+
+/* Título */
+.ver_title {
+  color: #ddd;
+  text-align: center;
+  font-size: 2.5em;
+  margin-top: -30px;
+  margin-bottom: 20px;
+  font-family: 'Merriweather', serif;
+}
+
+/* Responsive */
+
+/* Muy grandes */
+@media screen and (min-width: 1440px) {
+  .tabla__eventos-profesor {
+    max-width: 1300px;
+    font-size: 1rem;
+  }
+
+  .tabla__eventos-profesor th,
+  .tabla__eventos-profesor td {
+    padding: 12px 15px;
+  }
+
+  .tabla__eventos-profesor th:nth-child(1),
+  .tabla__eventos-profesor td:nth-child(1) { width: 25%; } /* Fecha */
+  .tabla__eventos-profesor th:nth-child(2),
+  .tabla__eventos-profesor td:nth-child(2) { width: 75%; } /* Acto / Título */
+
+  .ver_title{
+    font-size: 2.3em;
+  }
+}
+
+/* Grandes */
+@media screen and (min-width: 1281px) and (max-width: 1439px) {
+  .tabla__eventos-profesor {
+    max-width: 1150px;
+    font-size: 0.95rem;
+  }
+
+  .tabla__eventos-profesor th,
+  .tabla__eventos-profesor td {
+    padding: 11px 13px;
+  }
+
+  .tabla__eventos-profesor th:nth-child(1),
+  .tabla__eventos-profesor td:nth-child(1) { width: 30%; } /* Fecha */
+  .tabla__eventos-profesor th:nth-child(2),
+  .tabla__eventos-profesor td:nth-child(2) { width: 70%; } /* Acto / Título */
+
+  .ver_title{
+    font-size: 2.1em;
+  }
+}
+
+/* Medianas */
+@media (min-width: 1025px) and (max-width: 1280px) {
+  @media screen and (min-width: 1025px) and (max-width: 1280px) {
+  .tabla__eventos-profesor {
+    max-width: 1000px;
+    font-size: 0.9rem;
+  }
+
+  .tabla__eventos-profesor th,
+  .tabla__eventos-profesor td {
+    padding: 10px 12px;
+  }
+
+  /* Ajuste de ancho columnas si hace falta */
+  .tabla__eventos-profesor th:nth-child(1),
+  .tabla__eventos-profesor td:nth-child(1) { width: 35%; } /* Fecha */
+  .tabla__eventos-profesor th:nth-child(2),
+  .tabla__eventos-profesor td:nth-child(2) { width: 65%; } /* Acto / Título */
+
+  .ver_title{
+    font-size: 1.9em;
+  }
+}
+}

@@ -90,7 +90,7 @@ export const Nav = () => {
                     <img src={logo} alt="Logo" />
                   </div>
                   <li className="nav__item">
-                    <Link to={"/calendario"} onClick={cerrarMenu}>Calendario</Link>
+                    <Link to={"/calendario-profesor"} onClick={cerrarMenu}>Agenda</Link>
                   </li>
                 </>
               )}

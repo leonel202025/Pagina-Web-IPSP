@@ -55,7 +55,6 @@ export const Login = () => {
 
   return (
     <div className="container__login">
-      <>
         <h1 className="titulo-login">Iniciar Sesión</h1>
         <form onSubmit={handleSubmit}>
           <div>
@@ -101,7 +100,6 @@ export const Login = () => {
           <button className="btn-login" type="submit">Iniciar Sesión</button>
         </form>
         <img src={logo} alt="logo ipsp" className="logo" />
-      </>
     </div>
   );
 };

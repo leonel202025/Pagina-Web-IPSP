@@ -91,10 +91,46 @@ body, html {
 
 /* Notebooks */
 
+/* Muy Grandes */
+@media (max-width: 1440px){
+    .container {
+    width: 380px; /* más estrecho */
+    height: 400px;
+    margin-top: 20px;
+    padding: 12px 18px;
+  }
+
+  .tittle__alumno {
+    font-size: 1.6em;
+    margin-top: -2px;
+    margin-bottom: -15px;
+  }
+
+  .container form {
+    padding: 18px 0 0 0;
+  }
+
+  .container form input,
+  .container form select {
+    padding: 8px;
+    margin: 8px 0;
+    font-size: 0.9em;
+  }
+
+  .container form button[type="submit"] {
+    padding: 10px 12px;
+    font-size: 0.9em;
+    margin-top: 15px;
+    margin-bottom: -12px;
+  }
+}
+
 /* Grandes */
 @media screen and (min-width: 1281px) and (max-width: 1439px) {
   .container {
     width: 340px; /* más estrecho */
+    height: 380px;
+    margin-top: -10px;
     padding: 12px 18px;
   }
 
@@ -126,6 +162,8 @@ body, html {
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
   .container {
     width: 340px; /* más estrecho */
+    height: 380px;
+    margin-top: -10px;
     padding: 12px 18px;
   }
 

@@ -215,7 +215,7 @@
   }
 
   .nav__toggle.menu-open {
-    transform: translateX(20vw); 
+    transform: translateX(16vw); 
   }
 
   .nav__toggle:focus,

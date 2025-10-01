@@ -10,6 +10,7 @@ body, html {
     width: 100%;
     font-size: 2em;
     font-family: 'Merriweather';
+    margin-top: 20px;
 }
 
 .container__login {
@@ -160,11 +161,11 @@ label {
     padding: 10px !important;
   }
   label {
-    font-size: 1.2em;
+    font-size: 1em;
   }
   input {
     margin-top: 1px;
-    font-size: 1em;
+    font-size: 0.9em;
     padding: 10px;
   }
   form {
@@ -180,73 +181,197 @@ label {
 }
 
 /* Notebooks Medianas y Tablets de 10" (Horizontal) */
-@media (min-width: 1025px) and (max-width: 1280px) {
+@media (min-width: 1025px) and (max-width: 1280px) and (orientation: landscape){
   .container__login {
-    width: 350px;
-    margin-top: -17px;
+    width: 450px;        /* más ancho */
+    margin-top: -10px;   /* más espaciado superior */
+    padding: 30px;       /* más padding interno */
   }
 
   .titulo-login {
-    font-size: 1.5em;
-  }
-  .btn-login {
-    font-size: 0.90em !important;
-    padding: 10px !important;
-  }
-  .form__container {
-    font-size: 1.3em;
-  }
-  input {
-    font-size: 1.1em;
-    margin-top: 3px;
-    padding: 10px;
-  }
-  form {
-    max-width: 350px;
-    width: 85%; 
-  }
-  .logo{
-    margin-top: -5px;
-    margin-bottom: 5px;
-  width: 100px !important;
-  height: 115px !important;
-  }
-}
-
-/* Tablets de 7" y 10" (Vertical) */
-@media screen and (min-width: 600px) and (max-width: 800px) {
-  .container__login {
-    width: 350px;
-    margin-top: 50px;
+    font-size: 2em;      /* título más grande */
+    margin-bottom: 20px;
   }
 
-  .titulo-login {
-    font-size: 2em;
-  }
   .btn-login {
-    font-size: 1.1em !important;
-    padding: 10px !important;
+    font-size: 1em !important;
+    padding: 14px 20px !important;
   }
+
   .form__container {
-    font-size: 2em;
+    font-size: 1.4em;
   }
-  input {
-    font-size: 1.5em;
-    margin-top: 3px;
-    padding: 10px;
-  }
+
   label {
-    font-size: 1.5em;
+    font-size: 1.2em;
   }
+
+  input {
+    font-size: 1em;
+    margin-top: 5px;
+    padding: 12px;
+  }
+
   form {
-    max-width: 350px;
-    width: 85%; 
+    max-width: 450px;
+    width: 90%; 
   }
-  .logo{
-  width: 130px !important;
-  height: 140px !important;
+
+  .logo {
+    margin-top: 0;
+    margin-bottom: 10px;
+    width: 150px !important;
+    height: 170px !important;
+  }
 }
+
+/* Tablets de 10" (Vertical) */
+@media screen and (min-width: 800px) and (max-width: 1024px) and (orientation: portrait){
+  .container__login {
+    width: 500px;        /* más ancho */
+    padding: 35px;       /* más padding */
+    margin-top: 130px;   /* más espaciado superior */
+  }
+
+  form {
+    padding: 30px 25px;  /* padding más generoso */
+  }
+
+  .titulo-login {
+    font-size: 2.3em;    /* título más grande */
+    margin: 25px 0 -10px 0;
+  }
+
+  input {
+    padding: 14px;       /* inputs más altos */
+    font-size: 1.1em;    /* texto más grande */
+  }
+  
+  .btn-login {
+    padding: 16px 24px;  /* botón más grande */
+    font-size: 1.1em;
+  }
+
+  label {
+    font-size: 1.5em;    /* labels más grandes */
+  }
+  
+  .logo {
+    width: 180px;        /* logo más grande */
+    height: 195px;
+  }
+  
+  .error-message {
+    font-size: 15px;     /* mensajes de error más visibles */
+    padding: 14px 18px;
+  }
+  
+  .error-icon {
+    width: 22px;
+    height: 22px;
+  }
 }
+
+/* Tablet 7" horizontal */
+@media screen and (min-width: 800px) and (max-width: 920px) and (orientation: landscape){
+  .container__login {
+    width: 360px;       /* ancho compacto */
+    padding: 22px;      /* padding interno */
+    margin-top: -20px;   /* separación superior */
+  }
+
+  form {
+    max-width: 360px;
+    width: 90%;
+    padding: 20px 18px;
+  }
+
+  .titulo-login {
+    font-size: 1.8em;   /* título un poco más pequeño */
+    margin-bottom: 18px;
+  }
+
+  input {
+    padding: 11px;
+    font-size: 0.95em;
+    margin-top: 4px;
+  }
+
+  .btn-login {
+    font-size: 0.95em;
+    padding: 12px 18px;
+  }
+
+  label {
+    font-size: 1.1em;
+  }
+
+  .logo {
+    width: 130px;
+    height: 145px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+
+  .error-message {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .error-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+
+/* Tablet 7" vertical */
+@media screen and (min-width: 600px) and (max-width: 799px) and (orientation: portrait){
+  .container__login {
+    width: 360px; /* más angosto para pantallas chicas */
+    padding: 20px;
+    margin-top: 70px;
+  }
+
+  form {
+    padding: 20px 15px;
+  }
+
+  .titulo-login {
+    font-size: 1.7em;
+    margin: 15px 0 -8px 0;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 0.95em;
+  }
+
+  .btn-login {
+    padding: 12px 16px;
+    font-size: 0.95em;
+  }
+
+  label {
+    font-size: 1.1em;
+  }
+
+  .logo {
+    width: 125px;
+    height: 140px;
+  }
+
+  .error-message {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  .error-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 
 /* Celulares */
 @media screen and (max-width: 480px) {

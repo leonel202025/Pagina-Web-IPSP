@@ -124,14 +124,14 @@ export function VerAlumnos() {
 
   return (
     <div className="container__alumnos">
-      <h1 className="ver_title">Alumnos</h1>
+      <h1 className="ver__alumnos-title">Alumnos</h1>
       {gradosUnicos.map((grado) => {
         // Filtrar alumnos de este grado
         const alumnosDelGrado = alumnos.filter((a) => a.id_grado === grado);
 
         return (
           <div key={grado}>
-            <table>
+            <table className="tabla-alumnos">
               <thead>
                 <tr>
                   <th className="grado" colSpan="4">
@@ -148,9 +148,9 @@ export function VerAlumnos() {
               <tbody>
                 {alumnosDelGrado.map((alumno) => (
                   <tr key={alumno.id}>
-                    <td>{alumno.dni}</td>
-                    <td>{alumno.nombre}</td>
-                    <td>{alumno.email}</td>
+                    <td title={alumno.dni}>{alumno.dni}</td>
+                    <td title={alumno.nombre}>{alumno.nombre}</td>
+                    <td title={alumno.email}>{alumno.email}</td>
                     <td className="acciones">
                       <button
                         className="btn-editar"
@@ -232,7 +232,7 @@ export function VerAlumnos() {
               <button type="submit">Guardar Cambios</button>
               <button
                 type="button"
-                className="cancelar"
+                className="btn__cancelar-alm"
                 onClick={() => setModalEditarVisible(false)}
               >
                 Cancelar

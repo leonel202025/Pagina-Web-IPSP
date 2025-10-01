@@ -73,6 +73,38 @@
 
 /* Notebooks */
 
+/* Muy Grandes */
+@media (max-width: 1440px){
+    .crear__wrapper {
+    margin-top: -80px;
+}
+
+.title__create {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+}
+
+.container__create {
+    gap: 60px;
+}
+
+.crear__item {
+    font-size: 2.3em;
+    margin-top: 20px;
+    margin-bottom: -20px;
+}
+
+.icono__crear {
+  width: 90px;
+  height: 90px;
+}
+
+.icono__crear-profesor {
+  width: 95px;
+  height: 95px;
+}
+}
+
 /* Grandes */
 @media screen and (min-width: 1281px) and (max-width: 1439px){
     .crear__wrapper {

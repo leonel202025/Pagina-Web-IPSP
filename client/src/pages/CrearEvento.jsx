@@ -90,8 +90,8 @@ export function CrearEvento() {
   };
 
   return (
-    <div className="crear-evento__container">
-      <h1>Crear Evento</h1>
+    <div className="crear__evento-container">
+      <h1 className="crear__evento-title">Crear Evento</h1>
       <form onSubmit={handleSubmit} className="crear-evento__form">
         <input
           type="text"
@@ -132,7 +132,7 @@ export function CrearEvento() {
                 <option value="todos">Todos los profesores</option>
               </select>
 
-              <div className="botones">
+              <div className="add__evento-botones">
 
                 {/* Botón agregar */}
                 {!profesoresSeleccionados.includes("todos") && (
@@ -184,8 +184,9 @@ export function CrearEvento() {
             </div>
           ))}
         </div>
-
-        <button type="submit" className="btn__guardar-evento">Guardar Evento</button>
+        <div className="form__evento-footer">
+          <button type="submit" className="btn__guardar-evento">Guardar Evento</button>
+        </div>
       </form>
 
       <ModalMensaje

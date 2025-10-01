@@ -1,288 +1,206 @@
-.modal-profesor__overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
-}
-
-.modal-profesor__container {
-  width: 550px;
-  background-color: #fffd;
-  border: 3px solid var(--color-secundario);
-  border-radius: 10px;
-  padding: 2rem;
-  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+/* Contenedor principal */
+.mis-cursos__container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Igual que el otro formulario */
-  margin: auto;
-  
+  align-items: center;
+  margin-top: 40px;
+  font-family: 'Merriweather', serif;
 }
+
+/* Tabla con tamaño uniforme */
+.mis-cursos__table {
+  width: 100%;
+  max-width: 600px;
+  margin: 10px auto 20px auto;
+  border-collapse: collapse;
+  table-layout: fixed; /* permite ancho fijo de columnas */
+  box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.527);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Bordes redondeados */
+.mis-cursos__table thead tr:first-child th:first-child { border-top-left-radius: 10px; }
+.mis-cursos__table thead tr:first-child th:last-child { border-top-right-radius: 10px; }
+.mis-cursos__table tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+.mis-cursos__table tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+/* Cabecera */
+.mis-cursos__table thead th {
+  padding: 12px;
+  color: #ddd;
+  text-align: center;
+  border: 1.5px solid var(--color-secundario);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Encabezado de grado/materia */
+.mis-cursos__table thead .grado {
+  color: white;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 14px 0;
+  text-align: center;
+}
+
+/* Celdas */
+.mis-cursos__table tbody td {
+  padding: 12px;
+  border: 1.5px solid var(--color-secundario);
+  color: #ddd;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Ancho fijo por columna */
+.mis-cursos__table th:nth-child(1),
+.mis-cursos__table td:nth-child(1) { width: 40%; }  /* Nombre del Alumno */
+.mis-cursos__table th:nth-child(2),
+.mis-cursos__table td:nth-child(2) { width: 30%; }  /* Calificación */
+.mis-cursos__table th:nth-child(3),
+.mis-cursos__table td:nth-child(3) { width: 100%; }  /* Acciones */
 
 /* Título */
-.modal-profesor__title {
-  color: var(--color-secundario);
+.mis-cursos__title {
+  color: #ddd;
   text-align: center;
-  margin: 5px 0 -10px 0; /* Igual que title__profesor */
-  width: 100%;
-  font-size: 2em;
-  font-family: 'Merriweather';
+  font-size: 2.5em;
+  margin-top: -30px;
+  margin-bottom: 20px;
 }
 
-/* Contenedor del formulario */
-.modal-profesor__form {
-  width: 100%;
+/* Columna de acciones */
+.mis-cursos__acciones {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: space-between; /* Igual que el general */
-}
-
-/* Sección de datos personales */
-.modal-profesor__section {
-  flex: 1 1 100%;
-  max-width: 100%;
-}
-
-.modal-profesor__row {
-  display: flex;
-  gap: 3rem; /* Igual que form-datos-personales .row */
-  margin-bottom: 1rem;
-}
-
-.modal-profesor__input {
-  flex: 1;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: none;
-  border-bottom: 2px solid var(--color-secundario);
-  background: transparent;
-  outline: none;
-  text-align: left;
-}
-
-/* Checkboxes */
-.modal-profesor__checkboxes {
-  display: flex;
-  width: 100%;
-  justify-content: center; /* Cambiado para que se centre como en el general */
-  gap: 3rem;
-}
-
-.modal-profesor__column {
-  flex: 1 1 50%;
-  width: 200px;
-}
-
-.modal-profesor__checkbox-list {
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  padding: 0.75rem;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  text-align: left;
-}
-
-.modal-profesor__checkbox-item {
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  flex-direction: row-reverse; /* Igual que checkbox-item */
-}
-
-.modal-profesor__checkbox-item span {
-  display: inline-block;
-  width: 350px;
-  text-align: left;
-  padding-left: 6px;
-}
-
-/* Footer */
-.modal-profesor__footer {
+  gap: 10px;
   width: 100%;
-  margin-top: 2rem;
-  text-align: center;
 }
 
-.guardar {
-  background-color: var(--color-secundario);
-  color: white;
-  margin-bottom: 10px;
-}
-.guardar:hover {
-  background-color: #004b9f;
+/* Botones */
+.mis-cursos__btn-cargar,
+.mis-cursos__btn-eliminar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.cancelar {
-  background-color: #ccc;
+.mis-cursos__btn-cargar { border-color: var(--color-secundario); }
+.mis-cursos__btn-eliminar { border-color: #bd1111; }
+
+.mis-cursos__btn-cargar:hover { 
+  background-color: rgba(30, 86, 227, 0.6);
+  transform: scale(1.1);
+}
+.mis-cursos__btn-eliminar:hover { 
+  background-color: rgba(231, 17, 17, 0.6);
+  transform: scale(1.1);
+}
+
+/* Modal para cargar nota */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #ddd;
+  padding: 25px;
+  border-radius: 8px;
+  width: 350px;
+  max-width: 90%;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+}
+
+.nota__btn-cancelar {
+  background-color: #bbb;
   color: #333;
 }
 
-.cancelar:hover {
-  background-color: #bbb;
+.nota__btn-cancelar:hover {
+  background-color: #aaa;
 }
 
-@media screen and (min-width: 1280px) and (max-width: 1439px) {
-
-  /* Contenedor general */
-  .modal-profesor__container {
-    width: 380px; /* más angosto */
-    padding: 1rem; /* menos padding */
-  }
-
-  /* Título */
-  .modal-profesor__title {
-    font-size: 1.4em; /* más chico */
-    margin: 3px 0 -5px 0;
-  }
-
-  /* Formulario */
-  .modal-profesor__form {
-    gap: 1rem; /* menos separación */
-  }
-
-  /* Filas de inputs */
-  .modal-profesor__row {
-    gap: 1rem;
-    margin-bottom: 0.5rem; /* menos altura */
-  }
-
-  /* Inputs */
-  .modal-profesor__input {
-    font-size: 0.85rem;
-    padding: 0.35rem;
-  }
-
-  /* Labels */
-  .modal-profesor__label {
-    font-size: 1rem; /* achicamos labels */
-    margin-bottom: 8px;
-  }
-
-  /* Contenedor de checkboxes */
-  .modal-profesor__checkboxes {
-    gap: 1rem; /* menos espacio entre columnas */
-  }
-
-  .modal-profesor__column {
-    width: 130px; /* columnas más compactas */
-  }
-
-  /* Lista de checkboxes */
-  .modal-profesor__checkbox-list {
-    max-height: 180px; /* más baja */
-    padding: 0.4rem;
-  }
-
-  /* Ítems de checkbox */
-  .modal-profesor__checkbox-item {
-    gap: 0.3rem;
-    margin-bottom: 0.3rem; /* menos espacio vertical */
-  }
-
-  .modal-profesor__checkbox-item span {
-    width: 220px;
-    font-size: 0.8rem;
-  }
-
-  /* Botones */
-  .modal-profesor__btn{
-    padding: 0.5rem 1.2rem;
-    margin-top: -50px;
-    margin-bottom: -20px;
-    font-size: 0.9rem;
-  }
-
-  .modal-profesor__btn.guardar {
-    font-size: 0.9em;
-  }
+/* Selección de curso */
+.mis-cursos__seleccion{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--color-secundario);
+  padding: 30px 23px;
+  border-radius: 10px;
+  background-color: #fffc;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
 }
 
-
-@media screen and (min-width: 1025px) and (max-width: 1280px) {
-
-  /* Contenedor general */
-  .modal-profesor__container {
-    width: 380px; /* más angosto */
-    padding: 1rem; /* menos padding */
-  }
-
-  /* Título */
-  .modal-profesor__title {
-    font-size: 1.4em; /* más chico */
-    margin: 3px 0 -5px 0;
-  }
-
-  /* Formulario */
-  .modal-profesor__form {
-    gap: 1rem; /* menos separación */
-  }
-
-  /* Filas de inputs */
-  .modal-profesor__row {
-    gap: 1rem;
-    margin-bottom: 0.5rem; /* menos altura */
-  }
-
-  /* Inputs */
-  .modal-profesor__input {
-    font-size: 0.85rem;
-    padding: 0.35rem;
-  }
-
-  /* Labels */
-  .modal-profesor__label {
-    font-size: 1rem; /* achicamos labels */
-    margin-bottom: 8px;
-  }
-
-  /* Contenedor de checkboxes */
-  .modal-profesor__checkboxes {
-    gap: 1rem; /* menos espacio entre columnas */
-  }
-
-  .modal-profesor__column {
-    width: 130px; /* columnas más compactas */
-  }
-
-  /* Lista de checkboxes */
-  .modal-profesor__checkbox-list {
-    max-height: 180px; /* más baja */
-    padding: 0.4rem;
-  }
-
-  /* Ítems de checkbox */
-  .modal-profesor__checkbox-item {
-    gap: 0.3rem;
-    margin-bottom: 0.3rem; /* menos espacio vertical */
-  }
-
-  .modal-profesor__checkbox-item span {
-    width: 220px;
-    font-size: 0.8rem;
-  }
-
-  /* Botones */
-  .modal-profesor__btn{
-    padding: 0.5rem 1.2rem;
-    margin-top: -50px;
-    margin-bottom: -20px;
-    font-size: 0.85rem;
-  }
-
-  .modal-profesor__btn.guardar {
-    font-size: 0.8em;
-  }
+.mis__cursos-botones{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
+.mis__cursos-title {
+  font-size: 1.85em;
+  color: var(--color-secundario);
+  margin-bottom: 25px;
+}
 
+.mis__cursos-btn-curso {
+  background-color: transparent;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 1.3em;
+  color: #000;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
+.mis__cursos-btn-curso:hover {
+  transform: scale(1.01);
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.436);
+}
+
+.mis__cursos-boton-volver {
+  border: 1px solid var(--color-secundario);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  max-width: max-content;
+}
+
+.mis__cursos-boton-volver:hover{
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Quitar flechitas del input number */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

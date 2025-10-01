@@ -35,6 +35,7 @@ export function VerEventos() {
             <tr>
               <th>Fecha</th>
               <th>Acto</th>
+              <th>Descripcion</th>
               <th>Reponsables</th>
               <th>Acciones</th>
             </tr>
@@ -45,7 +46,14 @@ export function VerEventos() {
                 <tr key={evento.id}>
                   <td>{new Date(evento.fecha).toLocaleDateString()}</td>
                   <td className="evento__titulo">{evento.titulo}</td>
-                  <td>
+                  <td title={evento.descripcion}>{evento.descripcion}</td>
+                  <td
+                    title={
+                      Array.isArray(evento.profesores)
+                        ? evento.profesores.join(", ")
+                        : evento.profesores
+                    }
+                  >
                     {Array.isArray(evento.profesores)
                       ? evento.profesores.join(", ")
                       : evento.profesores}

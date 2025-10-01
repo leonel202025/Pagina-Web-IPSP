@@ -324,7 +324,7 @@ textarea {
 /* Notebooks Medianas y Tablets de 10" (Horizontal) */
 @media (min-width: 1025px) and (max-width: 1280px) {
   .form__container {
-    width: 340px;
+    width: 450px;
   }
 
   .titulo-contacto {
@@ -346,12 +346,12 @@ textarea {
   }
 
   .canales {
-    font-size: 1.4em;
+    font-size: 2em;
   }
 
   .logo__item {
-    width: 55px;
-    height: 55px;
+    width: 80px;
+    height: 80px;
   }
 }
 
@@ -390,39 +390,44 @@ textarea {
 }
 
 /* Tablets 10" (Vertical) */
-@media screen and (max-width: 800px){
+@media screen and (max-width: 800px) {
   .form__container {
-    width: 500px;
-    margin-top: 90px;
+    width: 500px;        /* ancho más amplio */
+    margin-top: 60px;   /* más espacio superior */
+    padding: 30px;       /* padding interno más grande */
   }
 
   .titulo-contacto {
-    font-size: 1.8em;
+    font-size: 2.5em;    /* título muy grande */
   }
 
   .form__container label {
-    font-size: 1em;
+    font-size: 1.4em;    /* etiquetas más visibles */
   }
 
   .form__container input,
-  select,
-  textarea {
-    font-size: 0.8em;
+  .form__container select,
+  .form__container textarea {
+    font-size: 1.2em;    /* texto más grande */
+    padding: 14px;       /* inputs más altos */
+    margin: 12px 0;      /* más espacio entre campos */
   }
 
   .btn-contact {
-   font-size: 1em !important;
+    font-size: 1.3em !important;  
+    padding: 16px 24px;  /* botón más grande */
   }
 
   .canales {
-    font-size: 2.1em;
+    font-size: 2em;    /* íconos de contacto más grandes */
   }
 
   .logo__item {
-    width: 90px;
-    height: 90px;
+    width: 80px;         /* logo más grande */
+    height: 80px;
   }
 }
+
 
 /* Tablets 7" (Vertical) */
 @media screen and (max-width: 600px){
@@ -432,17 +437,18 @@ textarea {
   }
 
   .titulo-contacto {
-    font-size: 2.3em;
+    font-size: 2em;
+    margin-top: 10px;
   }
 
   .form__container label {
-    font-size: 1.7em;
+    font-size: 1.3em;
   }
 
   .form__container input,
   select,
   textarea {
-    font-size: 1.3em;
+    font-size: 1em;
   }
 
   .btn-contact {
@@ -450,12 +456,12 @@ textarea {
   }
 
   .canales {
-    font-size: 2em;
+    font-size: 1.8em;
   }
 
   .logo__item {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
   }
 }
 

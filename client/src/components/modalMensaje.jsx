@@ -8,7 +8,7 @@ const ModalMensaje = ({
   onClose,
   onConfirm,
   onCancelar,
-  onVolverAlPanel
+  onVolverAlPanel,
 }) => {
   if (!visible) return null;
 
@@ -24,18 +24,8 @@ const ModalMensaje = ({
               width="60"
               height="60"
             >
-              <circle
-                className="circle"
-                cx={26}
-                cy={26}
-                r={23.5}
-                fill="none"
-              />
-              <path
-                className="check"
-                fill="none"
-                d="M14 27l7 7 17-17"
-              />
+              <circle className="circle" cx={26} cy={26} r={23.5} fill="none" />
+              <path className="check" fill="none" d="M14 27l7 7 17-17" />
             </svg>
           )}
 
@@ -94,7 +84,10 @@ const ModalMensaje = ({
             <button className="modal-btn confirmar" onClick={onConfirm}>
               Confirmar
             </button>
-            <button className="modal-btn cancelar" onClick={onCancelar || onClose}>
+            <button
+              className="modal-btn cancelar"
+              onClick={onCancelar || onClose}
+            >
               Cancelar
             </button>
           </div>

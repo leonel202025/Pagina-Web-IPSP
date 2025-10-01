@@ -148,12 +148,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--color-secundario);
+  border: 2px solid var(--color-secundario);
   padding: 30px 23px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.4); /* fondo oscuro semitransparente */
-  backdrop-filter: blur(8px); /* el efecto de blur */
-  -webkit-backdrop-filter: blur(8px); /* para Safari *  /* Safari */
+  background-color: #fffc;
   box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
 }
 
@@ -167,22 +165,24 @@
 
 .mis__cursos-title {
   font-size: 1.85em;
-  color: #ddd;
+  color: var(--color-secundario);
   margin-bottom: 25px;
 }
 
 .mis__cursos-btn-curso {
-  border: 1px solid var(--color-secundario);
   background-color: transparent;
   padding: 16px;
   border-radius: 10px;
   font-size: 1.3em;
-  color: #ddd;
+  color: #000;
+  transition: transform 2s ease, box-shadow 1s ease, border 2s ease;
 }
 
 /* opcional: efecto al pasar el mouse */
 .mis__cursos-btn-curso:hover {
-  background-color: rgba(0, 0, 0, 0.4); /* fondo oscuro semitransparente */
+  background-color: transparent;
+  transform: scale(1.01); 
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.436);
 }
 
 .mis__cursos-boton-volver {
@@ -219,4 +219,168 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .nota__btn-cancelar:hover{
   background-color: #aaa;
+}
+
+/* Responsive Design */
+
+/* Notebooks */
+
+/* Muy Grandes */
+@media screen and (min-width: 1440px) {
+  .mis-cursos__table {
+    max-width: 1200px;
+    font-size: 1rem;
+    margin-top: -30px;
+  }
+
+  .mis-cursos__table th, 
+  .mis-cursos__table td {
+    padding: 8px 15px;
+  }
+
+  .mis-cursos__title {
+    font-size: 2.5em;
+  }
+
+  .mis-cursos__btn-editar,
+  .mis-cursos__btn-eliminar,
+  .mis-cursos__btn-cargar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .mis__cursos-btn-curso {
+    font-size: 1.3em;
+    padding: 16px;
+  }
+
+  .mis__cursos-boton-volver {
+    font-size: 1.2em;
+    padding: 16px;
+  }
+
+   .mis-cursos__seleccion {
+    padding: 30px 23px;
+  }
+
+  .mis__cursos-title {
+    font-size: 1.5em;
+    margin-bottom: 25px;
+  }
+
+  .mis__cursos-botones {
+    gap: 20px;
+  }
+
+  .mis__cursos-btn-curso {
+    font-size: 1.2em;
+    padding: 16px;
+  }
+}
+
+/* Grandes */
+@media screen and (min-width: 1281px) and (max-width: 1439px) {
+  .mis-cursos__table {
+    max-width: 1050px;
+    font-size: 0.95rem;
+    margin-top: -25px;
+  }
+
+  .mis-cursos__table th, 
+  .mis-cursos__table td {
+    padding: 7px 12px;
+  }
+
+  .mis-cursos__title {
+    font-size: 2.2em;
+  }
+
+  .mis-cursos__btn-editar,
+  .mis-cursos__btn-eliminar,
+  .mis-cursos__btn-cargar {
+    width: 45px;
+    height: 45px;
+  }
+
+  .mis__cursos-btn-curso {
+    font-size: 1.2em;
+    padding: 14px;
+  }
+
+  .mis__cursos-boton-volver {
+    font-size: 1.15em;
+    padding: 14px;
+  }
+    .mis-cursos__seleccion {
+    padding: 25px 20px;
+    margin-top: -30px;
+  }
+
+  .mis__cursos-title {
+    font-size: 1.3em;
+    margin-bottom: 22px;
+  }
+
+  .mis__cursos-botones {
+    gap: 18px;
+  }
+
+  .mis__cursos-btn-curso {
+    font-size: 1em;
+    padding: 12px 14px;
+  }
+}
+
+/* Medianas */
+@media screen and (min-width: 1025px) and (max-width: 1280px) {
+  .mis-cursos__table {
+    max-width: 900px;
+    font-size: 0.9rem;
+    margin-top: -20px;
+  }
+
+  .mis-cursos__table th, 
+  .mis-cursos__table td {
+    padding: 6px 10px;
+  }
+
+  .mis-cursos__title {
+    font-size: 2em;
+  }
+
+  .mis-cursos__btn-editar,
+  .mis-cursos__btn-eliminar,
+  .mis-cursos__btn-cargar {
+    width: 40px;
+    height: 40px;
+    padding: 5px 10px;
+  }
+
+  .mis__cursos-btn-curso {
+    font-size: 1.15em;
+    padding: 12px;
+  }
+
+  .mis__cursos-boton-volver {
+    font-size: 1.1em;
+    padding: 12px;
+  }
+    .mis-cursos__seleccion {
+    padding: 20px 15px;
+    margin-top: -15px;
+  }
+
+  .mis__cursos-title {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+  }
+
+  .mis__cursos-botones {
+    gap: 15px;
+  }
+
+  .mis__cursos-btn-curso {
+    font-size: 1em;
+    padding: 10px 12px;
+  }
 }
