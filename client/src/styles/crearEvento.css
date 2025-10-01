@@ -110,38 +110,40 @@
 /* Grandes */
 @media screen and (min-width: 1281px) and (max-width: 1439px) {
   .crear__evento-container {
-    width: 400px;
-    padding: 22px 28px 5px 28px;
+    width: 360px;           /* más estrecho */
+    padding: 18px 22px 5px 22px;  /* menos padding */
+    margin-top: -20px;
   }
 
   .crear__evento-container h1 {
-    font-size: 1.7em;
-    margin-bottom: 18px;
+    font-size: 1.5em;       /* un poco más pequeño */
+    margin-bottom: 14px;
   }
 
   .crear-evento__form {
-    margin-top: -35px;
+    margin-top: -30px;      /* menos margen */
   }
 
   .crear-evento__form input,
   .crear-evento__form select,
   .crear-evento__form textarea {
-    font-size: 0.95em;
-    padding: 11px;
-    margin: 11px 0;
+    font-size: 0.9em;       /* un poco más pequeño */
+    padding: 9px;           /* menos padding */
+    margin: 9px 0;
   }
 
   .btn__guardar-evento {
-    margin-top: 25px;
-    font-size: 1rem;
-    padding: 0.7rem 1.5rem;
+    margin-top: 20px;
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
   }
 
-.form__evento-footer{
-  margin-top: -30px;
-  margin-bottom: -10px;
+  .form__evento-footer {
+    margin-top: -25px;
+    margin-bottom: -8px;
+  }
 }
-}
+
 
 /* Medianas */
 @media screen and (min-width: 1025px) and (max-width: 1280px) {

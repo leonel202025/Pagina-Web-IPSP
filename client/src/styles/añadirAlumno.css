@@ -129,7 +129,6 @@ body, html {
 @media screen and (min-width: 1281px) and (max-width: 1439px) {
   .container {
     width: 340px; /* más estrecho */
-    height: 380px;
     margin-top: -10px;
     padding: 12px 18px;
   }
