@@ -268,6 +268,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
     .mis-cursos__seleccion {
     padding: 30px 23px;
+    margin-top: -40px;
   }
 
   .mis__cursos-title {
@@ -285,12 +286,12 @@ input[type="number"]::-webkit-inner-spin-button {
   }
 }
 
-/* Graandes */
+/* Grandes */
 @media screen and (min-width: 1281px) and (max-width: 1439px) {
   .mis-cursos__table {
     max-width: 1050px;
     font-size: 0.95rem;
-    margin-top: -25px;
+    margin-top: -55px;
   }
 
   .mis-cursos__table th, 
@@ -320,6 +321,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
     .mis-cursos__seleccion {
     padding: 25px 20px;
+    margin-top: -40px;
   }
 
   .mis__cursos-title {
@@ -373,6 +375,7 @@ input[type="number"]::-webkit-inner-spin-button {
   }
     .mis-cursos__seleccion {
     padding: 20px 15px;
+    margin-top: -20px;
   }
 
   .mis__cursos-title {
