@@ -8,6 +8,7 @@ export function MisCursos() {
   const [grados, setGrados] = useState([]);
   const [alumnos, setAlumnos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [busqueda, setBusqueda] = useState(""); // 🔍 Estado para búsqueda
 
   const [cursoSeleccionado, setCursoSeleccionado] = useState(null);
 
@@ -174,93 +175,120 @@ export function MisCursos() {
       {/* Vista 2: Tabla de alumnos */}
       {cursoSeleccionado && (
         <>
-          <table
-            className="mis-cursos__table"
-            key={`${cursoSeleccionado.id_grado}-${cursoSeleccionado.id_asignatura}`}
-          >
-            <thead>
-              <tr>
-                <th className="grado" colSpan="3">
-                  {cursoSeleccionado.grado} - {cursoSeleccionado.materia}
-                </th>
-              </tr>
-              <tr>
-                <th>Nombre del Alumno</th>
-                <th>Calificación</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {alumnos
-                .filter(
-                  (a) =>
-                    a.id_grado === cursoSeleccionado.id_grado &&
-                    a.id_asignatura === cursoSeleccionado.id_asignatura
-                )
-                .map((alumno) => {
-                  const calificacion =
-                    alumno.nota !== null && alumno.nota !== undefined
-                      ? alumno.nota
-                      : "Sin calificación";
-                  return (
-                    <tr key={`${alumno.id}-${cursoSeleccionado.id_asignatura}`}>
-                      <td>{alumno.nombre}</td>
-                      <td>{calificacion}</td>
-                      <td className="mis-cursos__acciones">
-                        <button
-                          className="mis-cursos__btn-cargar"
-                          title="Cargar Calificación"
-                          onClick={() => {
-                            setAlumnoSeleccionado({
-                              ...alumno,
-                              id_asignatura: cursoSeleccionado.id_asignatura,
-                            });
-                            setModalNotaVisible(true);
-                          }}
-                        >
-                          {/* Ícono ➕ */}
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
+          {/* 🔍 Barra de búsqueda */}
+          <div className="busqueda__contenedor-alumno">
+            <button className="busqueda__boton">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="35"
+                height="35"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M10 2a8 8 0 0 1 6.32 12.906l5.387 5.387a1 1 0 0 1-1.414 1.414l-5.387-5.387A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12A6 6 0 0 0 10 4z" />
+              </svg>
+            </button>
+            <input
+              type="text"
+              placeholder="Buscar alumno..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              className="busqueda__input"
+            />
+          </div>
+          <div className="container__curso">
+            <table
+              className="mis-cursos__table"
+              key={`${cursoSeleccionado.id_grado}-${cursoSeleccionado.id_asignatura}`}
+            >
+              <thead>
+                <tr>
+                  <th className="grado" colSpan="3">
+                    {cursoSeleccionado.grado} - {cursoSeleccionado.materia}
+                  </th>
+                </tr>
+                <tr>
+                  <th>Nombre del Alumno</th>
+                  <th>Calificación</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {alumnos
+                  .filter(
+                    (a) =>
+                      a.id_grado === cursoSeleccionado.id_grado &&
+                      a.id_asignatura === cursoSeleccionado.id_asignatura
+                  )
+                  .filter((a) =>
+                    a.nombre.toLowerCase().includes(busqueda.toLowerCase())
+                  )
+                  .map((alumno) => {
+                    const calificacion =
+                      alumno.nota !== null && alumno.nota !== undefined
+                        ? alumno.nota
+                        : "Sin calificación";
+                    return (
+                      <tr
+                        key={`${alumno.id}-${cursoSeleccionado.id_asignatura}`}
+                      >
+                        <td>{alumno.nombre}</td>
+                        <td>{calificacion}</td>
+                        <td className="mis-cursos__acciones">
+                          <button
+                            className="mis-cursos__btn-cargar"
+                            title="Cargar Calificación"
+                            onClick={() => {
+                              setAlumnoSeleccionado({
+                                ...alumno,
+                                id_asignatura: cursoSeleccionado.id_asignatura,
+                              });
+                              setModalNotaVisible(true);
+                            }}
                           >
-                            <path
-                              d="M12 5v14m-7-7h14"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                            />
-                          </svg>
-                        </button>
+                            {/* Ícono ➕ */}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                d="M12 5v14m-7-7h14"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                              />
+                            </svg>
+                          </button>
 
-                        <button
-                          className="mis-cursos__btn-eliminar"
-                          title="Eliminar Calificación"
-                          onClick={() => {
-                            setNotaAEliminar(alumno);
-                            setModalConfirmVisible(true);
-                          }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            fill="#e74c3c"
-                            viewBox="0 0 24 24"
+                          <button
+                            className="mis-cursos__btn-eliminar"
+                            title="Eliminar Calificación"
+                            onClick={() => {
+                              setNotaAEliminar(alumno);
+                              setModalConfirmVisible(true);
+                            }}
                           >
-                            <path d="M6 19c0 1.104.896 2 2 2h8c1.104 0 2-.896 2-2V7H6v12zm3.46-9.88L12 10.59l2.54-2.47a1 1 0 1 1 1.42 1.42L13.41 12l2.47 2.54a1 1 0 1 1-1.42 1.42L12 13.41l-2.54 2.47a1 1 0 1 1-1.42-1.42L10.59 12 8.12 9.46a1 1 0 0 1 1.34-1.34z" />
-                            <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                          </svg>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
-
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              fill="#e74c3c"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M6 19c0 1.104.896 2 2 2h8c1.104 0 2-.896 2-2V7H6v12zm3.46-9.88L12 10.59l2.54-2.47a1 1 0 1 1 1.42 1.42L13.41 12l2.47 2.54a1 1 0 1 1-1.42 1.42L12 13.41l-2.54 2.47a1 1 0 1 1-1.42-1.42L10.59 12 8.12 9.46a1 1 0 0 1 1.34-1.34z" />
+                              <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
           <button
             className="mis__cursos-boton-volver"
             onClick={() => setCursoSeleccionado(null)}
@@ -290,7 +318,10 @@ export function MisCursos() {
               }}
             >
               <button onClick={guardarNota}>Guardar</button>
-              <button onClick={() => setModalNotaVisible(false)} className="nota__btn-cancelar">
+              <button
+                onClick={() => setModalNotaVisible(false)}
+                className="nota__btn-cancelar"
+              >
                 Cancelar
               </button>
             </div>
