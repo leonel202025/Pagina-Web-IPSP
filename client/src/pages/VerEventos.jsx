@@ -36,7 +36,7 @@ export function VerEventos() {
               <th>Fecha</th>
               <th>Acto</th>
               <th>Descripcion</th>
-              <th>Reponsables</th>
+              <th>Reponsable - Tarea</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -47,22 +47,38 @@ export function VerEventos() {
                   <td>{new Date(evento.fecha).toLocaleDateString()}</td>
                   <td className="evento__titulo">{evento.titulo}</td>
                   <td title={evento.descripcion}>{evento.descripcion}</td>
+
+                  {/* 🔹 Nueva columna: Responsable - Tarea */}
                   <td
                     title={
-                      Array.isArray(evento.profesores)
-                        ? evento.profesores.join(", ")
-                        : evento.profesores
+                      evento.asignaciones?.length
+                        ? evento.asignaciones
+                            .map(
+                              (a) =>
+                                `${a.profesor || "Sin profesor"} - ${
+                                  a.tarea || "Sin tarea"
+                                }`
+                            )
+                            .join(", ")
+                        : "Sin asignaciones"
                     }
                   >
-                    {Array.isArray(evento.profesores)
-                      ? evento.profesores.join(", ")
-                      : evento.profesores}
+                    {evento.asignaciones?.length ? (
+                      evento.asignaciones.map((a, i) => (
+                        <div key={i}>
+                          {a.profesor || "Sin profesor"} -{" "}
+                          {a.tarea || "Sin tarea"}
+                        </div>
+                      ))
+                    ) : (
+                      <span>Sin asignaciones</span>
+                    )}
                   </td>
+
                   <td className="acciones">
                     <button
                       className="btn-editar"
                       title="Modificar Datos"
-                      onClick={() => handleAbrirEditar(profesor)}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -75,9 +91,8 @@ export function VerEventos() {
                       </svg>
                     </button>
                     <button
-                      onClick={() => handleEliminarClick(profesor)}
                       className="btn-eliminar"
-                      title="Eliminar Profesor"
+                      title="Eliminar Evento"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +110,7 @@ export function VerEventos() {
               ))
             ) : (
               <tr>
-                <td colSpan="4">No hay eventos registrados</td>
+                <td colSpan="5">No hay eventos registrados</td>
               </tr>
             )}
           </tbody>

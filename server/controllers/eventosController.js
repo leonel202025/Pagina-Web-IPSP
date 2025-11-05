@@ -2,23 +2,36 @@ const db = require("../models/db"); // tu conexión mysql
 
 exports.crearEvento = async (req, res) => {
   try {
-    const { titulo, descripcion, fecha, todosProfesores, profesoresAsignados } = req.body;
+    const { titulo, descripcion, fecha, todosProfesores, profesoresAsignados } =
+      req.body;
 
-    // Insertar evento
+    // 1️⃣ Insertar evento
     const [result] = await db.query(
       "INSERT INTO eventos (titulo, descripcion, fecha, todos_profesores) VALUES (?, ?, ?, ?)",
       [titulo, descripcion, fecha, todosProfesores]
     );
-
     const eventoId = result.insertId;
 
-    // Si NO es para todos, guardar los profesores seleccionados
-    if (!todosProfesores && profesoresAsignados && profesoresAsignados.length > 0) {
-      for (const profesorId of profesoresAsignados) {
+    // 2️⃣ Si NO es para todos, guardar profesores y tareas
+    if (
+      !todosProfesores &&
+      profesoresAsignados &&
+      profesoresAsignados.length > 0
+    ) {
+      for (const prof of profesoresAsignados) {
+        // Insertar relación profesor-evento
         await db.query(
           "INSERT INTO evento_profesor (id_evento, id_profesor) VALUES (?, ?)",
-          [eventoId, profesorId]
+          [eventoId, prof.idProfesor]
         );
+
+        // Insertar relación tarea-evento-profesor si tiene tarea asignada
+        if (prof.idTarea) {
+          await db.query(
+            "INSERT INTO evento_tarea (id_evento, id_tarea, id_profesor) VALUES (?, ?, ?)",
+            [eventoId, prof.idTarea, prof.idProfesor]
+          );
+        }
       }
     }
 
@@ -31,37 +44,40 @@ exports.crearEvento = async (req, res) => {
 
 exports.listarEventos = async (req, res) => {
   try {
-    // Traemos todos los eventos
     const [eventos] = await db.query(
       `SELECT id, titulo, descripcion, fecha, todos_profesores
        FROM eventos
        ORDER BY fecha DESC`
     );
 
-    const eventosConProfesores = [];
+    const eventosConAsignaciones = [];
+
     for (const evento of eventos) {
-      let profesores = [];
+      let asignaciones = [];
 
       if (!evento.todos_profesores) {
-        // Traemos los nombres de los profesores asignados desde usuarios
         const [rows] = await db.query(
-          `SELECT u.nombre
-           FROM evento_profesor ep
-           JOIN usuarios u ON ep.id_profesor = u.id
-           WHERE ep.id_evento = ? AND u.rol = 'profesor'`,
+          `SELECT u.nombre AS profesor, t.nombre AS tarea
+   FROM evento_profesor ep
+   JOIN usuarios u ON ep.id_profesor = u.id
+   LEFT JOIN evento_tarea et ON ep.id_evento = et.id_evento AND ep.id_profesor = et.id_profesor
+   LEFT JOIN tareas t ON et.id_tarea = t.id
+   WHERE ep.id_evento = ?`,
           [evento.id]
         );
 
-        profesores = rows.map(r => r.nombre);
+        asignaciones = rows.length ? rows : [];
+      } else {
+        asignaciones = [{ profesor: "Todos los profesores", tarea: "" }];
       }
 
-      eventosConProfesores.push({
+      eventosConAsignaciones.push({
         ...evento,
-        profesores: evento.todos_profesores ? ['Todos los profesores'] : profesores.length ? profesores : ['Sin profesores asignados']
+        asignaciones,
       });
     }
 
-    res.json(eventosConProfesores);
+    res.json(eventosConAsignaciones);
   } catch (error) {
     console.error(error);
     res.status(500).json({ mensaje: "Error al listar eventos" });
@@ -72,7 +88,7 @@ exports.listarEventosProfesor = async (req, res) => {
   try {
     const { idProfesor } = req.params;
 
-    // Traemos los eventos que son para todos los profesores
+    // Eventos para todos los profesores
     const [eventosParaTodos] = await db.query(
       `SELECT id, titulo, descripcion, fecha, todos_profesores
        FROM eventos
@@ -80,28 +96,43 @@ exports.listarEventosProfesor = async (req, res) => {
        ORDER BY fecha DESC`
     );
 
-    // Traemos los eventos asignados específicamente al profesor
+    // Eventos asignados al profesor con sus tareas
     const [eventosAsignados] = await db.query(
-      `SELECT e.id, e.titulo, e.descripcion, e.fecha, e.todos_profesores
+      `SELECT e.id, e.titulo, e.descripcion, e.fecha, t.nombre as tarea
        FROM eventos e
        JOIN evento_profesor ep ON e.id = ep.id_evento
+       JOIN evento_tarea et ON e.id = et.id_evento AND ep.id_profesor = et.id_profesor
+       JOIN tareas t ON et.id_tarea = t.id
        WHERE ep.id_profesor = ?
        ORDER BY e.fecha DESC`,
       [idProfesor]
     );
 
-    // Unimos ambos resultados (sin duplicar)
+    // Unir eventos sin duplicados
     const eventosMap = new Map();
-
-    [...eventosParaTodos, ...eventosAsignados].forEach(ev => {
-      eventosMap.set(ev.id, ev); // evita duplicados por id
+    [...eventosParaTodos, ...eventosAsignados].forEach((ev) => {
+      if (!eventosMap.has(ev.id)) {
+        eventosMap.set(ev.id, { ...ev, tareas: [] });
+      }
+      if (ev.tarea) {
+        eventosMap.get(ev.id).tareas.push(ev.tarea);
+      }
     });
 
     const eventos = Array.from(eventosMap.values());
-
     res.json(eventos);
   } catch (error) {
     console.error(error);
     res.status(500).json({ mensaje: "Error al listar eventos del profesor" });
+  }
+};
+
+exports.listarTareas = async (req, res) => {
+  try {
+    const [rows] = await db.query("SELECT id, nombre, descripcion FROM tareas");
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al listar tareas" });
   }
 };

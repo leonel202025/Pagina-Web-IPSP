@@ -35,6 +35,7 @@ export const CalendarioProfesor = () => {
             <tr>
               <th>Fecha</th>
               <th>Acto</th>
+              <th>Tarea</th>
             </tr>
           </thead>
           <tbody>
@@ -42,12 +43,19 @@ export const CalendarioProfesor = () => {
               eventos.map((evento) => (
                 <tr key={evento.id}>
                   <td>{new Date(evento.fecha).toLocaleDateString()}</td>
-                  <td className="evento__titulo">{evento.titulo}</td>
+                  <td className="evento__titulo">
+                    {evento.titulo}{" "}
+                  </td>
+                  <td>
+                    {evento.tareas && evento.tareas.length > 0 && (
+                      <>{evento.tareas.join(", ")}</>
+                    )}
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="3">No tenés eventos asignados</td>
+                <td colSpan="2">No tenés eventos asignados</td>
               </tr>
             )}
           </tbody>

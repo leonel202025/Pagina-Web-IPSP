@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import ModalMensaje from "../components/ModalMensaje";
-import "../styles/crearEvento.css"; // <- importar tu CSS
+import "../styles/crearEvento.css";
 
 export function CrearEvento() {
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [fecha, setFecha] = useState("");
   const [profesores, setProfesores] = useState([]);
-  const [profesoresSeleccionados, setProfesoresSeleccionados] = useState([""]);
+  const [tareas, setTareas] = useState([]);
+  const [asignaciones, setAsignaciones] = useState([
+    { idProfesor: "", idTarea: "" },
+  ]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMensaje, setModalMensaje] = useState("");
-  const [modalTipo, setModalTipo] = useState(""); // 'exito', 'error', 'advertencia'
+  const [modalTipo, setModalTipo] = useState("");
 
+  // 🔹 Cargar profesores y tareas al montar
   useEffect(() => {
     const fetchProfesores = async () => {
       try {
@@ -22,45 +26,76 @@ export function CrearEvento() {
         console.error("Error cargando profesores:", error);
       }
     };
+
+    const fetchTareas = async () => {
+      try {
+        const res = await fetch("/api/eventos/tareas");
+        const data = await res.json();
+        setTareas(data);
+      } catch (error) {
+        console.error("Error cargando tareas:", error);
+      }
+    };
+
     fetchProfesores();
+    fetchTareas();
   }, []);
 
-  const handleSelectChange = (index, value) => {
-    const nuevosSeleccionados = [...profesoresSeleccionados];
-    nuevosSeleccionados[index] = value;
-    if (value === "todos") {
-      setProfesoresSeleccionados(["todos"]);
+  // 🔹 Manejo de cambios en selects
+  const handleChange = (index, field, value) => {
+    const nuevas = [...asignaciones];
+    nuevas[index][field] = value;
+    if (value === "todos" && field === "idProfesor") {
+      setAsignaciones([{ idProfesor: "todos", idTarea: "" }]);
     } else {
-      setProfesoresSeleccionados(nuevosSeleccionados);
+      setAsignaciones(nuevas);
     }
   };
 
-  const agregarSelect = () => {
-    setProfesoresSeleccionados([...profesoresSeleccionados, ""]);
+  // 🔹 Agregar o eliminar selects
+  const agregarAsignacion = () => {
+    setAsignaciones([...asignaciones, { idProfesor: "", idTarea: "" }]);
   };
 
-  const eliminarSelect = (index) => {
-    setProfesoresSeleccionados(
-      profesoresSeleccionados.filter((_, i) => i !== index)
-    );
+  const eliminarAsignacion = (index) => {
+    setAsignaciones(asignaciones.filter((_, i) => i !== index));
   };
 
-   const handleSubmit = async (e) => {
+  // 🔹 Enviar evento
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!titulo || !descripcion || !fecha) {
-      setModalMensaje("Todos los campos son obligatorios");
+    // Validar campos principales
+    if (!titulo.trim() || !descripcion.trim() || !fecha) {
+      setModalMensaje("Todos los campos del evento son obligatorios");
       setModalTipo("advertencia");
       setModalVisible(true);
       return;
     }
 
+    // Validar asignaciones (si no es "todos los profesores")
+    if (!asignaciones.some((a) => a.idProfesor === "todos")) {
+      const asignacionesIncompletas = asignaciones.some(
+        (a) => !a.idProfesor || !a.idTarea
+      );
+
+      if (asignacionesIncompletas) {
+        setModalMensaje("Debe seleccionar profesor y tarea en cada asignación");
+        setModalTipo("advertencia");
+        setModalVisible(true);
+        return;
+      }
+    }
+
+    // Crear el objeto del nuevo evento
     const nuevoEvento = {
-      titulo,
-      descripcion,
+      titulo: titulo.trim(),
+      descripcion: descripcion.trim(),
       fecha,
-      todosProfesores: profesoresSeleccionados.includes("todos"),
-      profesoresAsignados: profesoresSeleccionados.filter((id) => id !== "" && id !== "todos"),
+      todosProfesores: asignaciones.some((a) => a.idProfesor === "todos"),
+      profesoresAsignados: asignaciones.filter(
+        (a) => a.idProfesor && a.idProfesor !== "todos"
+      ), // { idProfesor, idTarea } por cada asignación
     };
 
     try {
@@ -76,12 +111,13 @@ export function CrearEvento() {
         setTitulo("");
         setDescripcion("");
         setFecha("");
-        setProfesoresSeleccionados([""]);
+        setAsignaciones([{ idProfesor: "", idTarea: "" }]);
       } else {
         setModalMensaje("Error al crear evento");
         setModalTipo("error");
       }
     } catch (error) {
+      console.error(error);
       setModalMensaje("Error de red");
       setModalTipo("error");
     } finally {
@@ -110,63 +146,70 @@ export function CrearEvento() {
           onChange={(e) => setFecha(e.target.value)}
         />
 
-        <div className="crear-evento__profesores">
-          {profesoresSeleccionados.map((profId, index) => (
-            <div key={index} className="select-item">
-              <select
-                value={profId}
-                onChange={(e) => handleSelectChange(index, e.target.value)}
-              >
-                <option value="">Seleccione un profesor</option>
-                {profesores
-                  .filter(
-                    (prof) =>
-                      !profesoresSeleccionados.includes(prof.id) ||
-                      prof.id === profId
-                  )
-                  .map((prof) => (
-                    <option key={prof.id} value={prof.id}>
-                      {prof.nombre}
+        {/* 🔹 Sección de asignaciones */}
+        <div className="form-asignaciones">
+          {asignaciones.map((item, index) => (
+            <div key={index} className="asignacion-fila">
+              <div className="asignacion-contenedor">
+                <select
+                  value={item.idProfesor}
+                  onChange={(e) =>
+                    handleChange(index, "idProfesor", e.target.value)
+                  }
+                >
+                  <option value="">Seleccionar profesor</option>
+                  {profesores.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.nombre}
                     </option>
                   ))}
-                <option value="todos">Todos los profesores</option>
-              </select>
+                </select>
 
-              <div className="add__evento-botones">
+                <select
+                  value={item.idTarea}
+                  onChange={(e) =>
+                    handleChange(index, "idTarea", e.target.value)
+                  }
+                  disabled={item.idProfesor === "todos"}
+                >
+                  <option value="">Seleccionar tarea</option>
+                  {tareas.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.nombre}
+                    </option>
+                  ))}
+                </select>
 
-                {/* Botón agregar */}
-                {!profesoresSeleccionados.includes("todos") && (
-                    <button
-                    type="button"
-                    onClick={agregarSelect}
+                <div className="add__profesor-botones">
+                  <button
                     className="agregar_asignacion"
-                    title="Agregar profesor"
-                    >
+                    type="button"
+                    onClick={agregarAsignacion}
+                    title="Agregar Asignación"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
                       height="20"
                       fill="#1E55E3"
                       viewBox="0 0 24 24"
-                      >
+                    >
                       <path
                         d="M12 5v14M5 12h14"
                         stroke="#1E55E3"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        />
+                      />
                     </svg>
                   </button>
-                )}
-                {/* Botón eliminar: solo si hay más de uno y no es el primero */}
-                {profesoresSeleccionados.length > 1 &&
-                  profId !== "todos" && (
+
+                  {asignaciones.length > 1 && (
                     <button
-                      type="button"
-                      onClick={() => eliminarSelect(index)}
                       className="borrar_asignacion"
-                      title="Borrar profesor"
+                      type="button"
+                      onClick={() => eliminarAsignacion(index)}
+                      title="Borrar Asignación"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -180,12 +223,16 @@ export function CrearEvento() {
                       </svg>
                     </button>
                   )}
+                </div>
               </div>
             </div>
           ))}
         </div>
+
         <div className="form__evento-footer">
-          <button type="submit" className="btn__guardar-evento">Guardar Evento</button>
+          <button type="submit" className="btn__guardar-evento">
+            Guardar Evento
+          </button>
         </div>
       </form>
 
