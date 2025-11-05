@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
 import "../styles/verProfesores.css";
 import ModalMensaje from "../components/ModalMensaje";
 
@@ -15,6 +16,7 @@ export function VerProfesores() {
   const [modalMensajeTipo, setModalMensajeTipo] = useState("");
   const [profesorAEliminar, setProfesorAEliminar] = useState(null);
   const [modalConfirmVisible, setModalConfirmVisible] = useState(false);
+  const [busqueda, setBusqueda] = useState("");
 
   // Obtener profesores con sus combinaciones de grado-materia
   useEffect(() => {
@@ -128,8 +130,30 @@ export function VerProfesores() {
   };
 
   return (
-    <div className="container__profesores">
+<>
       <h1 className="ver_title">Profesores</h1>
+    <div className="busqueda__contenedor-profesor">
+        <button className="busqueda__boton">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="35"
+            height="35"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            className="busqueda__icono"
+          >
+            <path d="M10 2a8 8 0 0 1 6.32 12.906l5.387 5.387a1 1 0 0 1-1.414 1.414l-5.387-5.387A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12A6 6 0 0 0 10 4z" />
+          </svg>
+        </button>
+        <input
+          type="text"
+          placeholder="Buscar profesor..."
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          className="busqueda__input"
+        />
+      </div>
+    <div className="container__profesores">
       <table className="table__profesor">
         <thead>
           <tr>
@@ -141,73 +165,81 @@ export function VerProfesores() {
           </tr>
         </thead>
         <tbody>
-          {profesores.map((profesor) => (
-            <tr key={profesor.id}>
-              <td>{profesor.dni}</td>
-              <td>{profesor.nombre}</td>
-              <td>{profesor.email}</td>
-              <td
-                title={profesor.gradosMaterias
-                  ?.map((gm) => {
-                    const grado = grados.find(
-                      (g) => g.id === gm.id_grado
-                    )?.grado;
-                    const materia = asignaturas.find(
-                      (a) => a.id === gm.id_asignatura
-                    )?.asignatura;
-                    return `${materia} - ${grado}`;
-                  })
-                  .join(", ")}
-              >
-                {profesor.gradosMaterias
-                  ?.map((gm) => {
-                    const grado = grados.find(
-                      (g) => g.id === gm.id_grado
-                    )?.grado;
-                    const materia = asignaturas.find(
-                      (a) => a.id === gm.id_asignatura
-                    )?.asignatura;
-                    return `${materia} - ${grado}`;
-                  })
-                  .join(", ")}
-              </td>
-              <td className="acciones">
-                <button
-                  className="btn-editar"
-                  title="Modificar Datos"
-                  onClick={() => handleAbrirEditar(profesor)}
+          {profesores
+            .filter((p) =>
+              p.nombre.toLowerCase().includes(busqueda.toLowerCase())
+            )
+            .map((profesor) => (
+              <tr key={profesor.id}>
+                <td>{profesor.dni}</td>
+                <td>{profesor.nombre}</td>
+                <td>{profesor.email}</td>
+                <td
+                  title={profesor.gradosMaterias
+                    ?.map((gm) => {
+                      const grado = grados.find(
+                        (g) => g.id === gm.id_grado
+                      )?.grado;
+                      const materia = asignaturas.find(
+                        (a) => a.id === gm.id_asignatura
+                      )?.asignatura;
+                      return `${materia} - ${grado}`;
+                    })
+                    .join(", ")}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="#3498db"
-                    viewBox="0 0 24 24"
+                  {profesor.gradosMaterias
+                    ?.map((gm) => {
+                      const grado = grados.find(
+                        (g) => g.id === gm.id_grado
+                      )?.grado;
+                      const materia = asignaturas.find(
+                        (a) => a.id === gm.id_asignatura
+                      )?.asignatura;
+                      return `${materia} - ${grado}`;
+                    })
+                    .join(", ")}
+                </td>
+                <td className="acciones">
+                  <button
+                    className="btn-editar"
+                    title="Modificar Datos"
+                    onClick={() => handleAbrirEditar(profesor)}
                   >
-                    <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => handleEliminarClick(profesor)}
-                  className="btn-eliminar"
-                  title="Eliminar Profesor"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    fill="#e74c3c"
-                    viewBox="0 0 24 24"
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      fill="#3498db"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => handleEliminarClick(profesor)}
+                    className="btn-eliminar"
+                    title="Eliminar Profesor"
                   >
-                    <path d="M6 19c0 1.104.896 2 2 2h8c1.104 0 2-.896 2-2V7H6v12zm3.46-9.88L12 10.59l2.54-2.47a1 1 0 1 1 1.42 1.42L13.41 12l2.47 2.54a1 1 0 1 1-1.42 1.42L12 13.41l-2.54 2.47a1 1 0 1 1-1.42-1.42L10.59 12 8.12 9.46a1 1 0 0 1 1.34-1.34z" />
-                    <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                  </svg>
-                </button>
-              </td>
-            </tr>
-          ))}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      fill="#e74c3c"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M6 19c0 1.104.896 2 2 2h8c1.104 0 2-.896 2-2V7H6v12zm3.46-9.88L12 10.59l2.54-2.47a1 1 0 1 1 1.42 1.42L13.41 12l2.47 2.54a1 1 0 1 1-1.42 1.42L12 13.41l-2.54 2.47a1 1 0 1 1-1.42-1.42L10.59 12 8.12 9.46a1 1 0 0 1 1.34-1.34z" />
+                      <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
+
+      <Link to={"/panel-admin"} className="boton-volver">
+        ← Volver
+          </Link>
 
       {/* Modal de edición */}
       {modalEditarVisible && profesorAEditar && (
@@ -362,7 +394,6 @@ export function VerProfesores() {
                           <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
                         </svg>
                       </button>
-
                     </div>
                   </div>
                 ))}
@@ -400,5 +431,6 @@ export function VerProfesores() {
         onConfirm={confirmarEliminarProfesor}
       />
     </div>
+    </>
   );
 }

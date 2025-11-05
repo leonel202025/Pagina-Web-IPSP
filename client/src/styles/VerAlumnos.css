@@ -17,6 +17,7 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   table-layout: fixed; /* columnas proporcionales */
+  margin-top: -120px;
 }
 
 /* Bordes redondeados */
@@ -219,6 +220,74 @@ tbody td {
 
 .modal-editar-form button.btn__cancelar-alm:hover {
   background-color: #999;
+}
+
+.container__alumnos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.alumnos__seleccion{
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--color-secundario);
+  padding: 30px 23px;
+  border-radius: 10px;
+  background-color: #fffc;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.436);
+}
+
+.busqueda__contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  padding: 10px 20px;
+  width: fit-content;
+  position: relative;
+  z-index: 100;
+  right: 320px;
+  top: -100px;
+}
+
+.busqueda__boton {
+  background-color: transparent;
+  border: 2px solid var(--color-secundario);
+  border-radius: 50%;
+  width: 47px;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.busqueda__boton:hover {
+  background-color: transparent;
+}
+
+.busqueda__input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-secundario);
+  color: #ddd;
+  padding: 8px 12px;
+  font-size: 1rem;
+  width: 280px;
+  border-radius: 5px;
+}
+
+.busqueda__input::placeholder {
+  color: #aaa;
 }
 
 

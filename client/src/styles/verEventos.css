@@ -17,6 +17,17 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   table-layout: fixed; /* columnas proporcionales */
+  top: 5000px;
+}
+
+.ver_title-eventos{
+  color: #ddd;
+  text-align: center;
+  font-size: 2.5em;
+  margin-top: -20px;
+  margin-bottom: 20px;
+  font-family: "Merriweather";
+  margin-top: -60px;
 }
 
 .tabla__eventos th, .tabla__eventos td {

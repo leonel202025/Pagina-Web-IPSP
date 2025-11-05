@@ -5,6 +5,7 @@ import ModalMensaje from "../components/ModalMensaje";
 export function VerAlumnos() {
   const [alumnos, setAlumnos] = useState([]);
   const [grados, setGrados] = useState([]);
+  const [gradoSeleccionado, setGradoSeleccionado] = useState(null);
   const [modalEditarVisible, setModalEditarVisible] = useState(false);
   const [alumnoAEditar, setAlumnoAEditar] = useState(null);
   const [modalMensaje, setModalMensaje] = useState("");
@@ -12,6 +13,7 @@ export function VerAlumnos() {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalConfirmVisible, setModalConfirmVisible] = useState(false);
   const [alumnoAEliminar, setAlumnoAEliminar] = useState(null);
+  const [busqueda, setBusqueda] = useState(""); // 🔍 Nuevo estado
 
   useEffect(() => {
     fetch("http://localhost:5000/api/usuarios/alumnos")
@@ -21,16 +23,11 @@ export function VerAlumnos() {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/grados") // Ajusta la URL según tu backend
+    fetch("http://localhost:5000/api/grados")
       .then((res) => res.json())
       .then((data) => setGrados(data))
       .catch((err) => console.error("Error al obtener grados:", err));
   }, []);
-
-  // Extraemos los grados únicos que hay en alumnos
-  const gradosUnicos = [...new Set(alumnos.map((a) => a.id_grado))].sort(
-    (a, b) => a - b
-  );
 
   const handleAbrirEditar = (alumno) => {
     setAlumnoAEditar(alumno);
@@ -45,40 +42,33 @@ export function VerAlumnos() {
   };
 
   const handleEditarSubmit = async (e) => {
-    console.log("handleEditarSubmit ejecutado, datos:", alumnoAEditar);
     e.preventDefault();
-
-    if (!alumnoAEditar) {
-      console.error("No hay alumno seleccionado para editar");
-      return;
-    }
+    if (!alumnoAEditar) return;
 
     try {
-      const dataToSend = { ...alumnoAEditar };
-
-      console.log("Enviando datos:", dataToSend);
       const res = await fetch(
         `http://localhost:5000/api/usuarios/${alumnoAEditar.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(dataToSend),
+          body: JSON.stringify(alumnoAEditar),
         }
       );
 
       const data = await res.json();
 
       if (res.ok) {
-        setModalMensaje("Alumno Modificado Correctamente");
+        setModalMensaje("Alumno modificado correctamente");
         setModalTipo("exito");
         setModalEditarVisible(false);
         setModalVisible(true);
-        // Recargar alumnos:
-        fetch("http://localhost:5000/api/usuarios/alumnos")
-          .then((res) => res.json())
-          .then((data) => setAlumnos(data));
+        // Recargar alumnos
+        const resAlumnos = await fetch(
+          "http://localhost:5000/api/usuarios/alumnos"
+        );
+        setAlumnos(await resAlumnos.json());
       } else {
-        throw new Error(data.error || "Error al modificar");
+        throw new Error(data.error || "Error al modificar el alumno");
       }
     } catch (error) {
       setModalMensaje(error.message);
@@ -97,19 +87,16 @@ export function VerAlumnos() {
           method: "DELETE",
         }
       );
-
       const data = await res.json();
 
       if (res.ok) {
         setModalMensaje("Alumno eliminado correctamente");
         setModalTipo("exito");
-
-        // Recargar alumnos con await
+        // Recargar alumnos
         const resAlumnos = await fetch(
           "http://localhost:5000/api/usuarios/alumnos"
         );
-        const dataAlumnos = await resAlumnos.json();
-        setAlumnos(dataAlumnos);
+        setAlumnos(await resAlumnos.json());
       } else {
         throw new Error(data.error || "Error al eliminar el alumno");
       }
@@ -124,29 +111,71 @@ export function VerAlumnos() {
 
   return (
     <div className="container__alumnos">
-      <h1 className="ver__alumnos-title">Alumnos</h1>
-      {gradosUnicos.map((grado) => {
-        // Filtrar alumnos de este grado
-        const alumnosDelGrado = alumnos.filter((a) => a.id_grado === grado);
+      {/* --- Vista 1: Selección de grado --- */}
+      {!gradoSeleccionado && (
+        <div className="alumnos__seleccion">
+          <h3 className="mis__cursos-title">Seleccione un Grado:</h3>
+          <div className="mis__cursos-botones">
+            {grados.map((grado) => (
+              <button
+                key={grado.id}
+                className="mis__cursos-btn-curso"
+                onClick={() => setGradoSeleccionado(grado)}
+              >
+                {grado.grado}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
-        return (
-          <div key={grado}>
-            <table className="tabla-alumnos">
-              <thead>
-                <tr>
-                  <th className="grado" colSpan="4">
-                    {grado}° Grado
-                  </th>
-                </tr>
-                <tr>
-                  <th>DNI</th>
-                  <th>Nombre</th>
-                  <th>Email</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {alumnosDelGrado.map((alumno) => (
+      {/* --- Vista 2: Tabla de alumnos --- */}
+      {gradoSeleccionado && (
+        <>
+          <div className="busqueda__contenedor">
+            <button
+              className="busqueda__boton"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="35"
+                height="35"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M10 2a8 8 0 0 1 6.32 12.906l5.387 5.387a1 1 0 0 1-1.414 1.414l-5.387-5.387A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12A6 6 0 0 0 10 4z" />
+              </svg>
+            </button>
+
+            <input
+              type="text"
+              placeholder="Buscar alumno..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              className={`busqueda__input`}
+            />
+          </div>
+          <table className="tabla-alumnos" key={gradoSeleccionado.id}>
+            <thead>
+              <tr>
+                <th className="grado" colSpan="4">
+                  {gradoSeleccionado.grado}° Grado
+                </th>
+              </tr>
+              <tr>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {alumnos
+                .filter((a) => a.id_grado === gradoSeleccionado.id)
+                .filter((a) =>
+                  a.nombre.toLowerCase().includes(busqueda.toLowerCase())
+                )
+                .map((alumno) => (
                   <tr key={alumno.id}>
                     <td title={alumno.dni}>{alumno.dni}</td>
                     <td title={alumno.nombre}>{alumno.nombre}</td>
@@ -189,11 +218,19 @@ export function VerAlumnos() {
                     </td>
                   </tr>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        );
-      })}
+            </tbody>
+          </table>
+
+          <button
+            className="mis__cursos-boton-volver"
+            onClick={() => setGradoSeleccionado(null)}
+          >
+            ← Volver a grados
+          </button>
+        </>
+      )}
+
+      {/* --- Modales --- */}
       {modalEditarVisible && (
         <div className="modal-editar-overlay">
           <div className="modal-editar-container">
@@ -241,6 +278,7 @@ export function VerAlumnos() {
           </div>
         </div>
       )}
+
       {modalVisible && (
         <ModalMensaje
           visible={modalVisible}
@@ -249,6 +287,7 @@ export function VerAlumnos() {
           onClose={() => setModalVisible(false)}
         />
       )}
+
       {modalConfirmVisible && (
         <ModalMensaje
           visible={modalConfirmVisible}

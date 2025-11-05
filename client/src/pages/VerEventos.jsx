@@ -28,7 +28,7 @@ export function VerEventos() {
 
   return (
     <div className="container__eventos">
-      <h1 className="ver_title">Lista de Eventos</h1>
+      <h1 className="ver_title-eventos">Lista de Eventos</h1>
       <div className="container__table-eventos">
         <table className="tabla__eventos">
           <thead>
