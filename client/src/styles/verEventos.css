@@ -116,6 +116,81 @@ tbody td:nth-child(5) {
   max-width: 400px;
 }
 
+.modal-editar-container {
+  width: 430px;
+  background-color: #fffd;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* ✅ importante para que crezca hacia abajo */
+  align-items: center;
+  border: 3px solid var(--color-secundario);
+  border-radius: 10px;
+  padding: 20px 25px 5px 25px;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
+  margin: 20px auto; /* ✅ da espacio al crecer */
+  margin-top: -20px;
+}
+
+/* Contenedor de botones dentro de cada fila de asignación */
+.add__profesor-botones {
+  display: flex;
+  gap: 7px;
+  margin-top: 5px;
+  margin: auto;
+}
+
+.add_asignacion-evento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 50px;
+  background-color: transparent !important; /* 🔹 fondo transparente real */
+  border: 2px solid #1E55E3 !important;    /* opcional, igual que el icono */
+  cursor: pointer;
+  transition: all 0.2s ease !important;
+  padding: 0;
+}
+
+.add_asignacion-evento svg {
+  fill: #1E55E3;
+}
+
+.add_asignacion-evento:hover {
+  background-color: rgba(30, 85, 227, 0.2);
+  transform: scale(1.05);
+}
+
+/* Botón de eliminar asignación */
+.borrar_asignacion-evento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 50px;
+  background-color: transparent !important;
+  border: 2px solid #e74c3c !important;
+  cursor: pointer;
+  transition: all 0.2s ease !important;
+  padding: 0;
+}
+
+.borrar_asignacion-evento svg {
+  fill: #e74c3c;
+}
+
+.borrar_asignacion-evento:hover {
+  background-color: rgba(231, 17, 17, 0.2);
+  transform: scale(1.05);
+}
+
+.btn__cancelar-evento{
+  margin-bottom: 20px;
+  background-color: #ccc !important;
+  color: #333 !important;
+}
+
+.btn__cancelar-evento:hover { background-color: #bbb !important; }
 
 /* Responsive Design */
 

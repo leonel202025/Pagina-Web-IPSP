@@ -57,15 +57,14 @@ exports.listarEventos = async (req, res) => {
 
       if (!evento.todos_profesores) {
         const [rows] = await db.query(
-          `SELECT u.nombre AS profesor, t.nombre AS tarea
-   FROM evento_profesor ep
-   JOIN usuarios u ON ep.id_profesor = u.id
-   LEFT JOIN evento_tarea et ON ep.id_evento = et.id_evento AND ep.id_profesor = et.id_profesor
-   LEFT JOIN tareas t ON et.id_tarea = t.id
-   WHERE ep.id_evento = ?`,
+          `SELECT u.id AS idProfesor, t.id AS idTarea, u.nombre AS profesor, t.nombre AS tarea
+     FROM evento_profesor ep
+     JOIN usuarios u ON ep.id_profesor = u.id
+     LEFT JOIN evento_tarea et ON ep.id_evento = et.id_evento AND ep.id_profesor = et.id_profesor
+     LEFT JOIN tareas t ON et.id_tarea = t.id
+     WHERE ep.id_evento = ?`,
           [evento.id]
         );
-
         asignaciones = rows.length ? rows : [];
       } else {
         asignaciones = [{ profesor: "Todos los profesores", tarea: "" }];
@@ -134,5 +133,87 @@ exports.listarTareas = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ mensaje: "Error al listar tareas" });
+  }
+};
+
+exports.editarEvento = async (req, res) => {
+  try {
+    const fecha = new Date(req.body.fecha);
+    const fechaFormateada = fecha.toISOString().slice(0, 19).replace("T", " ");
+    const { id } = req.params;
+    const { titulo, descripcion, todosProfesores, profesoresAsignados } =
+      req.body;
+
+    await db.query(
+      "UPDATE eventos SET titulo = ?, descripcion = ?, fecha = ?, todos_profesores = ? WHERE id = ?",
+      [titulo, descripcion, fechaFormateada, todosProfesores, id]
+    );
+
+    await db.query("DELETE FROM evento_profesor WHERE id_evento = ?", [id]);
+    await db.query("DELETE FROM evento_tarea WHERE id_evento = ?", [id]);
+
+    if (!todosProfesores && profesoresAsignados?.length > 0) {
+      for (const prof of profesoresAsignados) {
+        await db.query(
+          "INSERT INTO evento_profesor (id_evento, id_profesor) VALUES (?, ?)",
+          [id, prof.idProfesor]
+        );
+        if (prof.idTarea) {
+          await db.query(
+            "INSERT INTO evento_tarea (id_evento, id_tarea, id_profesor) VALUES (?, ?, ?)",
+            [id, prof.idTarea, prof.idProfesor]
+          );
+        }
+      }
+    }
+
+    // Traer evento actualizado con asignaciones
+    const [eventoRows] = await db.query("SELECT * FROM eventos WHERE id = ?", [
+      id,
+    ]);
+    const evento = eventoRows[0];
+
+    let asignaciones = [];
+    if (!evento.todos_profesores) {
+      const [rows] = await db.query(
+        `SELECT u.id AS idProfesor, t.id AS idTarea, u.nombre AS profesor, t.nombre AS tarea
+         FROM evento_profesor ep
+         JOIN usuarios u ON ep.id_profesor = u.id
+         LEFT JOIN evento_tarea et ON ep.id_evento = et.id_evento AND ep.id_profesor = et.id_profesor
+         LEFT JOIN tareas t ON et.id_tarea = t.id
+         WHERE ep.id_evento = ?`,
+        [evento.id]
+      );
+      asignaciones = rows.length ? rows : [];
+    } else {
+      asignaciones = [{ profesor: "Todos los profesores", tarea: "" }];
+    }
+
+    res.json({ ...evento, asignaciones });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al editar evento" });
+  }
+};
+
+exports.eliminarEvento = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 1️⃣ Eliminar relaciones en evento_tarea y evento_profesor
+    await db.query("DELETE FROM evento_tarea WHERE id_evento = ?", [id]);
+    await db.query("DELETE FROM evento_profesor WHERE id_evento = ?", [id]);
+
+    // 2️⃣ Eliminar el evento
+    const [result] = await db.query("DELETE FROM eventos WHERE id = ?", [id]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ mensaje: "Evento no encontrado" });
+    }
+
+    res.json({ mensaje: "Evento eliminado con éxito" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: "Error al eliminar evento" });
   }
 };
