@@ -180,7 +180,7 @@ export function CrearEvento() {
                   ))}
                 </select>
 
-                <div className="add__profesor-botones">
+                <div className="add__evento-botones">
                   <button
                     className="agregar_asignacion"
                     type="button"

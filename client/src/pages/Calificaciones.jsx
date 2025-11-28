@@ -41,7 +41,11 @@ export const Calificaciones = () => {
     <div className="container__calificaciones">
       <table className="table__calificaciones">
         <thead>
-            <th colSpan={6} className="calificaciones">Mis Calificaciones</th>
+          <tr>
+            <th colSpan={6} className="calificaciones">
+              Mis Calificaciones
+            </th>
+          </tr>
           <tr>
             <th>Materia</th>
             <th>1er Trimestre</th>
@@ -51,15 +55,16 @@ export const Calificaciones = () => {
             <th>Observaciones</th>
           </tr>
         </thead>
+
         <tbody>
           {calificaciones.map((c, i) => (
             <tr key={i}>
-              <td>{c.materia}</td>
-              <td>{c.primer_trimestre ?? "-"}</td>
-              <td>{c.segundo_trimestre ?? "-"}</td>
-              <td>{c.tercer_trimestre ?? "-"}</td>
-              <td>{c.promedio_final ?? "-"}</td>
-              <td>{c.observaciones ?? "-"}</td>
+              <td data-label="Materia">{c.materia}</td>
+              <td data-label="1er Trimestre">{c.primer_trimestre ?? "-"}</td>
+              <td data-label="2do Trimestre">{c.segundo_trimestre ?? "-"}</td>
+              <td data-label="3er Trimestre">{c.tercer_trimestre ?? "-"}</td>
+              <td data-label="Promedio Final">{c.promedio_final ?? "-"}</td>
+              <td data-label="Observaciones">{c.observaciones ?? "-"}</td>
             </tr>
           ))}
         </tbody>

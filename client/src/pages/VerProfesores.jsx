@@ -131,7 +131,6 @@ export function VerProfesores() {
 
   return (
     <>
-      <h1 className="ver_title">Profesores</h1>
       <div className="busqueda__contenedor-profesor">
         <button className="busqueda__boton">
           <svg
@@ -156,6 +155,7 @@ export function VerProfesores() {
       <div className="container__profesores">
         <table className="table__profesor">
           <thead>
+            <th colSpan={5} className="ver_title-profe">Profesores</th>
             <tr>
               <th>DNI</th>
               <th>Nombre</th>

@@ -28,10 +28,10 @@ export const CalendarioProfesor = () => {
 
   return (
     <div className="container__eventos">
-      <h1 className="ver_title">Mi Agenda</h1>
       <div className="container__table-eventos">
         <table className="tabla__eventos-profesor">
           <thead>
+            <th colSpan={3} className="ver_title">Mi Agenda</th>
             <tr>
               <th>Fecha</th>
               <th>Acto</th>

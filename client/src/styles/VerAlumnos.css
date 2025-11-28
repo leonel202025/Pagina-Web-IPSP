@@ -297,6 +297,13 @@ tbody td {
 
 /* Muy Grandes */
 @media (max-width: 1440px) {
+    .container__alumnos {
+    margin-top: -10px;
+}
+
+  .busqueda__contenedor {
+  top: -45px;
+}
 
   .ver__alumnos-title{
     font-size: 2em;
@@ -310,9 +317,9 @@ tbody td {
   }
 
   /* Tabla */
-  table {
+  .container__alumnos table {
     font-size: 0.9em;
-    margin-top: 8px;
+    margin-top: -70px;
     margin-bottom: 15px;
   }
 
@@ -368,11 +375,21 @@ tbody td {
     padding: 12px 15px;
     font-size: 0.95em;
 }
+.modal-editar-form button.btn__cancelar-alm {
+  margin-bottom: 20px;
+}
 
 }
 
 /* Grandes */
 @media screen and (min-width: 1281px) and (max-width: 1439px) {
+  .container__alumnos {
+    margin-top: -10px;
+}
+
+  .busqueda__contenedor {
+  top: -30px;
+}
 
   .ver__alumnos-title{
     font-size: 1.9em;
@@ -386,9 +403,9 @@ tbody td {
   }
 
   /* Tabla */
-  table {
+  .container__alumnos table {
     font-size: 0.9em;
-    margin-top: 8px;
+    margin-top: -50px;
     margin-bottom: 15px;
   }
 

@@ -151,10 +151,10 @@ export function VerEventos() {
 
   return (
     <div className="container__eventos">
-      <h1 className="ver_title-eventos">Lista de Eventos</h1>
       <div className="container__table-eventos">
         <table className="tabla__eventos">
           <thead>
+            <th colSpan={5} className="ver_title-eventos">Lista de Eventos</th>
             <tr>
               <th>Fecha</th>
               <th>Acto</th>

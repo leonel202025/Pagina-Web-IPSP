@@ -62,3 +62,83 @@
   justify-content: center;
   text-decoration: none;
 }
+
+/* Responsive Design */
+
+/* Notebooks */
+
+/* Muy Grandes */
+@media screen and (min-width: 1440px) {
+  .documentos_title {
+    font-size: 3rem;
+    margin-top: -35px;
+  }
+
+  .documentos_lista {
+    max-width: 800px;
+  }
+
+  .documento_item {
+    padding: 26px;
+    font-size: 1.3rem;
+  }
+
+  .documento_nombre {
+    font-size: 1.4rem;
+  }
+}
+
+/* Grandes */
+@media screen and (min-width: 1281px) and (max-width: 1439px) {
+  .documentos_title {
+    font-size: 2.7rem;
+    margin-top: -45px;
+  }
+
+  .documentos_lista {
+    max-width: 700px;
+  }
+
+  .documento_item {
+    padding: 22px;
+  }
+
+  .documento_nombre {
+    font-size: 1.3rem;
+  }
+}
+
+/* Celulares */
+@media screen and (max-width: 768px) {
+
+  .documentos_container {
+    margin-top: 110px;
+  }
+
+  .documentos_title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .documentos_lista {
+    width: 100%;
+    padding: 0 10px;
+    gap: 16px;
+  }
+
+  .documento_item {
+    flex-direction: column;   /* 👈 uno arriba del otro */
+    gap: 15px;
+    padding: 16px;
+  }
+
+  .documento_btn_icon {
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 14px 0;
+  }
+
+  .documento_nombre {
+    font-size: 1.1rem;
+  }
+}

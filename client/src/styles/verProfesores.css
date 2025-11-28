@@ -2,7 +2,7 @@
 .container__profesores {
   display: flex;
   flex-direction: column;
-  margin-top: -120px;
+  margin-top: -130px;
 }
 
 /* Tablas con tamaño uniforme */
@@ -21,8 +21,8 @@
 }
 
 /* Bordes redondeados */
-thead tr:first-child th:first-child { border-top-left-radius: 10px; }
-thead tr:first-child th:last-child { border-top-right-radius: 10px; }
+.table__profesor .ver_title-profe { border-top-left-radius: 10px; }
+.table__profesor .ver_title-profe{ border-top-right-radius: 10px; }
 tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
 tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 
@@ -57,7 +57,7 @@ tbody td {
 
 
 /* Título */
-.ver_title {
+.ver_title-profe {
   color: #ddd;
   text-align: center;
   font-size: 2.5em;
@@ -230,7 +230,7 @@ tbody td {
   position: relative;
   z-index: 100;
   right: 460px;
-  top: -90px;
+  top: -75px;
 }
 
 .busqueda__input {
@@ -341,7 +341,7 @@ tbody td {
     font-size: 0.9em;
   }
 
-  .ver_title{
+  .ver_title-profe{
     font-size: 2em;
     margin-top: -15px;
   }
@@ -349,7 +349,15 @@ tbody td {
 
 /* Grandes */
 @media screen and (min-width: 1280px) and (max-width: 1439px) {
-
+  .container__profesores {
+  display: flex;
+  flex-direction: column;
+  margin-top: -110px;
+}
+.busqueda__contenedor-profesor {
+  right: 445px;
+  top: -50px;
+}
   /* Contenedor general */
   .modal-profesor__container {
     width: 380px; /* más angosto */
@@ -397,9 +405,9 @@ tbody td {
     font-size: 0.9em;
   }
 
-  .ver_title{
-    font-size: 1.8em;
-    margin-top: -15px;
+  .ver_title-profe{
+    font-size: 1.7em;
+    margin-top: 5px;
   }
 }
 

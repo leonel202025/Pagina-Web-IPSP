@@ -16,14 +16,13 @@
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  table-layout: fixed; /* columnas proporcionales */
   top: 5000px;
 }
 
 .ver_title-eventos{
   color: #ddd;
   text-align: center;
-  font-size: 2.5em;
+  font-size: 2.2em;
   margin-top: -20px;
   margin-bottom: 20px;
   font-family: "Merriweather";
@@ -43,16 +42,16 @@
 .tabla__eventos th:nth-child(2), .tabla__eventos td:nth-child(2) { width: 25%; } /* Acto */
 .tabla__eventos th:nth-child(3), .tabla__eventos td:nth-child(3) { width: 60%; } /* Descripción */
 .tabla__eventos th:nth-child(4), .tabla__eventos td:nth-child(4) { width: 35%; } /* Responsables */
-thead th:nth-child(5),
-tbody td:nth-child(5) {
-  width: 150px;  /* columna de acciones fija */
+.tabla__eventos th:nth-child(5),
+.tabla__eventos td:nth-child(5) {
+  width: auto; /*columna de acciones fija */
   text-align: center;
   white-space: nowrap;
 }
 
 /* Bordes redondeados */
-.tabla__eventos thead tr:first-child th:first-child { border-top-left-radius: 10px; }
-.tabla__eventos thead tr:first-child th:last-child { border-top-right-radius: 10px; }
+.tabla__eventos .ver_title-eventos { border-top-left-radius: 10px; }
+.tabla__eventos .ver_title-eventos { border-top-right-radius: 10px; }
 .tabla__eventos tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
 .tabla__eventos tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 
