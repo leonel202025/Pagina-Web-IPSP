@@ -15,9 +15,16 @@ export function MisCursos() {
   const [modalNotaVisible, setModalNotaVisible] = useState(false);
   const [alumnoSeleccionado, setAlumnoSeleccionado] = useState(null);
   const [nota, setNota] = useState("");
+  const [trimestre, setTrimestre] = useState("primer_trimestre");
+  const [observaciones, setObservaciones] = useState("");
+  const [modalObservacionVisible, setModalObservacionVisible] = useState(false);
+  const [observacionActual, setObservacionActual] = useState("");
 
   const [modalConfirmVisible, setModalConfirmVisible] = useState(false);
   const [notaAEliminar, setNotaAEliminar] = useState(null);
+  const [trimestreAEliminar, setTrimestreAEliminar] = useState("");
+  const [modalElegirTrimestreVisible, setModalElegirTrimestreVisible] =
+    useState(false);
 
   const [modalMensaje, setModalMensaje] = useState({
     visible: false,
@@ -28,67 +35,108 @@ export function MisCursos() {
   useEffect(() => {
     if (!user?.id) return;
 
-    fetch(`http://localhost:5000/api/usuarios/profesor/${user.id}/grados`)
-      .then((res) => {
+    const cargarInicial = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:5000/api/usuarios/profesor/${user.id}/grados`
+        );
+
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
+
+        const data = await res.json();
+
         const alumnosConId = (data.alumnos || []).map((a) => ({
           ...a,
           id: a.id_alumno ?? a.id,
+          id_grado: a.id_grado, // 🔥 agregar
+          id_asignatura: a.id_asignatura, // 🔥 agregar
         }));
 
         setGrados(data.grados || []);
-        setAlumnos(alumnosConId);
-      })
-      .catch((error) => console.error("Error al obtener cursos:", error))
-      .finally(() => setLoading(false));
+
+        // 🔥 Cargar observaciones para cada alumno
+        const alumnosConObs = await Promise.all(
+          alumnosConId.map(async (a) => ({
+            ...a,
+            observaciones: await cargarObservacion(a),
+          }))
+        );
+
+        setAlumnos(alumnosConObs);
+      } catch (error) {
+        console.error("Error al obtener cursos:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarInicial();
   }, [user]);
 
   const guardarNota = async () => {
-    if (!alumnoSeleccionado?.id) return;
+    if (!alumnoSeleccionado?.id || !nota) return;
 
     try {
+      const body = {
+        id_alumno: alumnoSeleccionado.id,
+        id_grado: alumnoSeleccionado.id_grado,
+        id_asignatura: alumnoSeleccionado.id_asignatura,
+        id_profesor: user.id,
+        observaciones,
+      };
+
+      // Asignar la nota al trimestre seleccionado
+      body[trimestre] = Number(nota);
+
       const res = await fetch(
         "http://localhost:5000/api/usuarios/calificaciones",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id_alumno: alumnoSeleccionado.id,
-            id_grado: alumnoSeleccionado.id_grado,
-            id_asignatura: alumnoSeleccionado.id_asignatura,
-            id_profesor: user.id,
-            nota: Number(nota),
-          }),
+          body: JSON.stringify(body),
         }
       );
+
       const data = await res.json();
 
-      setAlumnos((prev) => {
-        const index = prev.findIndex(
-          (a) =>
-            a.id === data.id_alumno &&
-            a.id_grado === data.id_grado &&
-            a.id_asignatura === data.id_asignatura
-        );
+      // Actualizamos solo el alumno editado
+      setAlumnos((prev) =>
+        prev.map((a) =>
+          a.id === data.id_alumno &&
+          a.id_grado === data.id_grado &&
+          a.id_asignatura === data.id_asignatura
+            ? {
+                ...a,
+                primer_trimestre:
+                  data.primer_trimestre !== null
+                    ? Number(data.primer_trimestre)
+                    : null,
+                segundo_trimestre:
+                  data.segundo_trimestre !== null
+                    ? Number(data.segundo_trimestre)
+                    : null,
+                tercer_trimestre:
+                  data.tercer_trimestre !== null
+                    ? Number(data.tercer_trimestre)
+                    : null,
+                promedio_final:
+                  data.promedio_final !== null
+                    ? Number(data.promedio_final).toFixed(2)
+                    : null,
+                observaciones: data.observaciones ?? "",
+              }
+            : a
+        )
+      );
 
-        if (index !== -1) {
-          const updated = [...prev];
-          updated[index] = { ...updated[index], nota: data.nota };
-          return updated;
-        } else {
-          return [...prev, data];
-        }
-      });
-
-      setModalNotaVisible(false);
       setNota("");
+      setTrimestre("primer_trimestre");
+      setObservaciones("");
+      setModalNotaVisible(false);
 
       setModalMensaje({
         visible: true,
-        mensaje: "Nota cargada correctamente",
+        mensaje: "Nota guardada correctamente",
         tipo: "exito",
       });
     } catch (error) {
@@ -102,36 +150,73 @@ export function MisCursos() {
   };
 
   const eliminarNota = async () => {
-    if (!notaAEliminar) return;
+    if (!notaAEliminar || !trimestreAEliminar) return;
 
     try {
+      const body = {
+        id_alumno: notaAEliminar.id,
+        id_grado: notaAEliminar.id_grado,
+        id_asignatura: notaAEliminar.id_asignatura,
+        trimestre: trimestreAEliminar, // ✨ enviar trimestre
+      };
+
       const res = await fetch(
         "http://localhost:5000/api/usuarios/calificaciones/eliminar",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id_alumno: notaAEliminar.id,
-            id_grado: notaAEliminar.id_grado,
-            id_asignatura: notaAEliminar.id_asignatura,
-          }),
+          body: JSON.stringify(body),
         }
       );
 
-      if (!res.ok) throw new Error("Error al eliminar calificación");
       const data = await res.json();
 
       setAlumnos((prev) =>
-        prev.map((a) =>
-          a.id === data.id_alumno &&
-          a.id_grado === data.id_grado &&
-          a.id_asignatura === data.id_asignatura
-            ? { ...a, nota: null }
-            : a
-        )
+        prev.map((a) => {
+          if (
+            a.id === data.id_alumno &&
+            a.id_grado === data.id_grado &&
+            a.id_asignatura === data.id_asignatura
+          ) {
+            // Copia actual del alumno
+            const actualizado = { ...a };
+
+            // Eliminar solo un trimestre
+            if (trimestreAEliminar !== "todos") {
+              actualizado[trimestreAEliminar] = null;
+            } else {
+              actualizado.primer_trimestre = null;
+              actualizado.segundo_trimestre = null;
+              actualizado.tercer_trimestre = null;
+              actualizado.observaciones = null;
+            }
+
+            // Recalcular promedio
+            const notas = [
+              actualizado.primer_trimestre,
+              actualizado.segundo_trimestre,
+              actualizado.tercer_trimestre,
+            ]
+              .filter((n) => n !== null && n !== undefined)
+              .map((n) => Number(n)); // 🔥 Conversión necesaria
+
+            if (notas.length > 0) {
+              const promedio =
+                notas.reduce((acc, n) => acc + n, 0) / notas.length;
+              actualizado.promedio_final = promedio.toFixed(2);
+            } else {
+              actualizado.promedio_final = null;
+            }
+
+            return actualizado;
+          }
+
+          return a;
+        })
       );
 
       setModalConfirmVisible(false);
+      setTrimestreAEliminar("");
       setNotaAEliminar(null);
 
       setModalMensaje({
@@ -147,6 +232,84 @@ export function MisCursos() {
         tipo: "error",
       });
       setModalConfirmVisible(false);
+    }
+  };
+
+  const guardarObservacion = async () => {
+    if (!alumnoSeleccionado?.id) return;
+
+    try {
+      const body = {
+        id_alumno: alumnoSeleccionado.id,
+        id_grado: alumnoSeleccionado.id_grado,
+        id_asignatura: alumnoSeleccionado.id_asignatura,
+        id_profesor: user.id,
+        observaciones: observacionActual,
+      };
+
+      const res = await fetch(
+        "http://localhost:5000/api/usuarios/calificaciones/observacion",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      );
+
+      const data = await res.json();
+
+      // 🔥 Actualizamos el alumno directo en el front
+      setAlumnos((prev) =>
+        prev.map((a) =>
+          a.id === data.id_alumno &&
+          a.id_grado === data.id_grado &&
+          a.id_asignatura === data.id_asignatura
+            ? {
+                ...a,
+                observaciones: data.observaciones ?? "",
+              }
+            : a
+        )
+      );
+
+      setModalObservacionVisible(false);
+
+      setModalMensaje({
+        visible: true,
+        mensaje: "Observación guardada correctamente",
+        tipo: "exito",
+      });
+    } catch (error) {
+      console.error("Error al guardar observación:", error);
+
+      setModalMensaje({
+        visible: true,
+        mensaje: "Error al guardar la observación",
+        tipo: "error",
+      });
+    }
+  };
+
+  const cargarObservacion = async (alumno) => {
+    try {
+      const res = await fetch(
+        "http://localhost:5000/api/usuarios/calificaciones/observacion/obtener",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id_alumno: alumno.id,
+            id_grado: alumno.id_grado,
+            id_asignatura: alumno.id_asignatura,
+          }),
+        }
+      );
+
+      const data = await res.json();
+      return data.observaciones ?? "";
+    } catch (error) {
+      console.error("Error obteniendo observación:", error);
+      return "";
     }
   };
 
@@ -203,13 +366,17 @@ export function MisCursos() {
             >
               <thead>
                 <tr>
-                  <th className="grado" colSpan="3">
+                  <th className="grado" colSpan="7">
                     {cursoSeleccionado.grado} - {cursoSeleccionado.materia}
                   </th>
                 </tr>
                 <tr>
                   <th>Nombre del Alumno</th>
-                  <th>Calificación</th>
+                  <th>1° Trimestre</th>
+                  <th>2° Trimestre</th>
+                  <th>3° Trimestre</th>
+                  <th>Promedio</th>
+                  <th>Observación</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -224,16 +391,23 @@ export function MisCursos() {
                     a.nombre.toLowerCase().includes(busqueda.toLowerCase())
                   )
                   .map((alumno) => {
-                    const calificacion =
-                      alumno.nota !== null && alumno.nota !== undefined
-                        ? alumno.nota
-                        : "Sin calificación";
+                    const notasCargadas = [
+                      alumno.primer_trimestre,
+                      alumno.segundo_trimestre,
+                      alumno.tercer_trimestre,
+                    ].filter((n) => n != null); // Contar solo notas no nulas
+
+                    const puedeEliminar = notasCargadas.length > 0;
                     return (
                       <tr
                         key={`${alumno.id}-${cursoSeleccionado.id_asignatura}`}
                       >
                         <td>{alumno.nombre}</td>
-                        <td>{calificacion}</td>
+                        <td>{alumno.primer_trimestre ?? "—"}</td>
+                        <td>{alumno.segundo_trimestre ?? "—"}</td>
+                        <td>{alumno.tercer_trimestre ?? "—"}</td>
+                        <td>{alumno.promedio_final ?? "—"}</td>
+                        <td>{alumno.observaciones ?? "—"}</td>
                         <td className="mis-cursos__acciones">
                           <button
                             className="mis-cursos__btn-cargar"
@@ -262,13 +436,82 @@ export function MisCursos() {
                               />
                             </svg>
                           </button>
-
+                          <button
+                            className="mis-cursos__btn-observacion"
+                            title="Agregar observación"
+                            disabled={
+                              alumno.primer_trimestre == null ||
+                              alumno.segundo_trimestre == null ||
+                              alumno.tercer_trimestre == null
+                            }
+                            onClick={() => {
+                              setAlumnoSeleccionado({
+                                ...alumno,
+                                id_asignatura: cursoSeleccionado.id_asignatura,
+                              });
+                              setObservacionActual(alumno.observaciones || "");
+                              setModalObservacionVisible(true);
+                            }}
+                            style={{
+                              cursor:
+                                alumno.primer_trimestre == null ||
+                                alumno.segundo_trimestre == null ||
+                                alumno.tercer_trimestre == null
+                                  ? "not-allowed"
+                                  : "pointer",
+                              opacity:
+                                alumno.primer_trimestre == null ||
+                                alumno.segundo_trimestre == null ||
+                                alumno.tercer_trimestre == null
+                                  ? 0.5
+                                  : 1,
+                              pointerEvents:
+                                alumno.primer_trimestre == null ||
+                                alumno.segundo_trimestre == null ||
+                                alumno.tercer_trimestre == null
+                                  ? "none"
+                                  : "auto",
+                            }}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="22"
+                              height="22"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                fill="#3498db"
+                                d="M21 6.5A2.5 2.5 0 0 0 18.5 4h-13A2.5 2.5 0 0 0 3 6.5v9A2.5 2.5 0 0 0 5.5 18H6v3l4-3h8.5A2.5 2.5 0 0 0 21 15.5v-9z"
+                              />
+                            </svg>
+                          </button>
                           <button
                             className="mis-cursos__btn-eliminar"
                             title="Eliminar Calificación"
+                            disabled={!puedeEliminar}
                             onClick={() => {
-                              setNotaAEliminar(alumno);
-                              setModalConfirmVisible(true);
+                              if (notasCargadas.length === 1) {
+                                // Si solo hay una nota, borrarla directamente
+                                if (alumno.primer_trimestre != null)
+                                  setTrimestreAEliminar("primer_trimestre");
+                                else if (alumno.segundo_trimestre != null)
+                                  setTrimestreAEliminar("segundo_trimestre");
+                                else setTrimestreAEliminar("tercer_trimestre");
+
+                                setNotaAEliminar(alumno);
+                                setModalConfirmVisible(true);
+                              } else {
+                                // Si hay 2 o 3 notas, mostrar modal para elegir
+                                setNotaAEliminar(alumno);
+                                setModalElegirTrimestreVisible(true);
+                              }
+                            }}
+                            style={{
+                              cursor: !puedeEliminar
+                                ? "not-allowed"
+                                : "pointer",
+                              opacity: !puedeEliminar ? 0.5 : 1,
+                              pointerEvents: !puedeEliminar ? "none" : "auto",
                             }}
                           >
                             <svg
@@ -297,18 +540,76 @@ export function MisCursos() {
           </button>
         </>
       )}
+      {/* Modal para elegir trimestre a eliminar */}
+      {modalElegirTrimestreVisible && notaAEliminar && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Seleccione el trimestre a eliminar</h3>
+
+            <select
+              value={trimestreAEliminar}
+              onChange={(e) => setTrimestreAEliminar(e.target.value)}
+            >
+              <option value="">Seleccione una opción...</option>
+              {notaAEliminar.primer_trimestre != null && (
+                <option value="primer_trimestre">1° Trimestre</option>
+              )}
+              {notaAEliminar.segundo_trimestre != null && (
+                <option value="segundo_trimestre">2° Trimestre</option>
+              )}
+              {notaAEliminar.tercer_trimestre != null && (
+                <option value="tercer_trimestre">3° Trimestre</option>
+              )}
+              <option value="todos">Eliminar TODOS</option>
+            </select>
+
+            <div style={{ marginTop: "15px", display: "flex", gap: "10px" }}>
+              <button
+                onClick={() => {
+                  if (!trimestreAEliminar) return;
+                  setModalElegirTrimestreVisible(false);
+                  setModalConfirmVisible(true);
+                }}
+              >
+                Continuar
+              </button>
+
+              <button
+                className="nota__btn-cancelar"
+                onClick={() => setModalElegirTrimestreVisible(false)}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal para cargar nota */}
       {modalNotaVisible && alumnoSeleccionado && (
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>Cargar nota para {alumnoSeleccionado.nombre}</h3>
+
+            {/* Nota */}
             <input
               type="number"
               value={nota}
               onChange={(e) => setNota(e.target.value)}
               placeholder="Ingrese nota"
             />
+
+            {/* Trimestre */}
+            <select
+              value={trimestre}
+              onChange={(e) => setTrimestre(e.target.value)}
+              style={{ marginTop: "10px" }}
+            >
+              <option value="primer_trimestre">1° Trimestre</option>
+              <option value="segundo_trimestre">2° Trimestre</option>
+              <option value="tercer_trimestre">3° Trimestre</option>
+            </select>
+
             <div
               style={{
                 marginTop: "10px",
@@ -345,6 +646,40 @@ export function MisCursos() {
         mensaje={modalMensaje.mensaje}
         onClose={() => setModalMensaje({ ...modalMensaje, visible: false })}
       />
+
+      {modalObservacionVisible && alumnoSeleccionado && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Observación para {alumnoSeleccionado.nombre}</h3>
+
+            <textarea
+              value={observacionActual}
+              onChange={(e) => setObservacionActual(e.target.value)}
+              placeholder="Escriba una observación..."
+              rows="5"
+              style={{ width: "100%", marginTop: "10px" }}
+            />
+
+            <div
+              style={{
+                marginTop: "10px",
+                display: "flex",
+                gap: "10px",
+                justifyContent: "flex-end",
+              }}
+            >
+              <button onClick={guardarObservacion}>Guardar</button>
+
+              <button
+                onClick={() => setModalObservacionVisible(false)}
+                className="nota__btn-cancelar"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

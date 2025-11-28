@@ -49,16 +49,12 @@ tbody td {
 }
 
 /* Ejemplo de proporción de columnas */
-thead th:nth-child(1), tbody td:nth-child(1) { width: 15%; } /* DNI */
-thead th:nth-child(2), tbody td:nth-child(2) { width: 20%; } /* Nombre */
-thead th:nth-child(3), tbody td:nth-child(3) { width: 35%; } /* Email */
-thead th:nth-child(4), tbody td:nth-child(4) { width: 50%; } /* Grado - Materia */
-thead th:nth-child(5),
-tbody td:nth-child(5) {
-  width: 150px;  /* columna de acciones fija */
-  text-align: center;
-  white-space: nowrap;
-}
+.table__profesor thead th:nth-child(1), .table__profesor tbody td:nth-child(1) { width: 15%; } /* DNI */
+.table__profesor thead th:nth-child(2), .table__profesor tbody td:nth-child(2) { width: 20%; } /* Nombre */
+.table__profesor thead th:nth-child(3), .table__profesor tbody td:nth-child(3) { width: 35%; } /* Email */
+.table__profesor thead th:nth-child(4), .table__profesor tbody td:nth-child(4) { width: 50%; } /* Grado - Materia */
+
+
 
 /* Título */
 .ver_title {
@@ -78,6 +74,19 @@ tbody td:nth-child(5) {
   gap: 10px;
   width: 100%;             /* ocupa todo el td */
   height: 100%;
+}
+
+.table__profesor td.acciones {
+  display: table-cell !important;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.table__profesor td.acciones button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 4px;
 }
 
 .btn-editar, .btn-eliminar {

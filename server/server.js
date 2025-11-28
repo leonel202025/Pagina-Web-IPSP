@@ -6,6 +6,7 @@ const authRoutes = require('./routes/auth');
 const contactoRoute = require('./routes/contacto');
 const asignaturaRoute = require('./routes/asignaturas');
 const path = require("path");
+const documentosRoutes = require("./routes/documentos");
 
 const app = express();
 
@@ -26,6 +27,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use("/api/eventos", require("./routes/eventos"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/api/documentos", documentosRoutes);
+
 
 
 app.use((err, req, res, next) => {

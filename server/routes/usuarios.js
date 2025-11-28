@@ -17,6 +17,9 @@ router.delete("/profesores/:id", usuariosController.eliminarProfesor);
 router.get("/profesor/:id_profesor/grados", usuariosController.obtenerGradosYAlumnosPorProfesor);
 router.post("/calificaciones", usuariosController.guardarNota);
 router.post("/calificaciones/eliminar", usuariosController.eliminarNota);
+router.post("/calificaciones/observacion", usuariosController.guardarObservacion);
+router.post("/calificaciones/observacion/obtener", usuariosController.obtenerObservacion);
+router.get('/:id/calificaciones', usuariosController.obtenerCalificacionesAlumno);
 
 
 module.exports = router;

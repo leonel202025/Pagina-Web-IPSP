@@ -42,7 +42,7 @@
 .tabla__eventos th:nth-child(1), .tabla__eventos td:nth-child(1) { width: 15%; } /* Fecha */
 .tabla__eventos th:nth-child(2), .tabla__eventos td:nth-child(2) { width: 25%; } /* Acto */
 .tabla__eventos th:nth-child(3), .tabla__eventos td:nth-child(3) { width: 60%; } /* Descripción */
-.tabla__eventos th:nth-child(4), .tabla__eventos td:nth-child(4) { width: 25%; } /* Responsables */
+.tabla__eventos th:nth-child(4), .tabla__eventos td:nth-child(4) { width: 35%; } /* Responsables */
 thead th:nth-child(5),
 tbody td:nth-child(5) {
   width: 150px;  /* columna de acciones fija */

@@ -98,13 +98,13 @@ export const Nav = () => {
               {user.rol === "alumno" && (
                 <>
                   <li className="nav__item">
-                    <Link to={"/mis-materia"} onClick={cerrarMenu}>Mis Materias</Link>
+                    <Link to={"/calificaciones"} onClick={cerrarMenu}>Calificaciones</Link>
                   </li>
                   <div className="nav__logo-alumn">
                     <img src={logo} alt="Logo" />
                   </div>
                   <li className="nav__item">
-                    <Link to={"/mis-materia"} onClick={cerrarMenu}>Mis Materias</Link>
+                    <Link to={"/documentos"} onClick={cerrarMenu}>Documentos</Link>
                   </li>
                 </>
               )}

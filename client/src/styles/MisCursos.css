@@ -121,6 +121,28 @@
   background-color: rgba(231, 9, 9, 0.575);
 }
 
+.mis-cursos__btn-observacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border: 2px solid #3498db; /* azul como el icono */
+  background-color: transparent;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.mis-cursos__btn-observacion svg {
+  margin: auto;
+  fill: #3498db;
+}
+
+.mis-cursos__btn-observacion:hover {
+  background-color: rgba(52, 152, 219, 0.25); /* azul clarito transparente */
+}
+
 /* Agregá esto a tu CSS */
 .modal-overlay {
   position: fixed;

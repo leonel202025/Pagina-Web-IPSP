@@ -1,0 +1,78 @@
+/* Contenedor principal */
+.container__calificaciones {
+  display: flex;
+  flex-direction: column;
+  margin-top: -20px;
+}
+
+/* Tabla */
+.table__calificaciones {
+  width: 100%;
+  max-width: 1300px;
+  margin: 40px auto 20px auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: Arial, sans-serif;
+  box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.527);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  table-layout: fixed;
+}
+
+.calificaciones{
+    font-size: 25px;
+}
+
+/* Bordes redondeados */
+.table__calificaciones thead .calificaciones { border-top-left-radius: 10px; }
+.table__calificaciones thead .calificaciones { border-top-right-radius: 10px; }
+.table__calificaciones tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+.table__calificaciones tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+/* Cabecera */
+.table__calificaciones thead th {
+  padding: 12px 15px;
+  color: #ddd;
+  border: 1.5px solid var(--color-secundario);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Celdas */
+.table__calificaciones tbody td {
+  padding: 12px 15px;
+  border: 1.5px solid var(--color-secundario);
+  color: #ddd;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Proporciones de columnas */
+.table__calificaciones thead th:nth-child(1),
+.table__calificaciones tbody td:nth-child(1) { width: 25%; }
+
+.table__calificaciones thead th:nth-child(2),
+.table__calificaciones tbody td:nth-child(2),
+.table__calificaciones thead th:nth-child(3),
+.table__calificaciones tbody td:nth-child(3),
+.table__calificaciones thead th:nth-child(4),
+.table__calificaciones tbody td:nth-child(4) { width: 12%; }
+
+.table__calificaciones thead th:nth-child(5),
+.table__calificaciones tbody td:nth-child(5) { width: 15%; }
+
+.table__calificaciones thead th:nth-child(6),
+.table__calificaciones tbody td:nth-child(6) { width: 25%; }
+
+/* Título */
+.ver_title {
+  color: #ddd;
+  text-align: center;
+  font-size: 2.2rem;
+  margin-top: 40px;
+}

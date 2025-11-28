@@ -349,16 +349,20 @@ exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
     // 2) Obtener alumnos de esos grados
     const [alumnos] = await db.query(
       `SELECT 
-      aga.id AS id_alumno_grado_asignatura,
-      u.id AS id_alumno,
-      u.nombre,
-      u.dni,
-      u.email,
-      g.id AS id_grado,
-      g.grado,
-      a.id AS id_asignatura,
-      a.asignatura AS materia,
-      c.nota
+        aga.id AS id_alumno_grado_asignatura,
+        u.id AS id_alumno,
+        u.nombre,
+        u.dni,
+        u.email,
+        g.id AS id_grado,
+        g.grado,
+        a.id AS id_asignatura,
+        a.asignatura AS materia,
+        c.primer_trimestre,
+        c.segundo_trimestre,
+        c.tercer_trimestre,
+        c.promedio_final,
+        c.observaciones
       FROM alumno_grado_asignatura aga
       JOIN usuarios u ON u.id = aga.id_alumno
       JOIN grados g ON g.id = aga.id_grado
@@ -376,78 +380,161 @@ exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
 };
 
 exports.guardarNota = async (req, res) => {
-  const { id_alumno, id_grado, id_asignatura, id_profesor, nota } = req.body;
+  const {
+    id_alumno,
+    id_grado,
+    id_asignatura,
+    id_profesor,
+    primer_trimestre,
+    segundo_trimestre,
+    tercer_trimestre,
+    observaciones,
+  } = req.body;
 
-  // Validación rápida
   if (!id_alumno || !id_grado || !id_asignatura || !id_profesor) {
     return res.status(400).json({ error: "Faltan datos requeridos" });
   }
 
   try {
-    // 1️⃣ Ver si existe la relación alumno-grado-asignatura
+    // Buscar/crear relación
     const [relacion] = await db.query(
       `SELECT id FROM alumno_grado_asignatura 
        WHERE id_alumno = ? AND id_grado = ? AND id_asignatura = ?`,
       [id_alumno, id_grado, id_asignatura]
     );
 
-    let id_alumno_grado_asignatura;
+    let id_relacion;
+
     if (relacion.length > 0) {
-      id_alumno_grado_asignatura = relacion[0].id;
+      id_relacion = relacion[0].id;
     } else {
-      // Crear la relación si no existe
       const [resultado] = await db.query(
-        `INSERT INTO alumno_grado_asignatura (id_alumno, id_grado, id_asignatura)
+        `INSERT INTO alumno_grado_asignatura (id_alumno, id_grado, id_asignatura) 
          VALUES (?, ?, ?)`,
         [id_alumno, id_grado, id_asignatura]
       );
-      id_alumno_grado_asignatura = resultado.insertId;
+      id_relacion = resultado.insertId;
     }
 
-    // 2️⃣ Ver si ya existe una calificación
-    const [calificacionExistente] = await db.query(
-      `SELECT id FROM calificaciones 
+    // ===================================================
+    // ⭐ OBTENER NOTAS PREVIAS Y ACTUALIZAR SOLO LA RECIBIDA
+    // ===================================================
+    const [previas] = await db.query(
+      `SELECT primer_trimestre, segundo_trimestre, tercer_trimestre 
+       FROM calificaciones
        WHERE id_alumno_grado_asignatura = ?`,
-      [id_alumno_grado_asignatura]
+      [id_relacion]
+    );
+
+    let primer = previas[0]?.primer_trimestre ?? null;
+    let segundo = previas[0]?.segundo_trimestre ?? null;
+    let tercero = previas[0]?.tercer_trimestre ?? null;
+
+    if (primer_trimestre !== undefined) primer = primer_trimestre;
+    if (segundo_trimestre !== undefined) segundo = segundo_trimestre;
+    if (tercer_trimestre !== undefined) tercero = tercer_trimestre;
+
+    // ============================
+    // ⭐ CÁLCULO DEL PROMEDIO ⭐
+    // ============================
+
+    // Convertir valores a número o null
+    const t1 = primer !== null ? Number(primer) : null;
+    const t2 = segundo !== null ? Number(segundo) : null;
+    const t3 = tercero !== null ? Number(tercero) : null;
+
+    // Tomar solo los números válidos (no null, no NaN)
+    const valores = [t1, t2, t3].filter((v) => v !== null && !isNaN(v));
+
+    let promedio_final = null;
+
+    if (valores.length > 0) {
+      const suma = valores.reduce((a, b) => a + b, 0);
+      promedio_final = Number((suma / valores.length).toFixed(2));
+    }
+
+    // ===================================================
+    // ⭐ GUARDAR EN BD
+    // ===================================================
+    const [calificacionExistente] = await db.query(
+      `SELECT id 
+       FROM calificaciones 
+       WHERE id_alumno_grado_asignatura = ?`,
+      [id_relacion]
     );
 
     if (calificacionExistente.length > 0) {
-      // Actualizar nota
+      // UPDATE
       await db.query(
-        `UPDATE calificaciones SET nota = ?, id_profesor = ? 
+        `UPDATE calificaciones 
+         SET 
+           id_profesor = ?,
+           primer_trimestre = ?,
+           segundo_trimestre = ?,
+           tercer_trimestre = ?,
+           promedio_final = ?,
+           observaciones = ?
          WHERE id_alumno_grado_asignatura = ?`,
-        [nota, id_profesor, id_alumno_grado_asignatura]
+        [
+          id_profesor,
+          primer,
+          segundo,
+          tercero,
+          promedio_final,
+          observaciones,
+          id_relacion,
+        ]
       );
     } else {
-      // Insertar nueva nota
+      // INSERT
       await db.query(
-        `INSERT INTO calificaciones (id_alumno_grado_asignatura, id_profesor, nota)
-         VALUES (?, ?, ?)`,
-        [id_alumno_grado_asignatura, id_profesor, nota]
+        `INSERT INTO calificaciones 
+         (id_alumno_grado_asignatura, id_profesor, primer_trimestre, segundo_trimestre, tercer_trimestre, promedio_final, observaciones)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [
+          id_relacion,
+          id_profesor,
+          primer,
+          segundo,
+          tercero,
+          promedio_final,
+          observaciones,
+        ]
       );
     }
 
-    // Devolver la nota junto con la info para actualizar el frontend
     res.json({
-      id_alumno_grado_asignatura,
       id_alumno,
       id_grado,
       id_asignatura,
-      nota,
+      primer_trimestre: primer,
+      segundo_trimestre: segundo,
+      tercer_trimestre: tercero,
+      promedio_final,
+      observaciones,
     });
   } catch (error) {
-    console.error("❌ Error al guardar nota:", error);
-    res.status(500).json({ error: "Error al guardar nota" });
+    console.error("❌ Error al guardar calificación:", error);
+    res.status(500).json({ error: "Error al guardar calificación" });
   }
 };
 
-// controllers/usuariosController.js
-
 exports.eliminarNota = async (req, res) => {
-  const { id_alumno, id_grado, id_asignatura } = req.body;
+  const { id_alumno, id_grado, id_asignatura, trimestre } = req.body;
+
+  // Validar que llegue un trimestre válido
+  const trimestresValidos = [
+    "primer_trimestre",
+    "segundo_trimestre",
+    "tercer_trimestre",
+    "todos",
+  ];
+
+  if (!trimestre || !trimestresValidos.includes(trimestre)) {
+    return res.status(400).json({ error: "Trimestre inválido" });
+  }
 
   try {
-    // 1️⃣ Buscar la relación alumno-grado-asignatura
     const [relacion] = await db.query(
       `SELECT id FROM alumno_grado_asignatura 
        WHERE id_alumno = ? AND id_grado = ? AND id_asignatura = ?`,
@@ -458,17 +545,173 @@ exports.eliminarNota = async (req, res) => {
       return res.status(404).json({ error: "Relación no encontrada" });
     }
 
-    const id_alumno_grado_asignatura = relacion[0].id;
+    const id_relacion = relacion[0].id;
 
-    // 2️⃣ Eliminar la calificación si existe
+    // 🟦 Si se elimina SOLO 1 trimestre
+    if (trimestre !== "todos") {
+      await db.query(
+        `UPDATE calificaciones SET ${trimestre} = NULL 
+         WHERE id_alumno_grado_asignatura = ?`,
+        [id_relacion]
+      );
+
+      // Recalcular promedio automáticamente
+      await db.query(
+        `UPDATE calificaciones SET promedio_final = 
+        ROUND((COALESCE(primer_trimestre,0) +
+              COALESCE(segundo_trimestre,0) +
+              COALESCE(tercer_trimestre,0)) /
+              NULLIF( (primer_trimestre IS NOT NULL) +
+                      (segundo_trimestre IS NOT NULL) +
+                      (tercer_trimestre IS NOT NULL), 0 ), 2)
+        WHERE id_alumno_grado_asignatura = ?`,
+        [id_relacion]
+      );
+
+      return res.json({
+        message: `Trimestre ${trimestre} eliminado`,
+        id_alumno,
+        id_grado,
+        id_asignatura,
+      });
+    }
+
+    // 🟥 Si se eligen "todos"
     await db.query(
-      `DELETE FROM calificaciones WHERE id_alumno_grado_asignatura = ?`,
-      [id_alumno_grado_asignatura]
+      `UPDATE calificaciones SET 
+        primer_trimestre = NULL,
+        segundo_trimestre = NULL,
+        tercer_trimestre = NULL,
+        promedio_final = NULL,
+        observaciones = NULL
+       WHERE id_alumno_grado_asignatura = ?`,
+      [id_relacion]
     );
 
-    res.json({ message: "Calificación eliminada", id_alumno, id_grado, id_asignatura });
+    res.json({
+      message: "Todas las calificaciones eliminadas",
+      id_alumno,
+      id_grado,
+      id_asignatura,
+    });
   } catch (error) {
-    console.error("❌ Error al eliminar calificación:", error);
-    res.status(500).json({ error: "Error al eliminar calificación" });
+    console.error("❌ Error al eliminar calificaciones:", error);
+    res.status(500).json({ error: "Error al eliminar calificaciones" });
+  }
+};
+
+exports.guardarObservacion = async (req, res) => {
+  try {
+    const { id_alumno, id_grado, id_asignatura, observaciones } = req.body;
+
+    const [relacion] = await db.query(
+      `SELECT id FROM alumno_grado_asignatura 
+       WHERE id_alumno = ? AND id_grado = ? AND id_asignatura = ?`,
+      [id_alumno, id_grado, id_asignatura]
+    );
+
+    if (relacion.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No existe relación para este alumno." });
+    }
+
+    const id_relacion = relacion[0].id;
+
+    const [rows] = await db.query(
+      `SELECT * FROM calificaciones WHERE id_alumno_grado_asignatura = ?`,
+      [id_relacion]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({
+        message: "No existe registro de calificaciones para este alumno.",
+      });
+    }
+
+    await db.query(
+      `UPDATE calificaciones 
+       SET observaciones = ?
+       WHERE id_alumno_grado_asignatura = ?`,
+      [observaciones, id_relacion]
+    );
+
+    // ✅ Devolver la observación y los IDs para actualizar el front
+    return res.json({
+      id_alumno,
+      id_grado,
+      id_asignatura,
+      observaciones,
+    });
+  } catch (error) {
+    console.error("Error al guardar observación:", error);
+    return res.status(500).json({ error: "Error al guardar la observación" });
+  }
+};
+
+exports.obtenerObservacion = async (req, res) => {
+  try {
+    const { id_alumno, id_grado, id_asignatura } = req.body;
+
+    // Buscar relación
+    const [relacion] = await db.query(
+      `SELECT id FROM alumno_grado_asignatura 
+       WHERE id_alumno = ? AND id_grado = ? AND id_asignatura = ?`,
+      [id_alumno, id_grado, id_asignatura]
+    );
+
+    if (relacion.length === 0) {
+      return res.status(404).json({ error: "Relación no encontrada." });
+    }
+
+    const id_relacion = relacion[0].id;
+
+    // Obtener observaciones
+    const [calificacion] = await db.query(
+      `SELECT observaciones 
+       FROM calificaciones 
+       WHERE id_alumno_grado_asignatura = ?`,
+      [id_relacion]
+    );
+
+    if (calificacion.length === 0) {
+      return res.json({ observaciones: null });
+    }
+
+    res.json({ observaciones: calificacion[0].observaciones });
+  } catch (error) {
+    console.error("❌ Error al obtener observación:", error);
+    res.status(500).json({ error: "Error al obtener observación" });
+  }
+};
+
+// Obtener calificaciones de un alumno
+exports.obtenerCalificacionesAlumno = async (req, res) => {
+  const { id } = req.params;
+  console.log("ID del alumno recibido:", id);
+
+  try {
+    const [rows] = await db.query(`
+      SELECT
+        a.asignatura AS materia,
+        u.nombre AS docente,
+        c.primer_trimestre,
+        c.segundo_trimestre,
+        c.tercer_trimestre,
+        c.promedio_final,
+        c.observaciones
+      FROM alumno_grado_asignatura ag
+      JOIN asignaturas a ON ag.id_asignatura = a.id
+      LEFT JOIN calificaciones c ON c.id_alumno_grado_asignatura = ag.id
+      LEFT JOIN usuarios u ON c.id_profesor = u.id
+      WHERE ag.id_alumno = ?
+    `, [id]);
+
+    console.log("Materias + calificaciones:", rows);
+    res.json(rows);
+
+  } catch (error) {
+    console.error("❌ Error al obtener calificaciones:", error);
+    res.status(500).json({ error: 'Error al obtener calificaciones' });
   }
 };

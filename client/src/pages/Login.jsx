@@ -32,12 +32,12 @@ export const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // ✅ Solo aquí activamos el loading
-        setManualLoading(true);
-
-        sessionStorage.setItem("token", data.token);
-        login(data.user, data.token);
+        const { token, user } = data;
+        sessionStorage.setItem("token", token);
+        localStorage.setItem("idAlumno", user.id); // <-- Aquí guardamos el ID real del alumno
+        login(user, token);
         navigate("/");
+        setManualLoading(true);
         setLoadingTexto("Cargando...");
 
         setTimeout(() => {
@@ -55,51 +55,53 @@ export const Login = () => {
 
   return (
     <div className="container__login">
-        <h1 className="titulo-login">Iniciar Sesión</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Email:</label>
-            <input
-              type="email"
-              ref={emailInputRef}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Example@gmail.com"
-              required
-            />
+      <h1 className="titulo-login">Iniciar Sesión</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            ref={emailInputRef}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Example@gmail.com"
+            required
+          />
+        </div>
+        <div>
+          <label>Contraseña:</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div className={`error-wrapper ${errorMessage ? "visible" : ""}`}>
+          <div className="error-message">
+            <svg
+              className="error-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M1 12c0 6.075 4.925 11 11 11s11-4.925 11-11S18.075 1 12 1 1 5.925 1 12z"
+              />
+            </svg>
+            <span>{errorMessage}</span>
           </div>
-          <div>
-            <label>Contraseña:</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              required
-            />
-          </div>
-          <div className={`error-wrapper ${errorMessage ? "visible" : ""}`}>
-            <div className="error-message">
-              <svg
-                className="error-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M1 12c0 6.075 4.925 11 11 11s11-4.925 11-11S18.075 1 12 1 1 5.925 1 12z"
-                />
-              </svg>
-              <span>{errorMessage}</span>
-            </div>
-          </div>
-          <button className="btn-login" type="submit">Iniciar Sesión</button>
-        </form>
-        <img src={logo} alt="logo ipsp" className="logo" />
+        </div>
+        <button className="btn-login" type="submit">
+          Iniciar Sesión
+        </button>
+      </form>
+      <img src={logo} alt="logo ipsp" className="logo" />
     </div>
   );
 };
