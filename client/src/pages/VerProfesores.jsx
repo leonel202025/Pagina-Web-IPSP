@@ -18,7 +18,6 @@ export function VerProfesores() {
   const [modalConfirmVisible, setModalConfirmVisible] = useState(false);
   const [busqueda, setBusqueda] = useState("");
 
-  // Obtener profesores con sus combinaciones de grado-materia
   useEffect(() => {
     fetch("http://localhost:5000/api/usuarios/profesores")
       .then((res) => res.json())
@@ -36,9 +35,7 @@ export function VerProfesores() {
       .then((data) => setAsignaturas(data));
   }, []);
 
-  // Abrir modal de edición
   const handleAbrirEditar = (profesor) => {
-    // gradosMaterias: [{id_grado, id_asignatura}]
     const combinaciones = profesor.gradosMaterias || [];
     setProfesorAEditar({ ...profesor });
     setGradosMateriasSeleccionados(combinaciones);
@@ -82,7 +79,6 @@ export function VerProfesores() {
 
       const data = await res.json();
       if (res.ok) {
-        // refrescar lista
         const resProfes = await fetch(
           "http://localhost:5000/api/usuarios/profesores"
         );
@@ -343,8 +339,6 @@ export function VerProfesores() {
                           </option>
                         ))}
                       </select>
-
-                      {/* Div único que contiene ambos botones */}
                       <div className="profesores__botones">
                         <button
                           className="agregar_asignacion"

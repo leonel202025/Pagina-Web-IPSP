@@ -243,9 +243,9 @@
     left: 0;
     height: 100vh;
     width: 230px;
-    background-color: rgba(0, 0, 0, 0.5); /* más translúcido para que se note el blur */
-    backdrop-filter: blur(10px); /* 👈 desenfoque */
-    -webkit-backdrop-filter: blur(10px); /* soporte en Safari */
+    background-color: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
     padding-top: 60px;
     gap: 18px;
     margin: 0;
@@ -254,7 +254,7 @@
     pointer-events: none;
     transition: transform 0.3s ease, opacity 0.3s ease;
     z-index: 1000;
-    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.6); /* 👈 sombra oscura lateral */
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.6); 
   }
 
   .nav__list.active {

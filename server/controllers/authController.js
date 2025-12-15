@@ -1,9 +1,7 @@
-// controllers/authController.js
 const db = require("../models/db");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// LOGIN
 exports.login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -58,10 +56,10 @@ exports.perfil = async (req, res) => {
     }
 
     const usuario = rows[0];
-    delete usuario.password; // eliminar el password si lo trae
+    delete usuario.password; 
     res.json(usuario);
   } catch (err) {
-    console.error("Error en /perfil:", err); // 👈 Esto es lo que necesitamos ver
+    console.error("Error en /perfil:", err);
     res.status(500).json({ error: "Error del servidor" });
   }
 };

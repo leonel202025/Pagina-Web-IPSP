@@ -1,11 +1,9 @@
-/* Contenedor principal */
 .container__profesores {
   display: flex;
   flex-direction: column;
   margin-top: -130px;
 }
 
-/* Tablas con tamaño uniforme */
 .container__profesores table {
   width: 100%;
   max-width: 1300px;
@@ -20,13 +18,11 @@
   table-layout: fixed;
 }
 
-/* Bordes redondeados */
 .table__profesor .ver_title-profe { border-top-left-radius: 10px; }
 .table__profesor .ver_title-profe{ border-top-right-radius: 10px; }
 tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
 tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 
-/* Cabecera */
 thead th {
   padding: 12px 15px;
   color: #ddd;
@@ -37,7 +33,6 @@ thead th {
   text-overflow: ellipsis;
 }
 
-/* Celdas */
 tbody td {
   padding: 12px 15px;
   border: 1.5px solid var(--color-secundario);
@@ -48,15 +43,11 @@ tbody td {
   text-overflow: ellipsis;
 }
 
-/* Ejemplo de proporción de columnas */
-.table__profesor thead th:nth-child(1), .table__profesor tbody td:nth-child(1) { width: 15%; } /* DNI */
-.table__profesor thead th:nth-child(2), .table__profesor tbody td:nth-child(2) { width: 20%; } /* Nombre */
-.table__profesor thead th:nth-child(3), .table__profesor tbody td:nth-child(3) { width: 35%; } /* Email */
-.table__profesor thead th:nth-child(4), .table__profesor tbody td:nth-child(4) { width: 50%; } /* Grado - Materia */
+.table__profesor thead th:nth-child(1), .table__profesor tbody td:nth-child(1) { width: 15%; }
+.table__profesor thead th:nth-child(2), .table__profesor tbody td:nth-child(2) { width: 20%; } 
+.table__profesor thead th:nth-child(3), .table__profesor tbody td:nth-child(3) { width: 35%; } 
+.table__profesor thead th:nth-child(4), .table__profesor tbody td:nth-child(4) { width: 50%; } 
 
-
-
-/* Título */
 .ver_title-profe {
   color: #ddd;
   text-align: center;
@@ -66,13 +57,12 @@ tbody td {
   font-family: "Merriweather";
 }
 
-/* Columna de acciones */
 .acciones {
   display: flex;
-  justify-content: center; /* centra horizontal */
-  align-items: center;     /* centra vertical */
+  justify-content: center; 
+  align-items: center;   
   gap: 10px;
-  width: 100%;             /* ocupa todo el td */
+  width: 100%;            
   height: 100%;
 }
 
@@ -118,7 +108,6 @@ tbody td {
   transform: scale(1.1);
 }
 
-/* Fondo overlay específico para modal editar */
 .modal-profesor__overlay {
   position: fixed;
   inset: 0;
@@ -144,7 +133,6 @@ tbody td {
   margin: auto;
 }
 
-/* Título modal */
 .modal-profesor__title {
   color: var(--color-secundario);
   text-align: center;
@@ -154,7 +142,6 @@ tbody td {
   font-family: 'Merriweather';
 }
 
-/* Contenedor formulario */
 .modal-profesor__form {
   width: 100%;
   display: flex;
@@ -163,7 +150,6 @@ tbody td {
   justify-content: space-between;
 }
 
-/* Sección de inputs */
 .modal-profesor__section {
   flex: 1 1 100%;
   max-width: 100%;
@@ -196,7 +182,6 @@ tbody td {
   margin-right: 10px;
 }
 
-/* Footer */
 .modal-profesor__footer {
   width: 100%;
   margin-top: 2rem;
@@ -219,7 +204,6 @@ tbody td {
 }
 .cancelar:hover { background-color: #bbb; }
 
-/* Elimina el posicionamiento fijo y lo integra en el flujo normal */
 .busqueda__contenedor-profesor {
   display: flex;
   align-items: center;
@@ -277,7 +261,7 @@ tbody td {
   font-size: 1.3em;
   align-self: center;
   color: #ddd;
-  max-width: max-content; /* ocupa solo lo necesario */
+  max-width: max-content; 
   text-decoration: none;
 }
 
@@ -294,42 +278,35 @@ tbody td {
 /* Muy Grandes */
 @media (max-width: 1440px) {
 
-  /* Contenedor general */
   .modal-profesor__container {
-    width: 380px; /* más angosto */
-    padding: 1rem; /* menos padding */
+    width: 380px; 
+    padding: 1rem; 
   }
 
-  /* Título */
   .modal-profesor__title {
-    font-size: 1.4em; /* más chico */
+    font-size: 1.4em; 
     margin: 3px 0 -5px 0;
   }
 
-  /* Formulario */
   .modal-profesor__form {
-    gap: 1rem; /* menos separación */
+    gap: 1rem; 
   }
 
-  /* Filas de inputs */
   .modal-profesor__row {
     gap: 1rem;
-    margin-bottom: 0.5rem; /* menos altura */
+    margin-bottom: 0.5rem; 
   }
 
-  /* Inputs */
   .modal-profesor__input {
     font-size: 0.85rem;
     padding: 0.35rem;
   }
 
-  /* Labels */
   .modal-profesor__label {
-    font-size: 1rem; /* achicamos labels */
+    font-size: 1rem; 
     margin-bottom: 8px;
   }
 
-  /* Botones */
   .modal-profesor__btn{
     padding: 0.5rem 1.2rem;
     margin-top: -50px;
@@ -358,42 +335,35 @@ tbody td {
   right: 445px;
   top: -50px;
 }
-  /* Contenedor general */
   .modal-profesor__container {
-    width: 380px; /* más angosto */
-    padding: 1rem; /* menos padding */
+    width: 380px; 
+    padding: 1rem; 
   }
 
-  /* Título */
   .modal-profesor__title {
-    font-size: 1.4em; /* más chico */
+    font-size: 1.4em; 
     margin: 3px 0 -5px 0;
   }
 
-  /* Formulario */
   .modal-profesor__form {
-    gap: 1rem; /* menos separación */
+    gap: 1rem; 
   }
 
-  /* Filas de inputs */
   .modal-profesor__row {
     gap: 1rem;
-    margin-bottom: 0.5rem; /* menos altura */
+    margin-bottom: 0.5rem;
   }
 
-  /* Inputs */
   .modal-profesor__input {
     font-size: 0.85rem;
     padding: 0.35rem;
   }
 
-  /* Labels */
   .modal-profesor__label {
-    font-size: 1rem; /* achicamos labels */
+    font-size: 1rem; 
     margin-bottom: 8px;
   }
 
-  /* Botones */
   .modal-profesor__btn{
     padding: 0.5rem 1.2rem;
     margin-top: -50px;
@@ -414,42 +384,35 @@ tbody td {
 /* Medianas */
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
 
-  /* Contenedor general */
   .modal-profesor__container {
-    width: 380px; /* más angosto */
-    padding: 1rem; /* menos padding */
+    width: 380px; 
+    padding: 1rem; 
   }
 
-  /* Título */
   .modal-profesor__title {
-    font-size: 1.4em; /* más chico */
+    font-size: 1.4em; 
     margin: 3px 0 -5px 0;
   }
 
-  /* Formulario */
   .modal-profesor__form {
-    gap: 1rem; /* menos separación */
+    gap: 1rem; 
   }
 
-  /* Filas de inputs */
   .modal-profesor__row {
     gap: 1rem;
-    margin-bottom: 0.5rem; /* menos altura */
+    margin-bottom: 0.5rem; 
   }
 
-  /* Inputs */
   .modal-profesor__input {
     font-size: 0.85rem;
     padding: 0.35rem;
   }
 
-  /* Labels */
   .modal-profesor__label {
-    font-size: 1rem; /* achicamos labels */
+    font-size: 1rem; 
     margin-bottom: 8px;
   }
 
-  /* Botones */
   .modal-profesor__btn{
     padding: 0.5rem 1.2rem;
     margin-top: -50px;

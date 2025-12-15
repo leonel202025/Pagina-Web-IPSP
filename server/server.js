@@ -9,12 +9,10 @@ const path = require("path");
 const documentosRoutes = require("./routes/documentos");
 
 const app = express();
-
 app.use((req, res, next) => {
   next();
 });
 
-// Middlewares actualizados
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,8 +27,6 @@ app.use("/api/eventos", require("./routes/eventos"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/documentos", documentosRoutes);
 
-
-
 app.use((err, req, res, next) => {
   console.error('💥 ERROR:', {
     message: err.message,
@@ -40,13 +36,11 @@ app.use((err, req, res, next) => {
       files: req.files
     }
   });
-  
   res.status(500).json({
     error: 'Error interno del servidor',
     details: process.env.NODE_ENV === 'development' ? err.message : undefined
   });
 });
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);

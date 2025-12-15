@@ -8,7 +8,7 @@ export function MisCursos() {
   const [grados, setGrados] = useState([]);
   const [alumnos, setAlumnos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [busqueda, setBusqueda] = useState(""); // 🔍 Estado para búsqueda
+  const [busqueda, setBusqueda] = useState(""); 
 
   const [cursoSeleccionado, setCursoSeleccionado] = useState(null);
 
@@ -48,13 +48,12 @@ export function MisCursos() {
         const alumnosConId = (data.alumnos || []).map((a) => ({
           ...a,
           id: a.id_alumno ?? a.id,
-          id_grado: a.id_grado, // 🔥 agregar
-          id_asignatura: a.id_asignatura, // 🔥 agregar
+          id_grado: a.id_grado, 
+          id_asignatura: a.id_asignatura,
         }));
 
         setGrados(data.grados || []);
 
-        // 🔥 Cargar observaciones para cada alumno
         const alumnosConObs = await Promise.all(
           alumnosConId.map(async (a) => ({
             ...a,
@@ -85,7 +84,6 @@ export function MisCursos() {
         observaciones,
       };
 
-      // Asignar la nota al trimestre seleccionado
       body[trimestre] = Number(nota);
 
       const res = await fetch(
@@ -99,7 +97,6 @@ export function MisCursos() {
 
       const data = await res.json();
 
-      // Actualizamos solo el alumno editado
       setAlumnos((prev) =>
         prev.map((a) =>
           a.id === data.id_alumno &&
@@ -157,7 +154,7 @@ export function MisCursos() {
         id_alumno: notaAEliminar.id,
         id_grado: notaAEliminar.id_grado,
         id_asignatura: notaAEliminar.id_asignatura,
-        trimestre: trimestreAEliminar, // ✨ enviar trimestre
+        trimestre: trimestreAEliminar, 
       };
 
       const res = await fetch(
@@ -178,10 +175,8 @@ export function MisCursos() {
             a.id_grado === data.id_grado &&
             a.id_asignatura === data.id_asignatura
           ) {
-            // Copia actual del alumno
             const actualizado = { ...a };
 
-            // Eliminar solo un trimestre
             if (trimestreAEliminar !== "todos") {
               actualizado[trimestreAEliminar] = null;
             } else {
@@ -191,14 +186,13 @@ export function MisCursos() {
               actualizado.observaciones = null;
             }
 
-            // Recalcular promedio
             const notas = [
               actualizado.primer_trimestre,
               actualizado.segundo_trimestre,
               actualizado.tercer_trimestre,
             ]
               .filter((n) => n !== null && n !== undefined)
-              .map((n) => Number(n)); // 🔥 Conversión necesaria
+              .map((n) => Number(n)); 
 
             if (notas.length > 0) {
               const promedio =
@@ -258,7 +252,6 @@ export function MisCursos() {
 
       const data = await res.json();
 
-      // 🔥 Actualizamos el alumno directo en el front
       setAlumnos((prev) =>
         prev.map((a) =>
           a.id === data.id_alumno &&
@@ -395,7 +388,7 @@ export function MisCursos() {
                       alumno.primer_trimestre,
                       alumno.segundo_trimestre,
                       alumno.tercer_trimestre,
-                    ].filter((n) => n != null); // Contar solo notas no nulas
+                    ].filter((n) => n != null); 
 
                     const puedeEliminar = notasCargadas.length > 0;
                     return (
@@ -420,7 +413,6 @@ export function MisCursos() {
                               setModalNotaVisible(true);
                             }}
                           >
-                            {/* Ícono ➕ */}
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="20"
@@ -491,7 +483,6 @@ export function MisCursos() {
                             disabled={!puedeEliminar}
                             onClick={() => {
                               if (notasCargadas.length === 1) {
-                                // Si solo hay una nota, borrarla directamente
                                 if (alumno.primer_trimestre != null)
                                   setTrimestreAEliminar("primer_trimestre");
                                 else if (alumno.segundo_trimestre != null)
@@ -501,7 +492,6 @@ export function MisCursos() {
                                 setNotaAEliminar(alumno);
                                 setModalConfirmVisible(true);
                               } else {
-                                // Si hay 2 o 3 notas, mostrar modal para elegir
                                 setNotaAEliminar(alumno);
                                 setModalElegirTrimestreVisible(true);
                               }
@@ -590,16 +580,12 @@ export function MisCursos() {
         <div className="modal-overlay">
           <div className="modal-content">
             <h3>Cargar nota para {alumnoSeleccionado.nombre}</h3>
-
-            {/* Nota */}
             <input
               type="number"
               value={nota}
               onChange={(e) => setNota(e.target.value)}
               placeholder="Ingrese nota"
             />
-
-            {/* Trimestre */}
             <select
               value={trimestre}
               onChange={(e) => setTrimestre(e.target.value)}

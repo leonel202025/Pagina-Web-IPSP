@@ -15,7 +15,6 @@ export function CrearEvento() {
   const [modalMensaje, setModalMensaje] = useState("");
   const [modalTipo, setModalTipo] = useState("");
 
-  // 🔹 Cargar profesores y tareas al montar
   useEffect(() => {
     const fetchProfesores = async () => {
       try {
@@ -41,7 +40,6 @@ export function CrearEvento() {
     fetchTareas();
   }, []);
 
-  // 🔹 Manejo de cambios en selects
   const handleChange = (index, field, value) => {
     const nuevas = [...asignaciones];
     nuevas[index][field] = value;
@@ -52,7 +50,6 @@ export function CrearEvento() {
     }
   };
 
-  // 🔹 Agregar o eliminar selects
   const agregarAsignacion = () => {
     setAsignaciones([...asignaciones, { idProfesor: "", idTarea: "" }]);
   };
@@ -61,11 +58,9 @@ export function CrearEvento() {
     setAsignaciones(asignaciones.filter((_, i) => i !== index));
   };
 
-  // 🔹 Enviar evento
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar campos principales
     if (!titulo.trim() || !descripcion.trim() || !fecha) {
       setModalMensaje("Todos los campos del evento son obligatorios");
       setModalTipo("advertencia");
@@ -73,7 +68,6 @@ export function CrearEvento() {
       return;
     }
 
-    // Validar asignaciones (si no es "todos los profesores")
     if (!asignaciones.some((a) => a.idProfesor === "todos")) {
       const asignacionesIncompletas = asignaciones.some(
         (a) => !a.idProfesor || !a.idTarea
@@ -87,7 +81,6 @@ export function CrearEvento() {
       }
     }
 
-    // Crear el objeto del nuevo evento
     const nuevoEvento = {
       titulo: titulo.trim(),
       descripcion: descripcion.trim(),
@@ -95,7 +88,7 @@ export function CrearEvento() {
       todosProfesores: asignaciones.some((a) => a.idProfesor === "todos"),
       profesoresAsignados: asignaciones.filter(
         (a) => a.idProfesor && a.idProfesor !== "todos"
-      ), // { idProfesor, idTarea } por cada asignación
+      ),
     };
 
     try {
@@ -146,7 +139,6 @@ export function CrearEvento() {
           onChange={(e) => setFecha(e.target.value)}
         />
 
-        {/* 🔹 Sección de asignaciones */}
         <div className="form-asignaciones">
           {asignaciones.map((item, index) => (
             <div key={index} className="asignacion-fila">

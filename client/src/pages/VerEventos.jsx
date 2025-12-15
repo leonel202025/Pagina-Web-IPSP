@@ -8,7 +8,6 @@ export function VerEventos() {
   const [profesores, setProfesores] = useState([]);
   const [tareas, setTareas] = useState([]);
 
-  // Estados para editar
   const [modalEditarVisible, setModalEditarVisible] = useState(false);
   const [eventoSeleccionado, setEventoSeleccionado] = useState(null);
 
@@ -37,20 +36,17 @@ export function VerEventos() {
   }, []);
 
   useEffect(() => {
-    // Traer profesores
     fetch("/api/usuarios/profesores")
       .then((res) => res.json())
       .then((data) => setProfesores(data))
       .catch((err) => console.error(err));
 
-    // Traer tareas
     fetch("/api/eventos/tareas")
       .then((res) => res.json())
       .then((data) => setTareas(data))
       .catch((err) => console.error(err));
   }, []);
 
-  // 🔹 Abrir modal de edición
   const handleEditar = (evento) => {
     setEventoSeleccionado({
       ...evento,
@@ -170,8 +166,6 @@ export function VerEventos() {
                   <td>{new Date(evento.fecha).toLocaleDateString()}</td>
                   <td className="evento__titulo">{evento.titulo}</td>
                   <td title={evento.descripcion}>{evento.descripcion}</td>
-
-                  {/* 🔹 Nueva columna: Responsable - Tarea */}
                   <td
                     title={
                       evento.asignaciones?.length
@@ -240,7 +234,7 @@ export function VerEventos() {
             )}
           </tbody>
         </table>
-        {/* 🔹 Modal de edición */}
+        {/* Modal de edición */}
         {modalEditarVisible && eventoSeleccionado && (
           <div className="modal-editar-overlay">
             <div className="modal-editar-container">
@@ -282,7 +276,7 @@ export function VerEventos() {
                   }
                 />
 
-                {/* 🔹 Asignaciones de profesores y tareas */}
+                {/* Asignaciones de profesores y tareas */}
                 {eventoSeleccionado.asignaciones?.map((item, index) => (
                   <div key={index} className="asignacion-fila">
                     <div className="asignacion-contenedor">
@@ -325,7 +319,7 @@ export function VerEventos() {
                         ))}
                       </select>
 
-                      <div className="add__profesor-botones">
+                      <div className="add__evento-botones">
                         <button
                           type="button"
                           className="add_asignacion-evento"
@@ -402,7 +396,7 @@ export function VerEventos() {
           </div>
         )}
 
-        {/* 🔹 Modal de mensajes */}
+        {/* Modal de mensajes */}
         <ModalMensaje
           visible={modalVisible}
           mensaje={modalMensaje}

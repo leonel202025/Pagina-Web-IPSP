@@ -1,4 +1,3 @@
-// routes/documentos.js
 const express = require("express");
 const router = express.Router();
 const { descargarDocumento } = require("../controllers/documentosController");

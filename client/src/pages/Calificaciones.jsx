@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/calificaciones.css"; // ⬅️ nuevo CSS
+import "../styles/calificaciones.css";
 
 export const Calificaciones = () => {
   const [calificaciones, setCalificaciones] = useState([]);

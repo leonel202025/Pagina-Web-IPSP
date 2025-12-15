@@ -1,11 +1,9 @@
-// controllers/usuariosController.js
 const db = require("../models/db");
 const bcrypt = require("bcryptjs");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// Función para registrar usuario (antes en authController)
 exports.register = async (req, res) => {
   const {
     dni,
@@ -33,20 +31,17 @@ exports.register = async (req, res) => {
         return res.status(400).json({ error: "Faltan datos para alumno" });
       }
 
-      // Insertar en usuarios
       const [result] = await db.query(
         "INSERT INTO usuarios (dni, nombre, email, password, rol, id_grado) VALUES (?, ?, ?, ?, ?, ?)",
         [dni, nombre, email, hashedPassword, rol, id_grado]
       );
       const id_alumno = result.insertId;
 
-      // 2️⃣ Traer todas las asignaturas del grado del alumno
       const [asignaturas] = await db.query(
         "SELECT a.id AS id_asignatura FROM profesor_grado_asignatura pga JOIN asignaturas a ON a.id = pga.id_asignatura WHERE pga.id_grado = ? GROUP BY a.id",
         [id_grado]
       );
 
-      // 3️⃣ Insertar relaciones en alumno_grado_asignatura
       for (const a of asignaturas) {
         await db.query(
           "INSERT INTO alumno_grado_asignatura (id_alumno, id_grado, id_asignatura) VALUES (?, ?, ?)",
@@ -54,21 +49,19 @@ exports.register = async (req, res) => {
         );
       }
     } else if (rol === "profesor") {
-      const { asignaciones } = req.body; // Array [{id_grado, id_asignatura}, ...]
+      const { asignaciones } = req.body; 
       if (!Array.isArray(asignaciones) || asignaciones.length === 0) {
         return res
           .status(400)
           .json({ error: "Faltan asignaciones para el profesor" });
       }
 
-      // Insertar usuario
       const [result] = await db.query(
         "INSERT INTO usuarios (dni, nombre, email, password, rol) VALUES (?, ?, ?, ?, ?)",
         [dni, nombre, email, hashedPassword, rol]
       );
       const id_profesor = result.insertId;
 
-      // Insertar combinaciones en profesor_grado_asignatura
       for (const asig of asignaciones) {
         if (!asig.id_grado || !asig.id_asignatura) continue;
         await db.query(
@@ -89,7 +82,6 @@ exports.register = async (req, res) => {
   }
 };
 
-// Obtener alumnos (función nueva)
 exports.obtenerAlumnos = async (req, res) => {
   try {
     const [rows] = await db.query(
@@ -117,7 +109,6 @@ exports.obtenerProfesores = async (req, res) => {
       ORDER BY u.id, g.id, a.id
     `);
 
-    // Agrupar por profesor y formar array de combinaciones
     const profesoresMap = {};
     rows.forEach((row) => {
       if (!profesoresMap[row.id]) {
@@ -172,7 +163,6 @@ exports.actualizarProfesor = async (req, res) => {
   const { dni, nombre, email, password, gradosMaterias } = req.body;
 
   try {
-    // Actualizar datos personales
     const params = [dni, nombre, email];
     let sql = "UPDATE usuarios SET dni = ?, nombre = ?, email = ?";
     if (password) {
@@ -184,13 +174,11 @@ exports.actualizarProfesor = async (req, res) => {
     params.push(id);
     await db.query(sql, params);
 
-    // Eliminar asignaciones antiguas
     await db.query(
       "DELETE FROM profesor_grado_asignatura WHERE id_profesor = ?",
       [id]
     );
 
-    // Insertar nuevas combinaciones
     if (Array.isArray(gradosMaterias)) {
       for (const gm of gradosMaterias) {
         if (!gm.id_grado || !gm.id_asignatura) continue;
@@ -226,19 +214,15 @@ exports.eliminarUsuario = async (req, res) => {
 };
 
 exports.eliminarProfesor = async (req, res) => {
-  const { id } = req.params; // este id puede ser id o dni según tu PK en usuarios
+  const { id } = req.params;
 
   try {
-    // Primero eliminar relaciones en la tabla intermedia
     await db.query(
       "DELETE FROM profesor_grado_asignatura WHERE id_profesor = ?",
       [id]
     );
 
-    // Luego eliminar al profesor en usuarios
     const [result] = await db.query("DELETE FROM usuarios WHERE id = ?", [id]);
-    // ⚠️ Si tu PK es dni en vez de id, cambia la consulta a:
-    // const [result] = await db.query("DELETE FROM usuarios WHERE dni = ?", [id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "Profesor no encontrado" });
@@ -251,7 +235,6 @@ exports.eliminarProfesor = async (req, res) => {
   }
 };
 
-/* Manejar Foto de Perfil */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -276,7 +259,6 @@ exports.actualizarFotoPerfil = async (req, res) => {
   const rutaImagen = `/uploads/${req.file.filename}`;
 
   try {
-    // (Opcional) Obtener ruta anterior y eliminarla
     const [rows] = await db.query(
       "SELECT foto_perfil FROM usuarios WHERE id = ?",
       [userId]
@@ -284,10 +266,9 @@ exports.actualizarFotoPerfil = async (req, res) => {
     const anterior = rows[0]?.foto_perfil;
 
     if (anterior && fs.existsSync("." + anterior)) {
-      fs.unlinkSync("." + anterior); // Elimina la imagen vieja
+      fs.unlinkSync("." + anterior);
     }
 
-    // Actualizar la base de datos
     await db.query("UPDATE usuarios SET foto_perfil = ? WHERE id = ?", [
       rutaImagen,
       userId,
@@ -300,31 +281,10 @@ exports.actualizarFotoPerfil = async (req, res) => {
   }
 };
 
-exports.buscarPorDni = async (req, res) => {
-  const { dni } = req.params;
-  try {
-    const [result] = await db.query(
-      "SELECT * FROM usuarios WHERE dni = ? AND rol = 'alumno'",
-      [dni]
-    );
-
-    if (result.length === 0) {
-      return res.status(404).json({ mensaje: "Alumno no encontrado" });
-    }
-
-    res.json(result[0]);
-  } catch (err) {
-    console.error("Error al buscar por DNI:", err);
-    res.status(500).json({ mensaje: "Error del servidor" });
-  }
-};
-
-// Obtener grados, materias y alumnos asignados a un profesor
 exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
   const { id_profesor } = req.params;
 
   try {
-    // 1) Obtener todas las combinaciones de grado + materia que dicta el profesor
     const [grados] = await db.query(
       `SELECT 
           g.id AS id_grado,
@@ -343,10 +303,8 @@ exports.obtenerGradosYAlumnosPorProfesor = async (req, res) => {
       return res.json({ grados: [], alumnos: [] });
     }
 
-    // Extraer IDs de grados para buscar alumnos
     const idsGrados = [...new Set(grados.map((g) => g.id_grado))];
 
-    // 2) Obtener alumnos de esos grados
     const [alumnos] = await db.query(
       `SELECT 
         aga.id AS id_alumno_grado_asignatura,
@@ -396,7 +354,6 @@ exports.guardarNota = async (req, res) => {
   }
 
   try {
-    // Buscar/crear relación
     const [relacion] = await db.query(
       `SELECT id FROM alumno_grado_asignatura 
        WHERE id_alumno = ? AND id_grado = ? AND id_asignatura = ?`,
@@ -415,10 +372,6 @@ exports.guardarNota = async (req, res) => {
       );
       id_relacion = resultado.insertId;
     }
-
-    // ===================================================
-    // ⭐ OBTENER NOTAS PREVIAS Y ACTUALIZAR SOLO LA RECIBIDA
-    // ===================================================
     const [previas] = await db.query(
       `SELECT primer_trimestre, segundo_trimestre, tercer_trimestre 
        FROM calificaciones
@@ -433,17 +386,10 @@ exports.guardarNota = async (req, res) => {
     if (primer_trimestre !== undefined) primer = primer_trimestre;
     if (segundo_trimestre !== undefined) segundo = segundo_trimestre;
     if (tercer_trimestre !== undefined) tercero = tercer_trimestre;
-
-    // ============================
-    // ⭐ CÁLCULO DEL PROMEDIO ⭐
-    // ============================
-
-    // Convertir valores a número o null
     const t1 = primer !== null ? Number(primer) : null;
     const t2 = segundo !== null ? Number(segundo) : null;
     const t3 = tercero !== null ? Number(tercero) : null;
 
-    // Tomar solo los números válidos (no null, no NaN)
     const valores = [t1, t2, t3].filter((v) => v !== null && !isNaN(v));
 
     let promedio_final = null;
@@ -453,9 +399,6 @@ exports.guardarNota = async (req, res) => {
       promedio_final = Number((suma / valores.length).toFixed(2));
     }
 
-    // ===================================================
-    // ⭐ GUARDAR EN BD
-    // ===================================================
     const [calificacionExistente] = await db.query(
       `SELECT id 
        FROM calificaciones 
@@ -464,7 +407,6 @@ exports.guardarNota = async (req, res) => {
     );
 
     if (calificacionExistente.length > 0) {
-      // UPDATE
       await db.query(
         `UPDATE calificaciones 
          SET 
@@ -522,7 +464,6 @@ exports.guardarNota = async (req, res) => {
 exports.eliminarNota = async (req, res) => {
   const { id_alumno, id_grado, id_asignatura, trimestre } = req.body;
 
-  // Validar que llegue un trimestre válido
   const trimestresValidos = [
     "primer_trimestre",
     "segundo_trimestre",
@@ -547,7 +488,6 @@ exports.eliminarNota = async (req, res) => {
 
     const id_relacion = relacion[0].id;
 
-    // 🟦 Si se elimina SOLO 1 trimestre
     if (trimestre !== "todos") {
       await db.query(
         `UPDATE calificaciones SET ${trimestre} = NULL 
@@ -555,7 +495,6 @@ exports.eliminarNota = async (req, res) => {
         [id_relacion]
       );
 
-      // Recalcular promedio automáticamente
       await db.query(
         `UPDATE calificaciones SET promedio_final = 
         ROUND((COALESCE(primer_trimestre,0) +
@@ -576,7 +515,6 @@ exports.eliminarNota = async (req, res) => {
       });
     }
 
-    // 🟥 Si se eligen "todos"
     await db.query(
       `UPDATE calificaciones SET 
         primer_trimestre = NULL,
@@ -636,7 +574,6 @@ exports.guardarObservacion = async (req, res) => {
       [observaciones, id_relacion]
     );
 
-    // ✅ Devolver la observación y los IDs para actualizar el front
     return res.json({
       id_alumno,
       id_grado,
@@ -653,7 +590,6 @@ exports.obtenerObservacion = async (req, res) => {
   try {
     const { id_alumno, id_grado, id_asignatura } = req.body;
 
-    // Buscar relación
     const [relacion] = await db.query(
       `SELECT id FROM alumno_grado_asignatura 
        WHERE id_alumno = ? AND id_grado = ? AND id_asignatura = ?`,
@@ -666,7 +602,6 @@ exports.obtenerObservacion = async (req, res) => {
 
     const id_relacion = relacion[0].id;
 
-    // Obtener observaciones
     const [calificacion] = await db.query(
       `SELECT observaciones 
        FROM calificaciones 
@@ -685,7 +620,6 @@ exports.obtenerObservacion = async (req, res) => {
   }
 };
 
-// Obtener calificaciones de un alumno
 exports.obtenerCalificacionesAlumno = async (req, res) => {
   const { id } = req.params;
   console.log("ID del alumno recibido:", id);

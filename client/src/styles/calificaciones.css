@@ -1,11 +1,9 @@
-/* Contenedor principal */
 .container__calificaciones {
   display: flex;
   flex-direction: column;
   margin-top: -20px;
 }
 
-/* Tabla */
 .table__calificaciones {
   width: 100%;
   max-width: 1300px;
@@ -24,13 +22,11 @@
     font-size: 25px;
 }
 
-/* Bordes redondeados */
 .table__calificaciones thead .calificaciones { border-top-left-radius: 10px; }
 .table__calificaciones thead .calificaciones { border-top-right-radius: 10px; }
 .table__calificaciones tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
 .table__calificaciones tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 
-/* Cabecera */
 .table__calificaciones thead th {
   padding: 12px 15px;
   color: #ddd;
@@ -41,7 +37,6 @@
   text-overflow: ellipsis;
 }
 
-/* Celdas */
 .table__calificaciones tbody td {
   padding: 12px 15px;
   border: 1.5px solid var(--color-secundario);
@@ -52,7 +47,6 @@
   text-overflow: ellipsis;
 }
 
-/* Proporciones de columnas */
 .table__calificaciones thead th:nth-child(1),
 .table__calificaciones tbody td:nth-child(1) { width: 25%; }
 
@@ -69,7 +63,6 @@
 .table__calificaciones thead th:nth-child(6),
 .table__calificaciones tbody td:nth-child(6) { width: 25%; }
 
-/* Título */
 .ver_title {
   color: #ddd;
   text-align: center;
@@ -118,7 +111,6 @@
 
 @media screen and (max-width: 768px) {
 
-  /* Ocultar encabezados */
   .table__calificaciones thead {
     display: none;
   }

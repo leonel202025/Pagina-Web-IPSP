@@ -392,38 +392,38 @@ textarea {
 /* Tablets 10" (Vertical) */
 @media screen and (max-width: 800px) {
   .form__container {
-    width: 500px;        /* ancho más amplio */
-    margin-top: 60px;   /* más espacio superior */
-    padding: 30px;       /* padding interno más grande */
+    width: 500px;    
+    margin-top: 60px;   
+    padding: 30px;       
   }
 
   .titulo-contacto {
-    font-size: 2.5em;    /* título muy grande */
+    font-size: 2.5em; 
   }
 
   .form__container label {
-    font-size: 1.4em;    /* etiquetas más visibles */
+    font-size: 1.4em;    
   }
 
   .form__container input,
   .form__container select,
   .form__container textarea {
-    font-size: 1.2em;    /* texto más grande */
-    padding: 14px;       /* inputs más altos */
-    margin: 12px 0;      /* más espacio entre campos */
+    font-size: 1.2em;
+    padding: 14px;   
+    margin: 12px 0;      
   }
 
   .btn-contact {
     font-size: 1.3em !important;  
-    padding: 16px 24px;  /* botón más grande */
+    padding: 16px 24px
   }
 
   .canales {
-    font-size: 2em;    /* íconos de contacto más grandes */
+    font-size: 2em;    
   }
 
   .logo__item {
-    width: 80px;         /* logo más grande */
+    width: 80px;    
     height: 80px;
   }
 }

@@ -1,10 +1,8 @@
-/* Contenedor principal */
 .container__alumnos {
   display: flex;
   flex-direction: column;
 }
 
-/* Tablas con tamaño uniforme */
 .container__alumnos table {
   width: 100%;
   max-width: 1000px;
@@ -16,11 +14,10 @@
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  table-layout: fixed; /* columnas proporcionales */
+  table-layout: fixed;
   margin-top: -120px;
 }
 
-/* Bordes redondeados */
 thead tr:first-child th:first-child {
   border-top-left-radius: 10px;
 }
@@ -34,7 +31,6 @@ tbody tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
 }
 
-/* Cabecera */
 thead th {
   padding: 12px 15px;
   color: #ddd;
@@ -45,7 +41,6 @@ thead th {
   text-overflow: ellipsis;
 }
 
-/* Celdas */
 tbody td {
   padding: 12px 15px;
   border: 1.5px solid var(--color-secundario);
@@ -56,27 +51,25 @@ tbody td {
   text-overflow: ellipsis;
 }
 
-/* Proporción de columnas */
 .tabla-alumnos thead th:nth-child(1),
 .tabla-alumnos tbody td:nth-child(1) {
-  width: 50%; /* DNI */
+  width: 50%; 
 }
 .tabla-alumnos thead th:nth-child(2),
 .tabla-alumnos tbody td:nth-child(2) {
-  width: 35%; /* Nombre */
+  width: 35%; 
 }
 .tabla-alumnos thead th:nth-child(3),
 .tabla-alumnos tbody td:nth-child(3) {
-  width: 30%; /* Email */
+  width: 30%; 
 }
 .tabla-alumnos thead th:nth-child(4),
 .tabla-alumnos tbody td:nth-child(4) {
-  width: 250px;  /* columna de acciones fija */
+  width: 250px;  
   text-align: center;
   white-space: nowrap;
 }
 
-/* Título */
 .ver__alumnos-title {
   color: #ddd;
   text-align: center;
@@ -86,13 +79,12 @@ tbody td {
   font-family: "Merriweather";
 }
 
-/* Acciones */
 .acciones {
   display: flex;
-  justify-content: center; /* centra horizontal */
-  align-items: center;     /* centra vertical */
+  justify-content: center; 
+  align-items: center;   
   gap: 10px;
-  width: 100%;             /* ocupa todo el td */
+  width: 100%;            
   height: 100%;
 }
 
@@ -105,7 +97,7 @@ tbody td {
   min-width: 40px;
   min-height: 40px;
   border-radius: 50%;
-  padding: 0; /* ya centrado con flex */
+  padding: 0; 
 }
 
 .btn-editar svg { fill: #3498db; }
@@ -123,8 +115,6 @@ tbody td {
 .btn-editar:hover { background-color: #1e56e396; }
 .btn-eliminar:hover { background-color: rgba(231, 9, 9, 0.575); }
 
-
-/* Fondo overlay específico para modal editar alumno */
 .modal-editar-overlay {
   position: fixed;
   top: 0;
@@ -138,7 +128,6 @@ tbody td {
   z-index: 1000;
 }
 
-/* Contenedor modal específico */
 .modal-editar-container {
   width: 430px;
   background-color: #fffd;
@@ -155,7 +144,6 @@ tbody td {
   overflow-y: auto;
 }
 
-/* Título exclusivo del modal editar */
 .modal-editar-titulo {
   color: var(--color-secundario);
   text-align: center;
@@ -165,7 +153,6 @@ tbody td {
   font-family: 'Merriweather', serif;
 }
 
-/* Formulario específico */
 .modal-editar-form {
   max-width: 460px;
   width: 100%;
@@ -174,7 +161,6 @@ tbody td {
   border-radius: 5px;
 }
 
-/* Inputs y select específicos */
 .modal-editar-form input,
 .modal-editar-form select {
   width: 100%;
@@ -189,8 +175,6 @@ tbody td {
   font-weight: 400;
 }
 
-
-/* Botones específicos */
 .modal-editar-form button {
   background-color: var(--color-secundario);
   color: white;
@@ -211,7 +195,6 @@ tbody td {
   background-color: #103cac;
 }
 
-/* Botón cancelar específico */
 .modal-editar-form button.btn__cancelar-alm {
   background-color: #ccc;
   color: #333;
@@ -311,12 +294,10 @@ tbody td {
     margin-bottom: 8px;
   }
 
-  /* Contenedor principal */
   .container__alumnos {
     padding: 0 10px;
   }
 
-  /* Tabla */
   .container__alumnos table {
     font-size: 0.9em;
     margin-top: -70px;
@@ -337,21 +318,18 @@ tbody td {
     font-size: 1em;
   }
 
-  /* Botones acciones */
   .btn-editar, .btn-eliminar {
     width: 40px;
     height: 40px;
     padding: 5px 8px;
   }
 
-  /* Título */
   .ver_title {
     font-size: 2em;
     margin-top: -20px;
     margin-bottom: 15px;
   }
 
-  /* Modal editar */
   .modal-editar-container {
     width: 380px;
     padding: 15px 20px;
@@ -362,7 +340,6 @@ tbody td {
     margin: 15px 0 -25px 0;
   }
 
-  /* Inputs */
   .modal-editar-form input,
   .modal-editar-form select {
     padding: 10px;
@@ -370,7 +347,6 @@ tbody td {
     font-size: 0.95em;
   }
 
-  /* Botones modal */
   .modal-editar-form button {
     padding: 12px 15px;
     font-size: 0.95em;
@@ -397,12 +373,10 @@ tbody td {
     margin-bottom: 8px;
   }
 
-  /* Contenedor principal */
   .container__alumnos {
     padding: 0 10px;
   }
 
-  /* Tabla */
   .container__alumnos table {
     font-size: 0.9em;
     margin-top: -50px;
@@ -423,21 +397,18 @@ tbody td {
     font-size: 1em;
   }
 
-  /* Botones acciones */
   .btn-editar, .btn-eliminar {
     width: 40px;
     height: 40px;
     padding: 5px 8px;
   }
 
-  /* Título */
   .ver_title {
     font-size: 2em;
     margin-top: -20px;
     margin-bottom: 15px;
   }
 
-  /* Modal editar */
   .modal-editar-container {
     width: 380px;
     padding: 15px 20px;
@@ -448,7 +419,6 @@ tbody td {
     margin: 15px 0 -25px 0;
   }
 
-  /* Inputs */
   .modal-editar-form input,
   .modal-editar-form select {
     padding: 10px;
@@ -456,7 +426,6 @@ tbody td {
     font-size: 0.95em;
   }
 
-  /* Botones modal */
   .modal-editar-form button {
     padding: 12px 15px;
     font-size: 0.95em;
@@ -472,12 +441,10 @@ tbody td {
     margin-bottom: 8px;
   }
 
-  /* Contenedor principal */
   .container__alumnos {
     padding: 0 10px;
   }
 
-  /* Tabla */
   table {
     font-size: 0.9em;
     margin-top: 8px;
@@ -498,21 +465,18 @@ tbody td {
     font-size: 0.95em;
   }
 
-  /* Botones acciones */
   .btn-editar, .btn-eliminar {
     width: 40px;
     height: 40px;
     padding: 5px 8px;
   }
 
-  /* Título */
   .ver_title {
     font-size: 2em;
     margin-top: -20px;
     margin-bottom: 15px;
   }
 
-  /* Modal editar */
   .modal-editar-container {
     width: 380px;
     padding: 15px 20px;
@@ -523,7 +487,6 @@ tbody td {
     margin: 15px 0 -25px 0;
   }
 
-  /* Inputs */
   .modal-editar-form input,
   .modal-editar-form select {
     padding: 10px;
@@ -531,7 +494,6 @@ tbody td {
     font-size: 0.95em;
   }
 
-  /* Botones modal */
   .modal-editar-form button {
     padding: 12px 15px;
     font-size: 0.95em;

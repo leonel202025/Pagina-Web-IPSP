@@ -13,7 +13,7 @@ export const Contacto = () => {
   const [status, setStatus] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMensaje, setModalMensaje] = useState("");
-  const [modalTipo, setModalTipo] = useState(""); // "exito" o "error"
+  const [modalTipo, setModalTipo] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,10 +51,10 @@ export const Contacto = () => {
         setStatus("");
       })
       .catch((err) => {
-        setModalMensaje("Error al Enviar el Mensaje");
-        setModalTipo("error");
+        setModalMensaje("Debe Completar Todos los Campos");
+        setModalTipo("Advertencia");
         setModalVisible(true);
-        console.error("Error:", err);
+        console.error("Advertencia");
         setStatus("");
       });
   };
@@ -65,7 +65,9 @@ export const Contacto = () => {
         <h1 className="titulo-contacto">Contacto</h1>
         <form onSubmit={handleSubmit}>
           <div>
-            <label classname="label-contacto" htmlFor="nombre">Nombre y Apellido</label>
+            <label className="label-contacto" htmlFor="nombre">
+              Nombre y Apellido
+            </label>
             <input
               type="text"
               id="nombre"
@@ -73,12 +75,13 @@ export const Contacto = () => {
               placeholder="Ricardo Rodriguez"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
-              required
             />
           </div>
 
           <div>
-            <label htmlFor="email" classname="label-contacto">Correo electrónico</label>
+            <label htmlFor="email" className="label-contacto">
+              Correo electrónico
+            </label>
             <input
               type="email"
               id="email"
@@ -86,18 +89,18 @@ export const Contacto = () => {
               placeholder="Example@gmail.com"
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
-              required
             />
           </div>
 
           <div>
-            <label htmlFor="asunto" classname="label-contacto">Asunto</label>
+            <label htmlFor="asunto" className="label-contacto">
+              Asunto
+            </label>
             <select
               id="asunto"
               name="asunto"
               value={asunto}
               onChange={(e) => setAsunto(e.target.value)}
-              required
             >
               <option value="">-- Seleccioná un Asunto --</option>
               <option value="Inscripciones">Inscripciones</option>
@@ -116,7 +119,9 @@ export const Contacto = () => {
 
           {asunto === "Presentar Curriculum" && (
             <div>
-              <label htmlFor="archivo" classname="label-contacto">Adjuntar Curriculum</label>
+              <label htmlFor="archivo" className="label-contacto">
+                Adjuntar Curriculum
+              </label>
               <input
                 type="file"
                 id="archivo"
@@ -129,18 +134,23 @@ export const Contacto = () => {
           )}
 
           <div>
-            <label classname="label-contacto" htmlFor="mensaje">Mensaje</label>
+            <label className="label-contacto" htmlFor="mensaje">
+              Mensaje
+            </label>
             <textarea
               id="mensaje"
               name="mensaje"
               rows="5"
               value={mensaje}
               onChange={(e) => setMensaje(e.target.value)}
-              required
             ></textarea>
           </div>
 
-          <button type="submit" className="btn-contact" disabled={status === "Enviando..."}>
+          <button
+            type="submit"
+            className="btn-contact"
+            disabled={status === "Enviando..."}
+          >
             {status || "Enviar"}
           </button>
         </form>
@@ -193,22 +203,25 @@ export const Contacto = () => {
                 </svg>
               ) : (
                 <svg
-                  className="icon error"
+                  className="icon warning"
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 52 52"
+                  width="60"
+                  height="60"
                 >
                   <circle
                     className="circle"
-                    cx="26"
-                    cy="26"
-                    r="25"
+                    cx={26}
+                    cy={26}
+                    r={23.5}
                     fill="none"
                   />
                   <path
-                    className="cross"
+                    className="exclamation-line"
+                    d="M26 15v14"
                     fill="none"
-                    d="M16 16 36 36 M36 16 16 36"
                   />
+                  <circle className="exclamation-dot" cx={26} cy={36} r={2.5} />
                 </svg>
               )}
             </div>

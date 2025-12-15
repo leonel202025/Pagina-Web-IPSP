@@ -4,7 +4,6 @@ const nodemailer = require('nodemailer');
 const multer = require('multer');
 const path = require('path');
 
-// Configuración simplificada y robusta de Multer
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 }
@@ -12,7 +11,6 @@ const upload = multer({
 
 router.post('/', (req, res) => {
   upload(req, res, async (err) => {
-    // Manejo centralizado de errores
     if (err) {
       console.error('Error al subir archivo:', err);
       return res.status(400).json({ 
@@ -27,7 +25,6 @@ router.post('/', (req, res) => {
       const { nombre, correo, asunto, mensaje } = req.body;
       const archivo = req.file;
 
-      // Validación básica
       if (!nombre || !correo || !asunto || !mensaje) {
         return res.status(400).json({
           success: false,
@@ -35,7 +32,6 @@ router.post('/', (req, res) => {
         });
       }
 
-      // Configuración del transporter (mejorada)
       const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -49,7 +45,6 @@ router.post('/', (req, res) => {
         }
       });
 
-      // Construcción del correo
       const mailOptions = {
         from: `"Formulario de Contacto" <${process.env.GMAIL_USER}>`,
         to: 'leonsosaf9@gmail.com',
@@ -69,7 +64,6 @@ router.post('/', (req, res) => {
         }] : []
       };
 
-      // Envío del correo
       await transporter.sendMail(mailOptions);
       
       res.json({ 

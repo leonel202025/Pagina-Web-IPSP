@@ -34,7 +34,6 @@ export const Documentos = () => {
               className="documento_btn_icon"
               title="Descargar PDF"
             >
-              {/* Ícono SVG */}
               <svg 
                 title="Descargar PDF"
                 xmlns="http://www.w3.org/2000/svg" 

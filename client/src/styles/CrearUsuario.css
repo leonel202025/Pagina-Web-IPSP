@@ -14,7 +14,7 @@
     text-align: center;
     margin-top: -20px;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Nueva sombra */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); 
 }
 
 .container__general {
@@ -48,7 +48,7 @@
 }
 
 .crear__item:hover {
-    transform: scale(1.01); /* Aumenta el tamaño del botón */
+    transform: scale(1.01); 
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.436);
 }
 
@@ -57,7 +57,7 @@
   height: 60px;
   margin-right: 10px;
   vertical-align: middle;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); /* Sombra agregada */
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); 
 }
 
 .icono__crear-profesor {
@@ -65,7 +65,7 @@
   height: 75px;
   margin-right: 10px;
   vertical-align: middle;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); /* Sombra agregada */
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.5)); 
 }
 
 

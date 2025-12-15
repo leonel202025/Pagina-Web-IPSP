@@ -1,5 +1,5 @@
 body, html {
-  height: 100%; /* Asegura que el cuerpo ocupe toda la pantalla */
+  height: 100%;
   margin: 0;
 }
 
@@ -13,7 +13,6 @@ body, html {
     font-family: 'Merriweather';
 }
 
-/* Contenedor adaptado del modal */
 .container {
   width: 430px;
   background-color: #fffd;
@@ -30,7 +29,6 @@ body, html {
   overflow-y: auto;
 }
 
-/* Título con mismo estilo que modal */
 .tittle__alumno {
   color: var(--color-secundario);
   text-align: center;
@@ -40,7 +38,6 @@ body, html {
   font-family: 'Merriweather', serif;
 }
 
-/* Formulario */
 .container form {
   max-width: 460px;
   width: 100%;
@@ -49,7 +46,6 @@ body, html {
   border-radius: 5px;
 }
 
-/* Inputs y select */
 .container form input,
 .container form select {
   width: 100%;
@@ -64,7 +60,6 @@ body, html {
   font-weight: 400;
 }
 
-/* Botón submit */
 .container form button[type="submit"] {
   background-color: var(--color-secundario);
   color: white;
@@ -94,7 +89,7 @@ body, html {
 /* Muy Grandes */
 @media (max-width: 1440px){
     .container {
-    width: 380px; /* más estrecho */
+    width: 380px;
     height: 400px;
     margin-top: 20px;
     padding: 12px 18px;
@@ -128,7 +123,7 @@ body, html {
 /* Grandes */
 @media screen and (min-width: 1281px) and (max-width: 1439px) {
   .container {
-    width: 340px; /* más estrecho */
+    width: 340px; 
     margin-top: -10px;
     padding: 12px 18px;
   }
@@ -160,7 +155,7 @@ body, html {
 /* Medianas */
 @media screen and (min-width: 1025px) and (max-width: 1280px) {
   .container {
-    width: 340px; /* más estrecho */
+    width: 340px; 
     height: 380px;
     margin-top: -10px;
     padding: 12px 18px;
@@ -189,4 +184,3 @@ body, html {
     margin-bottom: 12px;
   }
 }
-

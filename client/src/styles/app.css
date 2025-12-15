@@ -7,7 +7,7 @@ body {
     background-image: url("../images/fondo.png");
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Evita que el fondo se expanda */
+    background-attachment: fixed; 
     margin: 0;
 }
 
@@ -20,17 +20,17 @@ body {
 html, body {
     min-height: 100%;
     display: flex;
-    flex-direction: column;  /* Hace que los elementos hijos se apilen verticalmente */
+    flex-direction: column; 
 }
 
 #root {
     display: flex;
     flex-direction: column;
-    min-height: 100%; /* Asegura que el contenido llene toda la pantalla */
+    min-height: 100%; 
 }
 
 .main-content {
-    flex: 1; /* Hace que el contenido crezca y empuje el footer hacia abajo */
+    flex: 1; 
     padding: 20px;
 }
 

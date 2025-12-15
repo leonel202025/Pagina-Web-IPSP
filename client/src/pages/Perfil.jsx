@@ -3,7 +3,7 @@ import "../styles/perfil.css";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 
-import ModalMensaje from "../components/ModalMensaje"; // Importar el modal
+import ModalMensaje from "../components/ModalMensaje";
 
 export const Perfil = () => {
   const [userData, setUserData] = useState(null);
@@ -11,10 +11,9 @@ export const Perfil = () => {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
 
-  // Estados para el modal
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMensaje, setModalMensaje] = useState("");
-  const [modalTipo, setModalTipo] = useState("exito"); // exito, error, advertencia, confirmacion
+  const [modalTipo, setModalTipo] = useState("exito"); 
 
   useEffect(() => {
     const fetchPerfil = async () => {
@@ -39,7 +38,6 @@ export const Perfil = () => {
           const text = await response.text();
           console.error("Respuesta inesperada:", text);
 
-          // Mostrar modal en vez de alert
           setModalMensaje("Error al cargar perfil");
           setModalTipo("error");
           setModalVisible(true);
@@ -69,13 +67,9 @@ export const Perfil = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // Mostrar modal en vez de alert
         setModalMensaje("Imagen actualizada");
         setModalTipo("exito");
         setModalVisible(true);
-
-        // Podés recargar el perfil después de cerrar el modal
-        // Por eso acá no recargamos inmediatamente, lo hacemos cuando se cierra el modal
       })
       .catch((err) => {
         console.error("Error al subir imagen", err);
@@ -95,10 +89,8 @@ export const Perfil = () => {
     }, 4000);
   };
 
-  // Función para cerrar modal
   const cerrarModal = () => {
     setModalVisible(false);
-    // Si querés recargar después de cerrar el modal de éxito por imagen actualizada:
     if (modalMensaje === "Imagen actualizada") {
       window.location.reload();
     }
@@ -166,7 +158,6 @@ export const Perfil = () => {
         tipo={modalTipo}
         onClose={cerrarModal}
         onConfirm={() => {
-          /* si tenés confirmaciones, las manejás acá */
           setModalVisible(false);
         }}
       />

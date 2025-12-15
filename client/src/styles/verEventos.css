@@ -7,7 +7,7 @@
 
 .tabla__eventos {
   width: 100%;
-  max-width: 1300px; /* ancho máximo */
+  max-width: 1300px; 
   margin: 10px auto 20px auto;
   border-collapse: separate;
   border-spacing: 0;
@@ -38,24 +38,22 @@
   text-overflow: ellipsis;
 }
 
-.tabla__eventos th:nth-child(1), .tabla__eventos td:nth-child(1) { width: 15%; } /* Fecha */
-.tabla__eventos th:nth-child(2), .tabla__eventos td:nth-child(2) { width: 25%; } /* Acto */
-.tabla__eventos th:nth-child(3), .tabla__eventos td:nth-child(3) { width: 60%; } /* Descripción */
-.tabla__eventos th:nth-child(4), .tabla__eventos td:nth-child(4) { width: 35%; } /* Responsables */
+.tabla__eventos th:nth-child(1), .tabla__eventos td:nth-child(1) { width: 15%; } 
+.tabla__eventos th:nth-child(2), .tabla__eventos td:nth-child(2) { width: 25%; }
+.tabla__eventos th:nth-child(3), .tabla__eventos td:nth-child(3) { width: 60%; } 
+.tabla__eventos th:nth-child(4), .tabla__eventos td:nth-child(4) { width: 35%; } 
 .tabla__eventos th:nth-child(5),
 .tabla__eventos td:nth-child(5) {
-  width: auto; /*columna de acciones fija */
+  width: auto; 
   text-align: center;
   white-space: nowrap;
 }
 
-/* Bordes redondeados */
 .tabla__eventos .ver_title-eventos { border-top-left-radius: 10px; }
 .tabla__eventos .ver_title-eventos { border-top-right-radius: 10px; }
 .tabla__eventos tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
 .tabla__eventos tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 
-/* Acciones */
 .acciones {
   display: flex;
   justify-content: center;
@@ -74,7 +72,7 @@
   min-width: 40px;
   min-height: 40px;
   border-radius: 50%;
-  padding: 0; /* ya centrado con flex */
+  padding: 0; 
 }
 
 .btn-editar svg { fill: #3498db; }
@@ -90,7 +88,6 @@
   transform: scale(1.1);
 }
 
-/* Mostrar contenido completo en hover */
 .tabla__eventos td {
   position: relative;
 }
@@ -120,18 +117,17 @@
   background-color: #fffd;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* ✅ importante para que crezca hacia abajo */
+  justify-content: flex-start; 
   align-items: center;
   border: 3px solid var(--color-secundario);
   border-radius: 10px;
   padding: 20px 25px 5px 25px;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
-  margin: 20px auto; /* ✅ da espacio al crecer */
+  margin: 20px auto; 
   margin-top: -20px;
 }
 
-/* Contenedor de botones dentro de cada fila de asignación */
-.add__profesor-botones {
+.add__evento-botones {
   display: flex;
   gap: 7px;
   margin-top: 5px;
@@ -144,8 +140,8 @@
   justify-content: center;
   width: 40px;
   height: 50px;
-  background-color: transparent !important; /* 🔹 fondo transparente real */
-  border: 2px solid #1E55E3 !important;    /* opcional, igual que el icono */
+  background-color: transparent !important; 
+  border: 2px solid #1E55E3 !important;    
   cursor: pointer;
   transition: all 0.2s ease !important;
   padding: 0;
@@ -160,7 +156,6 @@
   transform: scale(1.05);
 }
 
-/* Botón de eliminar asignación */
 .borrar_asignacion-evento {
   display: flex;
   align-items: center;
@@ -191,6 +186,7 @@
 
 .btn__cancelar-evento:hover { background-color: #bbb !important; }
 
+
 /* Responsive Design */
 
 /* Notebooks */
@@ -209,7 +205,7 @@
 
   thead th:nth-child(5),
   tbody td:nth-child(5) {
-    width: 150px; /* tamaño completo */
+    width: 150px; 
   }
 }
 
@@ -227,7 +223,7 @@
 
   thead th:nth-child(5),
   tbody td:nth-child(5) {
-    width: 140px; /* un poco más de espacio */
+    width: 140px; 
   }
 }
 
@@ -245,7 +241,7 @@
 
   thead th:nth-child(5),
   tbody td:nth-child(5) {
-    width: 120px; /* columna acciones más compacta */
+    width: 120px; 
   }
 
   .btn-editar, .btn-eliminar {

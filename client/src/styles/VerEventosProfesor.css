@@ -1,4 +1,3 @@
-/* Contenedor principal */
 .container__eventos {
   display: flex;
   flex-direction: column;
@@ -7,7 +6,6 @@
   font-family: Arial, sans-serif;
 }
 
-/* Contenedor de la tabla */
 .container__table-eventos {
   display: flex;
   justify-content: center;
@@ -16,14 +14,13 @@
   width: 100%;
 }
 
-/* Tabla */
 .tabla__eventos-profesor {
   width: 100%;
-  max-width: 1300px; /* ancho máximo */
+  max-width: 1300px; 
   margin: 10px auto 20px auto;
   border-collapse: separate;
   border-spacing: 0;
-  table-layout: fixed; /* columnas proporcionales */
+  table-layout: fixed; 
   font-family: Arial, sans-serif;
   box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.5);
   background-color: rgba(0, 0, 0, 0.4);
@@ -31,7 +28,6 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* Cabecera */
 .tabla__eventos-profesor th {
   padding: 12px 15px;
   text-align: center;
@@ -42,7 +38,6 @@
   text-overflow: ellipsis;
 }
 
-/* Celdas */
 .tabla__eventos-profesor td {
   padding: 12px 15px;
   text-align: center;
@@ -54,10 +49,10 @@
   position: relative;
 }
 
-/* Mostrar contenido completo en hover */
 .tabla__eventos-profesor td[title] {
   cursor: pointer;
 }
+
 .tabla__eventos-profesor td:hover::after {
   content: attr(title);
   position: absolute;
@@ -74,19 +69,16 @@
   max-width: 400px;
 }
 
-/* Bordes redondeados */
 .tabla__eventos-profesor thead tr:first-child th:first-child { border-top-left-radius: 10px; }
 .tabla__eventos-profesor thead tr:first-child th:last-child { border-top-right-radius: 10px; }
 .tabla__eventos-profesor tbody tr:last-child td:first-child { border-bottom-left-radius: 10px; }
 .tabla__eventos-profesor tbody tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 
-/* Ancho fijo de columnas */
 .tabla__eventos-profesor th:nth-child(1),
-.tabla__eventos-profesor td:nth-child(1) { width: 10px; } /* Fecha */
+.tabla__eventos-profesor td:nth-child(1) { width: 10px; } 
 .tabla__eventos-profesor th:nth-child(2),
-.tabla__eventos-profesor td:nth-child(2) { width: 10px; } /* Acto / Título */
+.tabla__eventos-profesor td:nth-child(2) { width: 10px; } 
 
-/* Título */
 .ver_title {
   color: #ddd;
   text-align: center;
@@ -95,6 +87,7 @@
   margin-bottom: 20px;
   font-family: 'Merriweather', serif;
 }
+
 
 /* Responsive */
 
@@ -114,9 +107,9 @@
   }
 
   .tabla__eventos-profesor th:nth-child(1),
-  .tabla__eventos-profesor td:nth-child(1) { width: 25%; } /* Fecha */
+  .tabla__eventos-profesor td:nth-child(1) { width: 25%; } 
   .tabla__eventos-profesor th:nth-child(2),
-  .tabla__eventos-profesor td:nth-child(2) { width: 75%; } /* Acto / Título */
+  .tabla__eventos-profesor td:nth-child(2) { width: 75%; } 
 
   .ver_title{
     font-size: 1.9em !important;
@@ -139,9 +132,9 @@
   }
 
   .tabla__eventos-profesor th:nth-child(1),
-  .tabla__eventos-profesor td:nth-child(1) { width: 30%; } /* Fecha */
+  .tabla__eventos-profesor td:nth-child(1) { width: 30%; } 
   .tabla__eventos-profesor th:nth-child(2),
-  .tabla__eventos-profesor td:nth-child(2) { width: 70%; } /* Acto / Título */
+  .tabla__eventos-profesor td:nth-child(2) { width: 70%; } 
 
   .ver_title{
     font-size: 1.7em !important;
@@ -161,11 +154,10 @@
     padding: 10px 12px;
   }
 
-  /* Ajuste de ancho columnas si hace falta */
   .tabla__eventos-profesor th:nth-child(1),
-  .tabla__eventos-profesor td:nth-child(1) { width: 35%; } /* Fecha */
+  .tabla__eventos-profesor td:nth-child(1) { width: 35%; } 
   .tabla__eventos-profesor th:nth-child(2),
-  .tabla__eventos-profesor td:nth-child(2) { width: 65%; } /* Acto / Título */
+  .tabla__eventos-profesor td:nth-child(2) { width: 65%; } 
 
   .ver_title{
     font-size: 1.9em;

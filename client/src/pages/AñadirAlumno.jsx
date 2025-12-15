@@ -15,7 +15,7 @@ export const AñadirAlumno = () => {
   const [grados, setGrados] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMensaje, setModalMensaje] = useState("");
-  const [modalTipo, setModalTipo] = useState(""); // 'exito', 'error', 'advertencia'
+  const [modalTipo, setModalTipo] = useState(""); 
 
   useEffect(() => {
     fetch("http://localhost:5000/api/grados")

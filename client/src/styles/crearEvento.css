@@ -3,16 +3,15 @@
   background-color: #fffd;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* ✅ importante para que crezca hacia abajo */
+  justify-content: flex-start; 
   align-items: center;
   border: 3px solid var(--color-secundario);
   border-radius: 10px;
   padding: 20px 25px 5px 25px;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
-  margin: 20px auto; /* ✅ da espacio al crecer */
+  margin: 20px auto; 
   margin-top: -20px;
 }
-
 
 .crear__evento-title{
   color: var(--color-secundario);
@@ -47,7 +46,6 @@
   min-height: 80px;
 }
 
-/* Estilo de los selects múltiples */
 .select-item {
   display: flex;
   align-items: center;
@@ -75,6 +73,7 @@
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
+
 
 /* Responsive Design */
 
@@ -118,25 +117,25 @@
 /* Grandes */
 @media screen and (min-width: 1281px) and (max-width: 1439px) {
   .crear__evento-container {
-    width: 360px;           /* más estrecho */
-    padding: 18px 22px 5px 22px;  /* menos padding */
+    width: 360px;          
+    padding: 18px 22px 5px 22px;  
     margin-top: -20px;
   }
 
   .crear__evento-container h1 {
-    font-size: 1.5em;       /* un poco más pequeño */
+    font-size: 1.5em;       
     margin-bottom: 14px;
   }
 
   .crear-evento__form {
-    margin-top: -30px;      /* menos margen */
+    margin-top: -30px;      
   }
 
   .crear-evento__form input,
   .crear-evento__form select,
   .crear-evento__form textarea {
-    font-size: 0.9em;       /* un poco más pequeño */
-    padding: 9px;           /* menos padding */
+    font-size: 0.9em;       
+    padding: 9px;           
     margin: 9px 0;
   }
 

@@ -63,6 +63,7 @@
   text-decoration: none;
 }
 
+
 /* Responsive Design */
 
 /* Notebooks */
@@ -127,7 +128,7 @@
   }
 
   .documento_item {
-    flex-direction: column;   /* 👈 uno arriba del otro */
+    flex-direction: column;   
     gap: 15px;
     padding: 16px;
   }

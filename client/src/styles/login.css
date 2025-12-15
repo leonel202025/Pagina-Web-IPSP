@@ -183,13 +183,13 @@ label {
 /* Notebooks Medianas y Tablets de 10" (Horizontal) */
 @media (min-width: 1025px) and (max-width: 1280px) and (orientation: landscape){
   .container__login {
-    width: 450px;        /* más ancho */
-    margin-top: -10px;   /* más espaciado superior */
-    padding: 30px;       /* más padding interno */
+    width: 450px;        
+    margin-top: -10px;   
+    padding: 30px;      
   }
 
   .titulo-login {
-    font-size: 2em;      /* título más grande */
+    font-size: 2em;      
     margin-bottom: 20px;
   }
 
@@ -228,41 +228,41 @@ label {
 /* Tablets de 10" (Vertical) */
 @media screen and (min-width: 800px) and (max-width: 1024px) and (orientation: portrait){
   .container__login {
-    width: 500px;        /* más ancho */
-    padding: 35px;       /* más padding */
-    margin-top: 130px;   /* más espaciado superior */
+    width: 500px;        
+    padding: 35px;       
+    margin-top: 130px;   
   }
 
   form {
-    padding: 30px 25px;  /* padding más generoso */
+    padding: 30px 25px;  
   }
 
   .titulo-login {
-    font-size: 2.3em;    /* título más grande */
+    font-size: 2.3em;   
     margin: 25px 0 -10px 0;
   }
 
   input {
-    padding: 14px;       /* inputs más altos */
-    font-size: 1.1em;    /* texto más grande */
+    padding: 14px;       
+    font-size: 1.1em;    
   }
   
   .btn-login {
-    padding: 16px 24px;  /* botón más grande */
+    padding: 16px 24px;  
     font-size: 1.1em;
   }
 
   label {
-    font-size: 1.5em;    /* labels más grandes */
+    font-size: 1.5em;    
   }
   
   .logo {
-    width: 180px;        /* logo más grande */
+    width: 180px;        
     height: 195px;
   }
   
   .error-message {
-    font-size: 15px;     /* mensajes de error más visibles */
+    font-size: 15px;     
     padding: 14px 18px;
   }
   
@@ -275,9 +275,9 @@ label {
 /* Tablet 7" horizontal */
 @media screen and (min-width: 800px) and (max-width: 920px) and (orientation: landscape){
   .container__login {
-    width: 360px;       /* ancho compacto */
-    padding: 22px;      /* padding interno */
-    margin-top: -20px;   /* separación superior */
+    width: 360px;  
+    padding: 22px;  
+    margin-top: -20px;   
   }
 
   form {
@@ -287,7 +287,7 @@ label {
   }
 
   .titulo-login {
-    font-size: 1.8em;   /* título un poco más pequeño */
+    font-size: 1.8em;   
     margin-bottom: 18px;
   }
 
@@ -328,7 +328,7 @@ label {
 /* Tablet 7" vertical */
 @media screen and (min-width: 600px) and (max-width: 799px) and (orientation: portrait){
   .container__login {
-    width: 360px; /* más angosto para pantallas chicas */
+    width: 360px; 
     padding: 20px;
     margin-top: 70px;
   }

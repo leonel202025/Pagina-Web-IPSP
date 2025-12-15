@@ -19,7 +19,7 @@ export const AñadirProfesor = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMensaje, setModalMensaje] = useState("");
-  const [modalTipo, setModalTipo] = useState(""); // 'exito', 'error', 'advertencia'
+  const [modalTipo, setModalTipo] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:5000/api/grados")
@@ -56,7 +56,6 @@ export const AñadirProfesor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validaciones
     if (asignaciones.length === 0) {
       setModalMensaje("Debes asignar al menos un grado con materia");
       setModalTipo("advertencia");
@@ -202,7 +201,6 @@ export const AñadirProfesor = () => {
               </select>
 
               <div className="add__profesor-botones">
-                {/* Botón agregar */}
                 <button
                   className="agregar_asignacion"
                   type="button"
@@ -226,7 +224,6 @@ export const AñadirProfesor = () => {
                   </svg>
                 </button>
 
-                {/* Botón eliminar: solo si hay más de uno */}
                 {asignaciones.length > 1 && (
                   <button
                     className="borrar_asignacion"

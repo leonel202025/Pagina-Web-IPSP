@@ -13,7 +13,7 @@ export function VerAlumnos() {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalConfirmVisible, setModalConfirmVisible] = useState(false);
   const [alumnoAEliminar, setAlumnoAEliminar] = useState(null);
-  const [busqueda, setBusqueda] = useState(""); // 🔍 Nuevo estado
+  const [busqueda, setBusqueda] = useState(""); 
 
   useEffect(() => {
     fetch("http://localhost:5000/api/usuarios/alumnos")
@@ -62,7 +62,6 @@ export function VerAlumnos() {
         setModalTipo("exito");
         setModalEditarVisible(false);
         setModalVisible(true);
-        // Recargar alumnos
         const resAlumnos = await fetch(
           "http://localhost:5000/api/usuarios/alumnos"
         );
@@ -92,7 +91,6 @@ export function VerAlumnos() {
       if (res.ok) {
         setModalMensaje("Alumno eliminado correctamente");
         setModalTipo("exito");
-        // Recargar alumnos
         const resAlumnos = await fetch(
           "http://localhost:5000/api/usuarios/alumnos"
         );
@@ -111,7 +109,7 @@ export function VerAlumnos() {
 
   return (
     <div className="container__alumnos">
-      {/* --- Vista 1: Selección de grado --- */}
+      {/* Vista 1: Selección de grado */}
       {!gradoSeleccionado && (
         <div className="alumnos__seleccion">
           <h3 className="mis__cursos-title">Seleccione un Grado:</h3>
@@ -129,7 +127,7 @@ export function VerAlumnos() {
         </div>
       )}
 
-      {/* --- Vista 2: Tabla de alumnos --- */}
+      {/* Vista 2: Tabla de alumnos */}
       {gradoSeleccionado && (
         <>
           <div className="busqueda__contenedor">
@@ -230,7 +228,7 @@ export function VerAlumnos() {
         </>
       )}
 
-      {/* --- Modales --- */}
+      {/* Modales */}
       {modalEditarVisible && (
         <div className="modal-editar-overlay">
           <div className="modal-editar-container">

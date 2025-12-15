@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [manualLoading, setManualLoading] = useState(false);
-  const [loadingTexto, setLoadingTexto] = useState("Cargando"); // 👈 nuevo
+  const [loadingTexto, setLoadingTexto] = useState("Cargando"); 
   const [usuarioBuscado, setUsuarioBuscado] = useState(null);
   const [modalVisibleUsuario, setModalVisibleUsuario] = useState(true);
 
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const res = await fetch("/api/auth/perfil", {
           headers: {
-            Authorization: `Bearer ${token}`, // 👈 CORRECTO
+            Authorization: `Bearer ${token}`,
           },
         });
         const data = await res.json();

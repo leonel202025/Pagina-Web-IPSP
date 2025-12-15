@@ -20,7 +20,7 @@ export const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(""); // Limpiamos errores previos
+    setErrorMessage("");
 
     try {
       const response = await fetch("http://localhost:5000/api/auth/login", {
@@ -34,7 +34,7 @@ export const Login = () => {
       if (response.ok) {
         const { token, user } = data;
         sessionStorage.setItem("token", token);
-        localStorage.setItem("idAlumno", user.id); // <-- Aquí guardamos el ID real del alumno
+        localStorage.setItem("idAlumno", user.id); 
         login(user, token);
         navigate("/");
         setManualLoading(true);
@@ -44,7 +44,6 @@ export const Login = () => {
           setManualLoading(false);
         }, 4000);
       } else {
-        // ❌ Error: no activamos el loading
         setErrorMessage("El Mail y/o Contraseña son Incorrectos.");
       }
     } catch (error) {

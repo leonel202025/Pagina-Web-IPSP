@@ -1,4 +1,3 @@
-// components/Loading.jsx
 import "../styles/loading.css";
 import logo from "../images/logo.png";
 

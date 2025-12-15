@@ -5,22 +5,20 @@ import { AuthContext } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 
 export const Inicio = () => {
-  const { setManualLoading, setLoadingTexto } = useContext(AuthContext); // 👈 agregar esto arriba
+  const { setManualLoading, setLoadingTexto } = useContext(AuthContext);
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
 
   const handleLogout = () => {
-    setManualLoading(true); // Mostrar loading
+    setManualLoading(true);
   
-    // Primero cerrás sesión
-    logout(); // Esta debería limpiar el token/contexto
-  
-    // Luego esperás un poco y redirigís
+    logout();
+
     setTimeout(() => {
-      navigate("/"); // Redirige al inicio
+      navigate("/");
       setLoadingTexto("Cargando");
-      setManualLoading(false); // Ocultar loading
-    }, 4000); // Podés ajustar el delay si querés
+      setManualLoading(false); 
+    }, 4000);
   };
   
   return (
