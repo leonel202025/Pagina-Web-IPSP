@@ -55,7 +55,7 @@ export const CalendarioProfesor = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="2">No tenés eventos asignados</td>
+                <td colSpan="3">No tenés eventos asignados</td>
               </tr>
             )}
           </tbody>
